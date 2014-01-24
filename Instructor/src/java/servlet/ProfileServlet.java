@@ -30,32 +30,27 @@ public class ProfileServlet extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String servlet = "ProfileServlet: ";
-            System.out.println(servlet);
-
             String action = request.getParameter("action");
+            System.out.println("ProfileServlet action: " + action);
 
-            if (action.equals("checkIsStudent")) {
+            if (action.equals("checkIsInstructor")) {
                 String userId = request.getParameter("userId");
 
                 response.setContentType("application/json;charset=utf-8");
                 JsonObject json = new JsonObject();
-                json.addProperty("response", accountBean.isStudent(userId));
+                json.addProperty("response", accountBean.isInstructor(userId));
 
                 PrintWriter pw = response.getWriter();
                 pw.print(json);
                 pw.close();
             }
-            else if (action.equals("createStudent")) {
+            else if (action.equals("createInstructor")) {
                 String userId = request.getParameter("UserID");
                 String name = request.getParameter("Name");
                 String email = request.getParameter("Email");
                 String gender = request.getParameter("Gender");
                 String faculty = request.getParameter("Faculty");
-                String firstMajor = request.getParameter("FirstMajor");
-                String secondMajor = request.getParameter("SecondMajor");
-                Integer matriculationYear = Integer.valueOf(request.getParameter("MatriculationYear"));
-                accountBean.createStudent(userId, name, email, gender, faculty, firstMajor, secondMajor, matriculationYear);
+                accountBean.createInstructor(userId, name, email, gender, faculty);
             }
         }
         catch (Exception ex) {

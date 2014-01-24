@@ -14,48 +14,42 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import session.AccountBeanLocal;
+import session.ModuleBeanLocal;
 
 /**
  *
  * @author Chih Yong
  */
-@WebServlet(name = "ProfileServlet", urlPatterns = {"/ProfileServlet", "/ProfileServlet?*"})
-public class ProfileServlet extends HttpServlet
+@WebServlet(name = "ModuleServlet", urlPatterns = {"/ModuleServlet"})
+public class ModuleServlet extends HttpServlet
 {
 
     @EJB
-    AccountBeanLocal accountBean;
+    ModuleBeanLocal moduleBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String servlet = "ProfileServlet: ";
-            System.out.println(servlet);
-
             String action = request.getParameter("action");
+            System.out.println("ModuleServlet action: " + action);
 
-            if (action.equals("checkIsStudent")) {
-                String userId = request.getParameter("userId");
+            if (action.equals("checkIsModule")) {
+                String moduleId = request.getParameter("moduleId");
 
                 response.setContentType("application/json;charset=utf-8");
                 JsonObject json = new JsonObject();
-                json.addProperty("response", accountBean.isStudent(userId));
+                json.addProperty("response", moduleBean.isModule(moduleId));
 
                 PrintWriter pw = response.getWriter();
                 pw.print(json);
                 pw.close();
             }
-            else if (action.equals("createStudent")) {
-                String userId = request.getParameter("UserID");
-                String name = request.getParameter("Name");
-                String email = request.getParameter("Email");
-                String gender = request.getParameter("Gender");
-                String faculty = request.getParameter("Faculty");
-                String firstMajor = request.getParameter("FirstMajor");
-                String secondMajor = request.getParameter("SecondMajor");
-                Integer matriculationYear = Integer.valueOf(request.getParameter("MatriculationYear"));
-                accountBean.createStudent(userId, name, email, gender, faculty, firstMajor, secondMajor, matriculationYear);
+            else if (action.equals("createModule")) {
+                String moduleId = request.getParameter("id");
+                String moduleCode = request.getParameter("code");
+                String moduleName = request.getParameter("name");
+                String moduleCreator = request.getParameter("creatorId");
+                moduleBean.createModule(moduleId, moduleCode, moduleName, moduleCreator);
             }
         }
         catch (Exception ex) {
