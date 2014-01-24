@@ -10,6 +10,6 @@ build.xml
 build.properties
 
 # Package Files #
-*.jar
+# *.jar #
 *.war
 *.ear

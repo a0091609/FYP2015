@@ -75,7 +75,6 @@ function displayProfile() {
         $.get(url, function(data) {
 
             if (!data.response) {
-                console.log(profileData);
                 $.ajax({
                     type: 'post',
                     url: '/Student/ProfileServlet?action=createStudent',

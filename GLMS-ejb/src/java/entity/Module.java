@@ -1,33 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
  * @author Chih Yong
  */
 @Entity
-public class Module implements Serializable {
+public class Module implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
     @Id
     private String moduleId;
     private String moduleCode;
     private String moduleName;
-    private String moduleSemester;
-    private String moduleAcadYear;
-    @Temporal(TemporalType.DATE)
-    private Date moduleOpenDate;
     private Boolean isActive;
 
     // To be added: creator, quiz
@@ -54,30 +43,6 @@ public class Module implements Serializable {
 
     public void setModuleName(String moduleName) {
         this.moduleName = moduleName;
-    }
-
-    public String getModuleSemester() {
-        return moduleSemester;
-    }
-
-    public void setModuleSemester(String moduleSemester) {
-        this.moduleSemester = moduleSemester;
-    }
-
-    public String getModuleAcadYear() {
-        return moduleAcadYear;
-    }
-
-    public void setModuleAcadYear(String moduleAcadYear) {
-        this.moduleAcadYear = moduleAcadYear;
-    }
-
-    public Date getModuleOpenDate() {
-        return moduleOpenDate;
-    }
-
-    public void setModuleOpenDate(Date moduleOpenDate) {
-        this.moduleOpenDate = moduleOpenDate;
     }
 
     public Boolean isIsActive() {

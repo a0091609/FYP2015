@@ -14,13 +14,16 @@ import javax.persistence.Id;
  * @author Chih Yong
  */
 @Entity
-public class Instructor implements Serializable {
+public class Instructor implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
     @Id
     private String userId;
     private String name;
     private String email;
+    private String gender;
+    private String faculty;
 
     public String getUserId() {
         return userId;
@@ -44,6 +47,22 @@ public class Instructor implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
     }
 
     @Override
