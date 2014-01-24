@@ -14,6 +14,7 @@
     <!-- END HEAD -->
     <!-- BEGIN BODY -->
     <body class="page-header-fixed page-sidebar-fixed">
+        <%-- Import for the header bar --%>
         <%@include file="WEB-INF/jspf/headerBar.jspf" %> 
         <!-- BEGIN CONTAINER -->
         <div class="page-container">
@@ -2331,18 +2332,10 @@
             <!-- END PAGE -->
         </div>
         <!-- END CONTAINER -->
-        <!-- BEGIN FOOTER -->
-        <div class="footer">
-            <div class="footer-inner">
-                2013 &copy; Metronic by keenthemes.
-            </div>
-            <div class="footer-tools">
-                <span class="go-top">
-                    <i class="icon-angle-up"></i>
-                </span>
-            </div>
-        </div>
-        <!-- END FOOTER -->
+        
+        <%-- Import for the footer bar --%>
+        <%@include file="WEB-INF/jspf/footer.jspf" %>   
+        
         <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
         <!-- BEGIN CORE PLUGINS -->   
         <script src="assets/plugins/jquery-1.10.1.min.js" type="text/javascript"></script>
