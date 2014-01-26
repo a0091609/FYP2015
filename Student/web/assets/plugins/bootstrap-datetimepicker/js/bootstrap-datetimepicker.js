@@ -1,12 +1,6 @@
 ﻿/* =========================================================
  * bootstrap-datetimepicker.js
  * =========================================================
- * Copyright 2012 Stefan Petre
- * Improvements by Keenthemes(just navigation icons modified)
- * Improvements by Andrew Rowls
- * Improvements by Sébastien Malot
- * Project URL : http://www.malot.fr/bootstrap-datetimepicker
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -1423,9 +1417,9 @@
 		},
 		headTemplate: '<thead>'+
 							'<tr>'+
-								'<th class="prev"><i class="icon-angle-left"/></th>'+ //icon modifed by keenthemes.
+								'<th class="prev"><i class="icon-angle-left"/></th>'+ //icon modifed 
 								'<th colspan="5" class="switch"></th>'+
-								'<th class="next"><i class="icon-angle-right"/></th>'+//icon modifed by keenthemes.
+								'<th class="next"><i class="icon-angle-right"/></th>'+//icon modifed 
 							'</tr>'+
 						'</thead>',
 		contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>',

@@ -1518,8 +1518,7 @@ function inArray( elem, array ) {
 
 /*
  * Javascript Diff Algorithm
- *  By John Resig (http://ejohn.org/)
- *  Modified by Chu Alan "sprite"
+ * By John Resig (http://ejohn.org/)
  *
  * Released under the MIT license.
  *

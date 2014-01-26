@@ -78,8 +78,8 @@ var Inbox = function () {
             inputClasses: 'm-wrap',
             source: function (query, process) {
                 return [
-                    'Bob Nilson <bob.nilson@metronic.com>',
-                    'Lisa Miller <lisa.miller@metronic.com>',
+                    'Bob Nilson <bob.nilson@abc.com>',
+                    'Lisa Miller <lisa.miller@abc.com>',
                     'Test <test@domain.com>',
                     'Dino <dino@demo.com>',
                     'Support <support@demo.com>']

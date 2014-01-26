@@ -1,7 +1,6 @@
 /**
  * Czech translation for bootstrap-datetimepicker
  * Matěj Koubík <matej@koubik.name>
- * Fixes by Michal Remiš <michal.remis@gmail.com>
  */
 ;(function($){
 	$.fn.datetimepicker.dates['cs'] = {

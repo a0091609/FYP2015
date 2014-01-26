@@ -82,7 +82,7 @@
         </li>
         <!-- BEGIN FRONT DEMO -->
         <li class="tooltips" data-placement="right" data-original-title="Frontend&nbsp;Theme&nbsp;For&nbsp;Metronic&nbsp;Admin">
-            <a href="http://keenthemes.com/preview/index.php?theme=metronic_frontend" target="_blank">
+            <a href="#" target="_blank">
                 <i class="icon-gift"></i> 
                 <span class="title">Frontend Theme</span>
             </a>

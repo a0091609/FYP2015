@@ -257,7 +257,7 @@
           {
             // see how far user swiped
             var diff = (touchDif - e.originalEvent.touches[0].pageY) / o.touchScrollStep;
-            touchDif = e.originalEvent.touches[0].pageY; //added by keenthemes to fix the fast scrolling issue on touch devices
+            touchDif = e.originalEvent.touches[0].pageY; //added to fix the fast scrolling issue on touch devices
             // scroll content
             scrollContent(diff, true);
           }

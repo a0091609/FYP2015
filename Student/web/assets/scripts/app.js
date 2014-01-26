@@ -45,7 +45,7 @@ var App = function () {
 
     var handleDesktopTabletContents = function () {
         // loops all page elements with "responsive" class and applies classes for tablet mode
-        // For Metronic  1280px or less set as tablet mode to display the content properly
+        // For  1280px or less set as tablet mode to display the content properly
         if ($(window).width() <= 1280 || $('body').hasClass('page-boxed')) {
             $(".responsive").each(function () {
                 var forTablet = $(this).attr('data-tablet');
@@ -58,7 +58,7 @@ var App = function () {
         }
 
         // loops all page elements with "responsive" class and applied classes for desktop mode
-        // For Metronic  higher 1280px set as desktop mode to display the content properly
+        // For  higher 1280px set as desktop mode to display the content properly
         if ($(window).width() > 1280 && $('body').hasClass('page-boxed') === false) {
             $(".responsive").each(function () {
                 var forTablet = $(this).attr('data-tablet');

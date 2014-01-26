@@ -2,9 +2,6 @@
  * jQuery File Upload User Interface Plugin 7.3
  * https://github.com/blueimp/jQuery-File-Upload
  *
- * Copyright 2010, Sebastian Tschan
- * https://blueimp.net
- *
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/MIT
  */
@@ -62,7 +59,7 @@
             // The maximum height of the preview images:
             previewMaxHeight: 80,
             // By default, preview images are displayed as canvas elements
-            // if supported by the browser. Set the following option to false
+            // if supported  the browser. Set the following option to false
             // to always display preview images as img elements:
             previewAsCanvas: true,
             // The ID of the upload template:
@@ -168,8 +165,8 @@
                                         that._trigger('finished', e, data);
                                         deferred.resolve();
 
-                                        App.initFancybox(); //added by keenthemes
-                                        App.initUniform('.fileupload-checkbox');    //added by keenthemes   
+                                        App.initFancybox(); //added this
+                                        App.initUniform('.fileupload-checkbox');    //added this   
                                     }
                                 );
                             }
@@ -198,8 +195,8 @@
                             that._trigger('finished', e, data);
                             deferred.resolve();
 
-                            App.initFancybox(); //added by keenthemes
-                            App.initUniform('.fileupload-checkbox');    //added by keenthemes
+                            App.initFancybox(); //added  this
+                            App.initUniform('.fileupload-checkbox');    //added  this
                         }
                     );
                 }
@@ -235,8 +232,8 @@
                                             that._trigger('finished', e, data);
                                             deferred.resolve();
 
-                                            App.initFancybox(); //added by keenthemes
-                                            App.initUniform('.fileupload-checkbox');    //added by keenthemes
+                                            App.initFancybox(); //added  this
+                                            App.initUniform('.fileupload-checkbox');    //added  this
                                         }
                                     );
                                 }
@@ -250,8 +247,8 @@
                                     that._trigger('finished', e, data);
                                     deferred.resolve();
 
-                                    App.initFancybox(); //added by keenthemes
-                                    App.initUniform('.fileupload-checkbox');    //added by keenthemes
+                                    App.initFancybox(); //added  this
+                                    App.initUniform('.fileupload-checkbox');    //added  this
                                 }
                             );
                         }
@@ -380,7 +377,7 @@
         },
 
         // Link handler, that allows to download files
-        // by drag & drop of the links to the desktop:
+        //  drag & drop of the links to the desktop:
         _enableDragToDesktop: function () {
             var link = $(this),
                 url = link.prop('href'),
@@ -407,17 +404,17 @@
             }
         },
 
-        _formatFileSize: function (bytes) {
-            if (typeof bytes !== 'number') {
+        _formatFileSize: function (tes) {
+            if (typeof tes !== 'number') {
                 return '';
             }
-            if (bytes >= 1000000000) {
-                return (bytes / 1000000000).toFixed(2) + ' GB';
+            if (tes >= 1000000000) {
+                return (tes / 1000000000).toFixed(2) + ' GB';
             }
-            if (bytes >= 1000000) {
-                return (bytes / 1000000).toFixed(2) + ' MB';
+            if (tes >= 1000000) {
+                return (tes / 1000000).toFixed(2) + ' MB';
             }
-            return (bytes / 1000).toFixed(2) + ' KB';
+            return (tes / 1000).toFixed(2) + ' KB';
         },
 
         _formatBitrate: function (bits) {
@@ -660,12 +657,12 @@
             this._on(fileUploadButtonBar.find('.delete'), {
                 click: function (e) {
                     e.preventDefault();
-                    filesList.find('.delete input:checked').parents('.checker') //modifed by keenthemes
+                    filesList.find('.delete input:checked').parents('.checker') //modifed
                         .siblings('button').click();
 
-                    fileUploadButtonBar.find('.toggle')  //added by keenthemes
+                    fileUploadButtonBar.find('.toggle')  //added
                         .prop('checked', false);
-                    jQuery.uniform.update(fileUploadButtonBar.find('.toggle')); //added by keenthemes
+                    jQuery.uniform.update(fileUploadButtonBar.find('.toggle')); //added
                 }
             });
             this._on(fileUploadButtonBar.find('.toggle'), {
@@ -675,7 +672,7 @@
                         $(e.currentTarget).is(':checked')
                     );
 
-                    jQuery.uniform.update(filesList.find('.delete input'));  //added by keenthemes
+                    jQuery.uniform.update(filesList.find('.delete input'));  //added
                 }
             });
         },

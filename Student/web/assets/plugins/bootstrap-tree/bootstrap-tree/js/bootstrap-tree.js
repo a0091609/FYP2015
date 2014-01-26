@@ -156,7 +156,7 @@
           
           var branch = $("<ul>").addClass("branch")
           
-          attributes['class'] = "tree-toggle closed" //fixed by keenthemes for ie8
+          attributes['class'] = "tree-toggle closed" //fixed for ie8
           attributes["data-toggle"] = "branch"
             
         }

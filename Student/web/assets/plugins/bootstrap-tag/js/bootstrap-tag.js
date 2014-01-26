@@ -96,7 +96,7 @@
         });
 
 
-      //auto resize input: this option added by keenthemes for inbos compose form needs. this will enable typing a tag in hirozontal position and input auto resizes while typing
+      //auto resize input: this option added for compose form needs. this will enable typing a tag in hirozontal position and input auto resizes while typing
       if (that.options.autosizedInput) {
          var  input = that.input,
               minWidth = that.options.minWidth || input.width(),
@@ -145,7 +145,7 @@
 
           input.bind('keydown keyup blur update', check);
         }
-        //auto resize input: added by keenthemes
+        //auto resize input added
     }
   , inValues: function ( value ) {
       if (this.options.caseInsensitive) {
@@ -166,7 +166,7 @@
     
     $('<span class="tag">')
       .text(value)
-      .append($('<button type="button" class="close"></button>') //modified by keenthemes sinse close class already defined in global style(style.css)
+      .append($('<button type="button" class="close"></button>') //modified since close class already defined in global style(style.css)
         .on('click', function () {
           that.remove(that.element.siblings('.tag').index($(this).closest('.tag')))
         })
