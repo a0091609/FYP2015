@@ -5,7 +5,7 @@
     <!-- BEGIN HEAD -->
     <head>
         <meta charset="utf-8" />
-        <title>GLMS | Student Dashboard</title>
+        <title>GLMS | PLEASE CHANGE THE TITLE!!</title>
         <%-- Standard imports for every page--%>
         <%@include file="WEB-INF/jspf/stylesheets.jspf" %> 
     </head>
@@ -27,7 +27,7 @@
                         <div class="span12">
                             <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                             <h3 class="page-title">
-                                Student Dashboard
+                                Template Page!
                             </h3>
                             <ul class="breadcrumb">
                                 <li>
@@ -35,7 +35,13 @@
                                     <a href="#">Home</a> 
                                     <i class="icon-angle-right"></i>
                                 </li>
-                                <li><a href="#">Dashboard</a></li>
+                                <li>
+                                    <a href="#">Submenu Name</a>
+                                    <i class="icon-angle-right"></i>
+                                </li>
+                                <li>
+                                    <a href="#">Page Name</a>
+                                </li>
                             </ul>
                             <!-- END PAGE TITLE & BREADCRUMB-->
                         </div>
@@ -48,7 +54,7 @@
                     <!-- BEGIN PAGE CONTENT-->
                     <div class="row-fluid">
                         <div class="span12">
-                            Insert Dashboard Content here!
+                            Insert all you beautiful contents here!
                         </div>
                     </div>
                     <!-- END PAGE CONTENT-->
