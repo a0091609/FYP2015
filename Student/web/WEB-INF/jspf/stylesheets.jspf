@@ -24,6 +24,9 @@
 <link href="assets/css/GLOBAL.css" rel="stylesheet" type="text/css"/>
 <!-- END PAGE LEVEL STYLES -->
 
+<!-- Prompt Add to iDevice Homescreen -->
+<link rel="stylesheet" href="assets/plugins/add-to-homescreen-master/style/add2home.css">
+<script type="application/javascript" src="assets/plugins/add-to-homescreen-master/src/add2home.js"></script>
 
 <!-- Favicons and shortcut icons! -->
 <link rel="shortcut icon" href="assets/favicons/favicon.ico">
