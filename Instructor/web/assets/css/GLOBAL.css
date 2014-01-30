@@ -1,0 +1,15 @@
+/*
+This is a global CSS file to fix styling issues
+*/
+/* 
+    Created on : Jan 28, 2014, 6:33:44 PM
+    Author     : Philson
+*/
+
+.headerPhoto
+{
+    max-height: 30px;
+    min-width: 27px;
+    max-width: 30px !important;
+    padding-right: 3px;
+}
