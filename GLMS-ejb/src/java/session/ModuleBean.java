@@ -1,5 +1,6 @@
 package session;
 
+import entity.Instructor;
 import entity.Module;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -16,7 +17,6 @@ public class ModuleBean implements ModuleBeanLocal
     @PersistenceContext
     private EntityManager em;
 
-    //TODO: set module creator
     public void createModule(String moduleId, String moduleCode, String moduleName, String moduleCreator) {
         if (!isModule(moduleId)) {
             Module module = new Module();
@@ -24,6 +24,9 @@ public class ModuleBean implements ModuleBeanLocal
             module.setModuleId(moduleId);
             module.setModuleCode(moduleCode);
             module.setModuleName(moduleName);
+
+            Instructor instructor = em.find(Instructor.class, moduleCreator);
+            module.setCreator(instructor);
 
             em.persist(module);
             System.out.println("New module created.");

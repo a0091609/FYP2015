@@ -32,25 +32,20 @@ function displayUsername() {
     });
 }
 
-function displayModule() {
-    var moduleUrl = API_URL + "Modules?APIKey=" + APIKEY + "&AuthToken=" + TOKEN + "&Duration=1&IncludeAllInfo=false&output=json&callback=?";
-
-    //Get all registered modules
-    jQuery.getJSON(moduleUrl, function(data) {
-        $('#modules').html("<span>Response: " + JSON.stringify(data) + "</span>");
-
-        for (i = 0; i < data.Results.length; i++) {
-            var m = data.Results[i];
-            saveModule(m);
-        }
-    });
-}
-
 function displayProfile() {
     var profileUrl = API_URL + "Profile_View?output=json&callback=?&APIKey=" + APIKEY + "&AuthToken=" + TOKEN;
 
     jQuery.getJSON(profileUrl, function(data) {
-        saveInstructorProfile(data);
+        // If instructor userId, save instructor profile
+        var userId = data.Results[0]["UserID"];
+        if (userId.length > 4 && isNaN(parseInt(userId.substr(4)))) {
+            createLoginSession(userId);
+            saveInstructorProfile(data);
+        }
+        else
+        {
+            window.location = "http://localhost:8080/Student/";
+        }
     });
 }
 
@@ -68,6 +63,35 @@ function saveInstructorProfile(data) {
                 }
             });
         }
+    });
+}
+
+function createLoginSession(userId) {
+    $.ajax({
+        type: 'post',
+        url: '/Instructor/AuthServlet?action=createLoginSession',
+        data: {'userId': userId},
+        success: function(data) {
+            console.log(data);
+        }
+    });
+}
+
+function displayModule() {
+    var moduleUrl = API_URL + "Modules?APIKey=" + APIKEY + "&AuthToken=" + TOKEN + "&Duration=1&IncludeAllInfo=false&output=json&callback=?";
+
+    //Get all registered modules
+    jQuery.getJSON(moduleUrl, function(data) {
+        var moduleList = "", i;
+        for (i = 0; i < data.Results.length; i++) {
+            var m = data.Results[i];
+            saveModule(m);
+
+            moduleList += m.CourseCode + " " + m.CourseAcadYear + " - " + m.CourseName;
+            moduleList += " <a href='/Instructor/QuizServlet?action=createQuiz&moduleId=" + m.ID + "&moduleName=" + m.CourseName + "'>Create Quiz</a>";
+            moduleList += "<br />";
+        }
+        $('#modules').html(moduleList);
     });
 }
 

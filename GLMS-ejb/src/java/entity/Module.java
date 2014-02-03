@@ -3,6 +3,8 @@ package entity;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -11,16 +13,18 @@ import javax.persistence.Id;
 @Entity
 public class Module implements Serializable
 {
+    /* Fields to be added: quiz */
 
     private static final long serialVersionUID = 1L;
     @Id
     private String moduleId;
     private String moduleCode;
     private String moduleName;
+    @ManyToOne
+    @JoinColumn(name = "CREATORUSERID")
+    private Instructor creator;
     private Boolean isActive;
 
-    // To be added: creator, quiz
-    //
     public String getModuleId() {
         return moduleId;
     }
@@ -43,6 +47,14 @@ public class Module implements Serializable
 
     public void setModuleName(String moduleName) {
         this.moduleName = moduleName;
+    }
+
+    public Instructor getCreator() {
+        return creator;
+    }
+
+    public void setCreator(Instructor creator) {
+        this.creator = creator;
     }
 
     public Boolean isIsActive() {

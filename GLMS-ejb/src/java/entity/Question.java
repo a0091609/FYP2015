@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -19,30 +21,40 @@ import javax.persistence.TemporalType;
  * @author Chih Yong
  */
 @Entity
-public class Question implements Serializable {
+public class Question implements Serializable
+{
+    /* Fields to be added: category */
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long questionId;
+    private String name;
     private String questionText;
     private String image;
+    private String generalFeedback;
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeCreated;
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeModified;
+    @ManyToOne
+    @JoinColumn(name = "QUIZID")
+    private Quiz quiz;
 
-    /* To be added: createdBy, modifiedBy */
-    //private Instructor createdBy;
-    //private Instructor modifiedBy;
-    
-    
     public Long getQuestionId() {
         return questionId;
     }
 
     public void setQuestionId(Long questionId) {
         this.questionId = questionId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getQuestionText() {
@@ -61,6 +73,14 @@ public class Question implements Serializable {
         this.image = image;
     }
 
+    public String getGeneralFeedback() {
+        return generalFeedback;
+    }
+
+    public void setGeneralFeedback(String generalFeedback) {
+        this.generalFeedback = generalFeedback;
+    }
+
     public Date getTimeCreated() {
         return timeCreated;
     }
@@ -75,6 +95,14 @@ public class Question implements Serializable {
 
     public void setTimeModified(Date timeModified) {
         this.timeModified = timeModified;
+    }
+
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
     }
 
     @Override

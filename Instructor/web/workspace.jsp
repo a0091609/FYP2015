@@ -17,6 +17,7 @@
                     window.location = LOGIN_URL;
                 }
                 else {
+                    //lapicalls.js
                     displayUsername();
                     displayProfile();
                     displayModule();
@@ -26,5 +27,24 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+        <b>Welcome</b>
+
+        <br /><br />
+
+        Your modules for this semester<br />
+
+        <span id="modules"><img src="http://ivle.nus.edu.sg/images/spinner.gif" alt=""/></span>
+
+        <br />
+
+        <div>Get Username<br />
+            <span id="userInfo"><img src="http://ivle.nus.edu.sg/images/spinner.gif" alt=""/></span>
+        </div>
+
+        <br />
+
+        <div>Get Profile<br />
+            <span id="profile"><img src="http://ivle.nus.edu.sg/images/spinner.gif" alt=""/></span>
+        </div>
     </body>
 </html>

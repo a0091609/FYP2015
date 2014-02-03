@@ -5,51 +5,38 @@
  */
 package servlet;
 
-import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import session.ModuleBeanLocal;
 
 /**
  *
  * @author Chih Yong
  */
-@WebServlet(name = "ModuleServlet", urlPatterns = {"/ModuleServlet", "/ModuleServlet?*"})
-public class ModuleServlet extends HttpServlet
+@WebServlet(name = "QuestionServlet", urlPatterns = {"/QuestionServlet", "/QuestionServlet?*"})
+public class QuestionServlet extends HttpServlet
 {
-
-    @EJB
-    ModuleBeanLocal moduleBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             String action = request.getParameter("action");
-            System.out.println("ModuleServlet action: " + action);
+            System.out.println("QuestionServlet action: " + action);
 
-            if (action.equals("checkIsModule")) {
-                String moduleId = request.getParameter("moduleId");
+            if (action.equals("createMultiChoice")) {
+                String quizId = request.getParameter("quizId");
+                String moduleName = request.getParameter("moduleName");
 
-                response.setContentType("application/json;charset=utf-8");
-                JsonObject json = new JsonObject();
-                json.addProperty("response", moduleBean.isModule(moduleId));
+                request.setAttribute("quizId", quizId);
+                request.setAttribute("moduleName", moduleName);
 
-                PrintWriter pw = response.getWriter();
-                pw.print(json);
-                pw.close();
-            }
-            else if (action.equals("createModule")) {
-                String moduleId = request.getParameter("id");
-                String moduleCode = request.getParameter("code");
-                String moduleName = request.getParameter("name");
-                String moduleCreator = request.getParameter("creatorId");
-                moduleBean.createModule(moduleId, moduleCode, moduleName, moduleCreator);
+                RequestDispatcher rd = request.getRequestDispatcher("/quiz/newMultiChoice.jsp");
+                rd.forward(request, response);
             }
         }
         catch (Exception ex) {

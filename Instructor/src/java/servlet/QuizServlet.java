@@ -5,51 +5,51 @@
  */
 package servlet;
 
-import com.google.gson.JsonObject;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import session.ModuleBeanLocal;
+import session.QuizBeanLocal;
 
 /**
  *
  * @author Chih Yong
  */
-@WebServlet(name = "ModuleServlet", urlPatterns = {"/ModuleServlet", "/ModuleServlet?*"})
-public class ModuleServlet extends HttpServlet
+@WebServlet(name = "QuizServlet", urlPatterns = {"/QuizServlet", "/QuizServlet?*"})
+public class QuizServlet extends HttpServlet
 {
 
     @EJB
-    ModuleBeanLocal moduleBean;
+    QuizBeanLocal quizBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            System.out.println("session userId: " + request.getSession().getAttribute("userId"));
+            if (request.getSession().getAttribute("userId") == null) {
+                response.sendRedirect("/Instructor/workspace.jsp");
+            }
             String action = request.getParameter("action");
-            System.out.println("ModuleServlet action: " + action);
+            System.out.println("QuizServlet action: " + action);
 
-            if (action.equals("checkIsModule")) {
+            if (action.equals("createQuiz")) {
+                RequestDispatcher rd = request.getRequestDispatcher("/quiz/newQuiz.jsp");
+                rd.forward(request, response);
+            }
+            else if (action.equals("saveNewQuiz")) {
+                String quizName = request.getParameter("quizName");
                 String moduleId = request.getParameter("moduleId");
 
-                response.setContentType("application/json;charset=utf-8");
-                JsonObject json = new JsonObject();
-                json.addProperty("response", moduleBean.isModule(moduleId));
+                Long quizId = quizBean.saveNewQuiz(quizName, moduleId);
 
-                PrintWriter pw = response.getWriter();
-                pw.print(json);
-                pw.close();
-            }
-            else if (action.equals("createModule")) {
-                String moduleId = request.getParameter("id");
-                String moduleCode = request.getParameter("code");
-                String moduleName = request.getParameter("name");
-                String moduleCreator = request.getParameter("creatorId");
-                moduleBean.createModule(moduleId, moduleCode, moduleName, moduleCreator);
+                request.setAttribute("quizId", quizId);
+                request.setAttribute("quizName", quizName);
+
+                request.getRequestDispatcher("/quiz/newQuestion.jsp").forward(request, response);
             }
         }
         catch (Exception ex) {
