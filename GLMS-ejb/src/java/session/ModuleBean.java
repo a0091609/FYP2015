@@ -2,9 +2,11 @@ package session;
 
 import entity.Instructor;
 import entity.Module;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -43,5 +45,11 @@ public class ModuleBean implements ModuleBeanLocal
             System.out.println("Module does not exist.");
             return false;
         }
+    }
+
+    public List getInstructorModules(String userId) {
+        Query q = em.createQuery("SELECT m FROM Module m WHERE m.creator.userId = '" + userId + "'");
+
+        return q.getResultList();
     }
 }

@@ -189,7 +189,7 @@
                 <li class="dropdown user">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                         <img class="headerPhoto" src="assets/img/myAvatar.jpg" />
-                        <span class="username">Philson Nah</span>
+                        <span class="username"></span>
                         <i class="icon-angle-down"></i>
                     </a>
                     <ul class="dropdown-menu">

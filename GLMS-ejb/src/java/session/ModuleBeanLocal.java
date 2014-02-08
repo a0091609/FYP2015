@@ -5,6 +5,7 @@
  */
 package session;
 
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -18,5 +19,7 @@ public interface ModuleBeanLocal
     public void createModule(String moduleId, String moduleCode, String moduleName, String moduleCreator);
 
     public Boolean isModule(String moduleId);
+
+    public List getInstructorModules(String userId);
 
 }

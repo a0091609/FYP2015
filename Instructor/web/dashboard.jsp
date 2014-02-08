@@ -7,7 +7,7 @@
         <meta charset="utf-8" />
         <title>GLMS | Instructor Dashboard</title>
         <%-- Standard imports for every page--%>
-        <%@include file="WEB-INF/jspf/stylesheets.jspf" %> 
+        <%@include file="WEB-INF/jspf/stylesheets.jspf" %>
     </head>
     <!-- END HEAD -->
     <!-- BEGIN BODY -->
@@ -46,10 +46,8 @@
 
 
                     <!-- BEGIN PAGE CONTENT-->
-                    <div class="row-fluid">
-                        <div class="span12">
-                            Insert Dashboard Content here!
-                        </div>
+                    <div id="modules">
+
                     </div>
                     <!-- END PAGE CONTENT-->
 
@@ -68,11 +66,22 @@
 
         <!-- BEGIN JAVASCRIPTS (Load javascripts at bottom, this will reduce page load time) -->
         <%-- Standard JS imports for every page--%>
-        <%@include file="WEB-INF/jspf/javascripts.jspf" %> 
+        <%@include file="WEB-INF/jspf/javascripts.jspf" %>
+        <script type="text/javascript" src="/Instructor/assets/js/lapicalls.js"></script>
+        <script type="text/javascript" src="/Instructor/assets/js/dashboard-custom.js"></script>
         <script>
             jQuery(document).ready(function()
             {
                 App.init(); // initlayout and core plugins
+                if (TOKEN.length < 1) {
+                    window.location = LOGIN_URL;
+                }
+                else {
+                    //lapicalls.js
+                    dashboardInit();
+                    checkModules();
+                    displayUsername();
+                }
             });
         </script>
         <!-- END JAVASCRIPTS -->

@@ -6,17 +6,18 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
 
 /**
  *
  * @author Chih Yong
  */
 @Entity
-public class Student implements Serializable {
+public class Student implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -28,6 +29,8 @@ public class Student implements Serializable {
     private String firstMajor;
     private String secondMajor;
     private Integer matriculationYear;
+    @ManyToMany
+    private Set<Module> modules;
 //    @OneToOne @MapsId
 //    private GameProfile gameProfile;
 
@@ -95,6 +98,14 @@ public class Student implements Serializable {
         this.matriculationYear = matriculationYear;
     }
 
+    public Set<Module> getModules() {
+        return modules;
+    }
+
+    public void setModules(Set<Module> modules) {
+        this.modules = modules;
+    }
+
 //    public GameProfile getGameProfile() {
 //        return gameProfile;
 //    }
@@ -102,7 +113,6 @@ public class Student implements Serializable {
 //    public void setGameProfile(GameProfile gameProfile) {
 //        this.gameProfile = gameProfile;
 //    }
-
     @Override
     public int hashCode() {
         int hash = 0;

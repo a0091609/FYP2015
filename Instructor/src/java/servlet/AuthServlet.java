@@ -29,12 +29,13 @@ public class AuthServlet extends HttpServlet
             System.out.println("AuthServlet action: " + action);
 
             if (action.equals("createLoginSession")) {
-                request.getSession().setAttribute("userId", request.getParameter("userId"));
+                String userId = request.getParameter("userId");
+                request.getSession().setAttribute("userId", userId);
                 request.getSession().setAttribute("userType", "instructor");
 
                 response.setContentType("application/json;charset=utf-8");
                 JsonObject json = new JsonObject();
-                json.addProperty("response", "Login session created.");
+                json.addProperty("response", "Login session for " + userId + " created.");
 
                 PrintWriter pw = response.getWriter();
                 pw.print(json);
