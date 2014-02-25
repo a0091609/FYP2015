@@ -25,9 +25,9 @@
         </li>
         
         <li>
-            <a href="#">
+            <a href="activateModule.jsp">
                 <i class="icon-file-text"></i> 
-                <span class="title">Sample Link</span>
+                <span class="title">Create Module</span>
             </a>
         </li>
         <li>
