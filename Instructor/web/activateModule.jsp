@@ -65,7 +65,7 @@
                                         </div>
                                     </div>
                                     <div class="portlet-body form">
-                                        <br>
+                                        <p>Please provide the details about this course.</p>
                                         <div class="row-fluid">
                                             <div class="span6">
                                                 <label class="control-label">Module Code:</label>
@@ -92,7 +92,7 @@
                                         <div class="control-group">
                                             <label class="control-label">Description:</label>
                                             <div class="controls">
-                                                <textarea class="span12 m-wrap" style="resize: none" disabled rows="5"></textarea>
+                                                <textarea class="span12 m-wrap" style="resize: none" rows="5" placeholder="Enter a brief description about the course."></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -108,12 +108,13 @@
                                         </div>
                                     </div>
                                     <div class="portlet-body form">
+                                        <p>Please select the pedagogy you would like to use for this course.</p>
                                         <div class="row-fluid">
                                             <div class="span6">
                                                 <label class="control-label">Pedagogy:</label>
                                                 <div class="controls">
                                                     <label class="radio">
-                                                        <input type="checkbox" name="" value="" />
+                                                        <input id="adaptive" type="checkbox" name="" value="" />
                                                         Adaptive Teaching
                                                     </label>
                                                     <div class="help-block">
@@ -127,7 +128,7 @@
                                             <div class="span6">
                                                 <div class="controls">
                                                     <label class="radio">
-                                                        <input type="checkbox" name="" value="" />
+                                                        <input id="lcp" type="checkbox" name="" value="" />
                                                         Learner Centered Pedagogy
                                                     </label>
                                                     <div class="help-block">
@@ -152,14 +153,13 @@
                                         </div>
                                     </div>
                                     <div class="portlet-body form">
-
-
+                                        <p>You may also choose to customize the gamification components used.</p>
                                         <div class="row-fluid">
                                             <div class="span6">
                                                 <label class="control-label">Points:</label>
                                                 <div class="controls">
                                                     <label class="radio">
-                                                        <input type="checkbox" name="" value="" />
+                                                        <input id="feature-exp" type="checkbox" name="" value="" />
                                                         Experience Points (EXP)
                                                     </label>
                                                     <div class="help-block">
@@ -173,7 +173,7 @@
                                             <div class="span6">
                                                 <div class="controls">
                                                     <label class="radio">
-                                                        <input type="checkbox" name="" value="" />
+                                                        <input id="feature-coins" type="checkbox" name="" value="" />
                                                         Virtual Currency (Coins)
                                                     </label>
                                                     <div class="help-block">
@@ -190,7 +190,7 @@
                                                 <label class="control-label">Ranking:</label>
                                                 <div class="controls">
                                                     <label class="radio">
-                                                        <input type="checkbox" name="" value="" />
+                                                        <input id="feature-globalLB" type="checkbox" name="" value="" />
                                                         Global Leaderboard
                                                     </label>
                                                     <div class="help-block">
@@ -204,7 +204,7 @@
                                             <div class="span6">
                                                 <div class="controls">
                                                     <label class="radio">
-                                                        <input type="checkbox" name="" value="" />
+                                                        <input id="feature-socialLB" type="checkbox" name="" value="" />
                                                         Social Leaderboard
                                                     </label>
                                                     <div class="help-block">
@@ -221,7 +221,7 @@
                                                 <label class="control-label">Items:</label>
                                                 <div class="controls">
                                                     <label class="radio">
-                                                        <input type="checkbox" name="" value="" />
+                                                        <input id="feature-autoRW" type="checkbox" name="" value="" />
                                                         Automatic Rewards
                                                     </label>
                                                     <div class="help-block">
@@ -235,7 +235,7 @@
                                             <div class="span6">
                                                 <div class="controls">
                                                     <label class="radio">
-                                                        <input type="checkbox" name="" value="" />
+                                                        <input id="feature-mkt" type="checkbox" name="" value="" />
                                                         Marketplace
                                                     </label>
                                                     <div class="help-block">
@@ -252,7 +252,7 @@
                                                 <label class="control-label">Tasks:</label>
                                                 <div class="controls">
                                                     <label class="radio">
-                                                        <input type="checkbox" name="" value="" />
+                                                        <input id="feature-quiz" type="checkbox" name="" value="" />
                                                         Quiz
                                                     </label>
                                                     <div class="help-block">
@@ -266,7 +266,7 @@
                                             <div class="span6">
                                                 <div class="controls">
                                                     <label class="radio">
-                                                        <input type="checkbox" name="" value="" />
+                                                        <input id="feature-quest" type="checkbox" name="" value="" />
                                                         Quests
                                                     </label>
                                                     <div class="help-block">
@@ -283,7 +283,7 @@
                                                 <label class="control-label">Profiles:</label>
                                                 <div class="controls">
                                                     <label class="radio">
-                                                        <input type="checkbox" name="" value="" />
+                                                        <input id="feature-buddy" type="checkbox" name="" value="" />
                                                         Buddy Lists
                                                     </label>
                                                     <div class="help-block">
@@ -297,7 +297,7 @@
                                             <div class="span6">
                                                 <div class="controls">
                                                     <label class="radio">
-                                                        <input type="checkbox" name="" value="" />
+                                                        <input id="feature-avatar" type="checkbox" name="" value="" />
                                                         Avatars
                                                     </label>
                                                     <div class="help-block">
@@ -312,8 +312,10 @@
                                     </div>
                                 </div>
 
-
-
+                                <p align="right">
+                                    <button type="submit" class="btn green"><i class="icon-ok"></i> Submit</button>
+                                    <a href="javascript:history.back()"><button type="button" class="btn">Cancel</button></a>
+                                </p>
                                 <!-- END OF FORM CONTENTS! -->
                             </form>
                         </div>
@@ -338,10 +340,12 @@
         <%@include file="WEB-INF/jspf/javascripts.jspf" %>
         <script type="text/javascript" src="/Instructor/assets/js/lapicalls.js"></script>
         <script type="text/javascript" src="/Instructor/assets/js/dashboard-custom.js"></script>
+        <script type="text/javascript" src="/Instructor/assets/js/activateModule.js"></script>
         <script>
             jQuery(document).ready(function()
             {
                 App.init(); // initlayout and core plugins
+                setActivePage("link-dashboard");
             });
         </script>
         <!-- END JAVASCRIPTS -->
