@@ -6,13 +6,13 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import session.QuestionBeanLocal;
 
 /**
  *
@@ -22,21 +22,38 @@ import javax.servlet.http.HttpServletResponse;
 public class QuestionServlet extends HttpServlet
 {
 
+    @EJB
+    QuestionBeanLocal questionBean;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             String action = request.getParameter("action");
             System.out.println("QuestionServlet action: " + action);
 
-            if (action.equals("createMultiChoice")) {
+            if (action.equals("saveNewMultiChoice")) {
                 String quizId = request.getParameter("quizId");
-                String moduleName = request.getParameter("moduleName");
+                String quizName = request.getParameter("quizName");
 
-                request.setAttribute("quizId", quizId);
-                request.setAttribute("moduleName", moduleName);
+                String questName = request.getParameter("questName");
+                String questText = request.getParameter("questText");
+                String option1 = request.getParameter("option1");
+                String option2 = request.getParameter("option2");
+                String option3 = request.getParameter("option3");
+                String option4 = request.getParameter("option4");
+                Integer answer = Integer.parseInt(request.getParameter("answer"));
+                
+                System.out.println(quizId);
 
-                RequestDispatcher rd = request.getRequestDispatcher("/quiz/newMultiChoice.jsp");
-                rd.forward(request, response);
+                Boolean succeed = questionBean.saveMultiChoice(quizId, questName, questText, option1, option2, option3, option4, answer);
+
+                // Continue to quiz settings or add new question
+                if (request.getParameter("next").equals("Next: Quiz settings")) {
+                    response.sendRedirect("/Instructor/QuizServlet?action=quizInfo&quizId=" + quizId + "&quizName=" + quizName);
+                }
+                else {
+                    request.getRequestDispatcher("/quiz/newMultiChoice.jsp").forward(request, response);
+                }
             }
         }
         catch (Exception ex) {

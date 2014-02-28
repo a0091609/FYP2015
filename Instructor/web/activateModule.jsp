@@ -70,7 +70,7 @@
                                             <div class="span6">
                                                 <label class="control-label">Module Code:</label>
                                                 <div class="controls">
-                                                    <input class="span12 m-wrap" type="text" disabled />
+                                                    <input class="span12 m-wrap" type="text" disabled value="<%=request.getAttribute("moduleCode")%>"/>
                                                 </div>
                                                 <br>
                                             </div>
@@ -78,7 +78,7 @@
                                             <div class="span6">
                                                 <label class="control-label">Module ID:</label>
                                                 <div class="controls">
-                                                    <input class="span12 m-wrap" type="text" disabled />
+                                                    <input class="span12 m-wrap" type="text" disabled value="<%=request.getAttribute("moduleId")%>"/>
                                                 </div>
                                                 <br>
                                             </div>
@@ -86,7 +86,7 @@
                                         <div class="control-group">
                                             <label class="control-label">Module Name:</label>
                                             <div class="controls">
-                                                <input class="span12 m-wrap" type="text" disabled />
+                                                <input class="span12 m-wrap" type="text" disabled value="<%=request.getAttribute("moduleName")%>"/>
                                             </div>
                                         </div>
                                         <div class="control-group">

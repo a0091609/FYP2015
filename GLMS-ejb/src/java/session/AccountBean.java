@@ -52,20 +52,26 @@ public class AccountBean implements AccountBeanLocal
     /* End of methods for Student */
 
     /* Methods for Instructor */
-    public void createInstructor(String userId, String name, String email, String gender,
-            String faculty) {
+    public Boolean createInstructor(String userId, String name, String email,
+            String gender, String faculty) {
 
-        if (!isInstructor(userId) && isInstructorUserId(userId)) {
-            Instructor instructor = new Instructor();
+        try {
+            if (!isInstructor(userId) && isInstructorUserId(userId)) {
+                Instructor instructor = new Instructor();
 
-            instructor.setUserId(userId);
-            instructor.setName(name);
-            instructor.setEmail(email);
-            instructor.setGender(gender.toLowerCase());
-            instructor.setFaculty(faculty);
+                instructor.setUserId(userId);
+                instructor.setName(name);
+                instructor.setEmail(email);
+                instructor.setGender(gender.toLowerCase());
+                instructor.setFaculty(faculty);
 
-            em.persist(instructor);
-            System.out.println("New instructor created.");
+                em.persist(instructor);
+                System.out.println("New instructor created.");
+            }
+            return true;
+        }
+        catch (Exception e) {
+            return false;
         }
     }
 

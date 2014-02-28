@@ -5,7 +5,9 @@
  */
 package servlet;
 
+import helper.QuizDetails;
 import java.io.IOException;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,27 +31,47 @@ public class QuizServlet extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            System.out.println("session userId: " + request.getSession().getAttribute("userId"));
             if (request.getSession().getAttribute("userId") == null) {
-                response.sendRedirect("/Instructor/workspace.jsp");
+                response.sendRedirect("/Instructor/dashboard.jsp");
             }
             String action = request.getParameter("action");
             System.out.println("QuizServlet action: " + action);
 
-            if (action.equals("createQuiz")) {
+            if (action.equals("viewAllQuiz")) {
+                String moduleId = request.getParameter("moduleId");
+                String moduleName = request.getParameter("moduleName");
+                
+                request.getSession().setAttribute("moduleId", moduleId);
+                request.getSession().setAttribute("moduleName", moduleName);
+
+                List<QuizDetails> quizzes = quizBean.getModuleQuiz(moduleId);
+                request.setAttribute("quizzes", quizzes);
+
+                request.getRequestDispatcher("/quiz/allQuizzes.jsp").forward(request, response);
+            }
+            else if (action.equals("createQuiz")) {
                 RequestDispatcher rd = request.getRequestDispatcher("/quiz/newQuiz.jsp");
                 rd.forward(request, response);
             }
             else if (action.equals("saveNewQuiz")) {
                 String quizName = request.getParameter("quizName");
-                String moduleId = request.getParameter("moduleId");
+                String moduleId = request.getSession().getAttribute("moduleId").toString();
 
                 Long quizId = quizBean.saveNewQuiz(quizName, moduleId);
 
                 request.setAttribute("quizId", quizId);
                 request.setAttribute("quizName", quizName);
 
-                request.getRequestDispatcher("/quiz/newQuestion.jsp").forward(request, response);
+                request.getRequestDispatcher("/quiz/newMultiChoice.jsp").forward(request, response);
+            }
+            else if (action.equals("quizInfo")) {
+                String quizId = request.getParameter("quizId");
+                String quizName = request.getParameter("quizName");
+                
+                request.setAttribute("quizId", quizId);
+                request.setAttribute("quizName", quizName);
+
+                request.getRequestDispatcher("/quiz/quizSettings.jsp").forward(request, response);
             }
         }
         catch (Exception ex) {

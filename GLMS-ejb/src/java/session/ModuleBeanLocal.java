@@ -16,7 +16,7 @@ import javax.ejb.Local;
 public interface ModuleBeanLocal
 {
 
-    public void createModule(String moduleId, String moduleCode, String moduleName, String moduleCreator);
+    public Boolean createModule(String moduleId, String moduleCode, String moduleName, String moduleCreator, Boolean isActivated);
 
     public Boolean isModule(String moduleId);
 

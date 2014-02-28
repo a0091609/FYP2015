@@ -19,19 +19,29 @@ public class ModuleBean implements ModuleBeanLocal
     @PersistenceContext
     private EntityManager em;
 
-    public void createModule(String moduleId, String moduleCode, String moduleName, String moduleCreator) {
-        if (!isModule(moduleId)) {
-            Module module = new Module();
+    public Boolean createModule(String moduleId, String moduleCode, String moduleName, String moduleCreator, Boolean isActivated) {
+        try {
+            if (!isModule(moduleId)) {
+                Module module = new Module();
 
-            module.setModuleId(moduleId);
-            module.setModuleCode(moduleCode);
-            module.setModuleName(moduleName);
+                module.setModuleId(moduleId);
+                module.setModuleCode(moduleCode);
+                module.setModuleName(moduleName);
+                module.setActivated(isActivated);
 
-            Instructor instructor = em.find(Instructor.class, moduleCreator);
-            module.setCreator(instructor);
+                Instructor instructor = em.find(Instructor.class, moduleCreator);
+                module.setCreator(instructor);
 
-            em.persist(module);
-            System.out.println("New module created.");
+                em.persist(module);
+                System.out.println("New module created.");
+            }
+            else {
+                System.out.println("Module " + moduleCode + " " + moduleName + " already exists.");
+            }
+            return true;
+        }
+        catch (Exception e) {
+            return false;
         }
     }
 

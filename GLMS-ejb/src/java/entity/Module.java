@@ -23,7 +23,7 @@ public class Module implements Serializable
     @ManyToOne
     @JoinColumn(name = "CREATORUSERID")
     private Instructor creator;
-    private Boolean isActive;
+    private Boolean activated;
 
     public String getModuleId() {
         return moduleId;
@@ -57,12 +57,12 @@ public class Module implements Serializable
         this.creator = creator;
     }
 
-    public Boolean isIsActive() {
-        return isActive;
+    public Boolean isActivated() {
+        return activated;
     }
 
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
+    public void setActivated(Boolean activated) {
+        this.activated = activated;
     }
 
     @Override

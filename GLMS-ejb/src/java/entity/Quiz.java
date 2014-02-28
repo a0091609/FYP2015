@@ -29,17 +29,22 @@ public class Quiz implements Serializable
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long quizId;
     private String name;
-    private String intro;
-    private Integer timeLimit;      // in minits
-    private Boolean isActive;
+    private String descr;
+    private String difficultyLvl;
+    private Boolean active;
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeCreated;
+
     @ManyToOne
     @JoinColumn(name = "MODULEID")
     private Module module;
 
     public Long getQuizId() {
         return quizId;
+    }
+
+    public void setQuizId(Long quizId) {
+        this.quizId = quizId;
     }
 
     public String getName() {
@@ -50,32 +55,28 @@ public class Quiz implements Serializable
         this.name = name;
     }
 
-    public String getIntro() {
-        return intro;
+    public String getDescr() {
+        return descr;
     }
 
-    public void setIntro(String intro) {
-        this.intro = intro;
+    public void setDescr(String descr) {
+        this.descr = descr;
     }
 
-    public void setQuizId(Long quizId) {
-        this.quizId = quizId;
+    public String getDifficultyLvl() {
+        return difficultyLvl;
     }
 
-    public Integer getTimeLimit() {
-        return timeLimit;
+    public void setDifficultyLvl(String difficultyLvl) {
+        this.difficultyLvl = difficultyLvl;
     }
 
-    public void setTimeLimit(Integer timeLimit) {
-        this.timeLimit = timeLimit;
+    public Boolean isActive() {
+        return active;
     }
 
-    public Boolean isIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public Date getTimeCreated() {

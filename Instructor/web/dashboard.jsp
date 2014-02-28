@@ -47,7 +47,7 @@
 
                     <!-- BEGIN PAGE CONTENT-->
                     <div id="modules">
-
+                        <div style="text-align:center;"><img src="assets/img/loading.gif"></div>
                     </div>
                     <!-- END PAGE CONTENT-->
 
@@ -67,7 +67,6 @@
         <!-- BEGIN JAVASCRIPTS (Load javascripts at bottom, this will reduce page load time) -->
         <%-- Standard JS imports for every page--%>
         <%@include file="WEB-INF/jspf/javascripts.jspf" %>
-        <script type="text/javascript" src="/Instructor/assets/js/lapicalls.js"></script>
         <script type="text/javascript" src="/Instructor/assets/js/dashboard-custom.js"></script>
         <script>
             jQuery(document).ready(function()
@@ -77,9 +76,7 @@
                     window.location = LOGIN_URL;
                 }
                 else {
-                    //lapicalls.js
                     dashboardInit();
-                    checkModules();
                     displayUsername();
                 }
             });

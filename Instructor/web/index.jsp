@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta HTTP-EQUIV="REFRESH" content="0; url=login.jsp">
+        <meta HTTP-EQUIV="REFRESH" content="0; url=dashboard.jsp">
         <title>GLMS</title>
     </head>
     <body>

@@ -5,6 +5,7 @@
  */
 package session;
 
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -14,6 +15,8 @@ import javax.ejb.Local;
 @Local
 public interface QuizBeanLocal
 {
+
+    public List getModuleQuiz(String moduleId);
 
     public Long saveNewQuiz(String quizName, String moduleId);
 

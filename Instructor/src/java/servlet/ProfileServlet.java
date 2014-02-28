@@ -50,7 +50,14 @@ public class ProfileServlet extends HttpServlet
                 String email = request.getParameter("Email");
                 String gender = request.getParameter("Gender");
                 String faculty = request.getParameter("Faculty");
-                accountBean.createInstructor(userId, name, email, gender, faculty);
+                
+                response.setContentType("application/json;charset=utf-8");
+                JsonObject json = new JsonObject();
+                json.addProperty("response", accountBean.createInstructor(userId, name, email, gender, faculty));
+
+                PrintWriter pw = response.getWriter();
+                pw.print(json);
+                pw.close();
             }
         }
         catch (Exception ex) {

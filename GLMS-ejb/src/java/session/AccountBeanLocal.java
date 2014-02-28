@@ -22,7 +22,7 @@ public interface AccountBeanLocal
     /* End of methods for Student */
 
     /* Methods for Instructor */
-    public void createInstructor(String userId, String name, String email, String gender, String faculty);
+    public Boolean createInstructor(String userId, String name, String email, String gender, String faculty);
 
     public Boolean isInstructorUserId(String userId);
 

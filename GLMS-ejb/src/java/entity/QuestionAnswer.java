@@ -27,6 +27,7 @@ public class QuestionAnswer implements Serializable
     private Long answerId;
     private String answer;
     private String feedback;
+    private Boolean correctAnswer;
     @ManyToOne
     @JoinColumn(name = "QUESTIONID")
     private Question question;
@@ -53,6 +54,14 @@ public class QuestionAnswer implements Serializable
 
     public void setFeedback(String feedback) {
         this.feedback = feedback;
+    }
+
+    public Boolean isCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public void setCorrectAnswer(Boolean correctAnswer) {
+        this.correctAnswer = correctAnswer;
     }
 
     public Question getQuestion() {

@@ -26,23 +26,23 @@ import session.ModuleBeanLocal;
 @WebServlet(name = "ModuleServlet", urlPatterns = {"/ModuleServlet", "/ModuleServlet?*"})
 public class ModuleServlet extends HttpServlet
 {
-    
+
     @EJB
     ModuleBeanLocal moduleBean;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             String action = request.getParameter("action");
             System.out.println("ModuleServlet action: " + action);
-            
+
             if (action.equals("checkIsModule")) {
                 String moduleId = request.getParameter("moduleId");
-                
+
                 response.setContentType("application/json;charset=utf-8");
                 JsonObject json = new JsonObject();
                 json.addProperty("response", moduleBean.isModule(moduleId));
-                
+
                 PrintWriter pw = response.getWriter();
                 pw.print(json);
                 pw.close();
@@ -55,13 +55,32 @@ public class ModuleServlet extends HttpServlet
                 //Current system has no record of Instructor with creatorId return from LAPI calls.
                 //String moduleCreator = request.getParameter("creatorId");
                 String moduleCreator = request.getSession().getAttribute("userId").toString();
-                moduleBean.createModule(moduleId, moduleCode, moduleName, moduleCreator);
+                Boolean isActivated = false;
+
+                response.setContentType("application/json;charset=utf-8");
+                JsonObject json = new JsonObject();
+                json.addProperty("response", moduleBean.createModule(moduleId, moduleCode, moduleName, moduleCreator, isActivated));
+
+                PrintWriter pw = response.getWriter();
+                pw.print(json);
+                pw.close();
             }
             else if (action.equals("getInstructorModules")) {
                 String userId = request.getSession().getAttribute("userId").toString();
                 List<Module> list = moduleBean.getInstructorModules(userId);
                 response.setContentType("application/json;charset=utf-8");
                 response.getWriter().write(new Gson().toJson(list));
+            }
+            else if (action.equals("activateModule")) {
+                String moduleId = request.getParameter("moduleId");
+                String moduleCode = request.getParameter("moduleCode");
+                String moduleName = request.getParameter("moduleName");
+                
+                request.setAttribute("moduleId", moduleId);
+                request.setAttribute("moduleCode", moduleCode);
+                request.setAttribute("moduleName", moduleName);
+
+                request.getRequestDispatcher("/activateModule.jsp").forward(request, response);
             }
         }
         catch (Exception ex) {
