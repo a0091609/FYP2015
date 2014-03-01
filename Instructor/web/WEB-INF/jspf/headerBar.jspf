@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <!-- BEGIN LOGO -->
             <a class="brand" href="index.jsp">
-                <img src="assets/img/logo.png" alt="logo" />
+                <img src="/Instructor/assets/img/logo.png" alt="logo" />
             </a>
             <!-- END LOGO -->
             <!-- BEGIN RESPONSIVE MENU TOGGLER -->
             <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
-                <img src="assets/img/menu-toggler.png" alt="" />
+                <img src="/Instructor/assets/img/menu-toggler.png" alt="" />
             </a>          
             <!-- END RESPONSIVE MENU TOGGLER -->            
             <!-- BEGIN TOP NAVIGATION MENU -->              
@@ -114,7 +114,7 @@
                             <ul class="dropdown-menu-list scroller" style="height:250px">
                                 <li>
                                     <a href="inbox.html?a=view">
-                                        <span class="photo"><img src="./assets/img/myAvatar.jpg" alt="" /></span>
+                                        <span class="photo"><img src="/Instructor/assets/img/myAvatar.jpg" alt="" /></span>
                                         <span class="subject">
                                             <span class="from">Philson Nah</span>
                                             <span class="time">Just Now</span>
@@ -127,7 +127,7 @@
                                 </li>
                                 <li>
                                     <a href="inbox.html?a=view">
-                                        <span class="photo"><img src="./assets/img/avatar.png" alt="" /></span>
+                                        <span class="photo"><img src="/Instructor//assets/img/avatar.png" alt="" /></span>
                                         <span class="subject">
                                             <span class="from">Richard Lee</span>
                                             <span class="time">16 mins</span>
@@ -140,7 +140,7 @@
                                 </li>
                                 <li>
                                     <a href="inbox.html?a=view">
-                                        <span class="photo"><img src="./assets/img/avatar.png" alt="" /></span>
+                                        <span class="photo"><img src="/Instructor/assets/img/avatar.png" alt="" /></span>
                                         <span class="subject">
                                             <span class="from">Bob Ang</span>
                                             <span class="time">2 hrs</span>
@@ -153,7 +153,7 @@
                                 </li>
                                 <li>
                                     <a href="inbox.html?a=view">
-                                        <span class="photo"><img src="./assets/img/avatar.png" alt="" /></span>
+                                        <span class="photo"><img src="/Instructor/assets/img/avatar.png" alt="" /></span>
                                         <span class="subject">
                                             <span class="from">Lisa Wong</span>
                                             <span class="time">40 mins</span>
@@ -165,7 +165,7 @@
                                 </li>
                                 <li>
                                     <a href="inbox.html?a=view">
-                                        <span class="photo"><img src="./assets/img/avatar.png" alt="" /></span>
+                                        <span class="photo"><img src="/Instructor/assets/img/avatar.png" alt="" /></span>
                                         <span class="subject">
                                             <span class="from">Richard Toh</span>
                                             <span class="time">46 mins</span>
@@ -188,7 +188,7 @@
                 <!-- BEGIN USER LOGIN DROPDOWN -->
                 <li class="dropdown user">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                        <img class="headerPhoto" src="assets/img/myAvatar.jpg" />
+                        <img class="headerPhoto" src="/Instructor/assets/img/myAvatar.jpg" />
                         <span class="username"></span>
                         <i class="icon-angle-down"></i>
                     </a>

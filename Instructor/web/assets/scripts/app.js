@@ -1,7 +1,7 @@
 /**
-Core script to handle the entire layout and base functions
-**/
-var App = function () {
+ Core script to handle the entire layout and base functions
+ **/
+var App = function() {
 
     // IE mode
     var isRTL = false;
@@ -34,20 +34,20 @@ var App = function () {
             isRTL = true;
         }
 
-        isIE8 = !! navigator.userAgent.match(/MSIE 8.0/);
-        isIE9 = !! navigator.userAgent.match(/MSIE 9.0/);
-        isIE10 = !! navigator.userAgent.match(/MSIE 10.0/);
-        
+        isIE8 = !!navigator.userAgent.match(/MSIE 8.0/);
+        isIE9 = !!navigator.userAgent.match(/MSIE 9.0/);
+        isIE10 = !!navigator.userAgent.match(/MSIE 10.0/);
+
         if (isIE10) {
             jQuery('html').addClass('ie10'); // detect IE10 version
         }
     }
 
-    var handleDesktopTabletContents = function () {
+    var handleDesktopTabletContents = function() {
         // loops all page elements with "responsive" class and applies classes for tablet mode
         // For  1280px or less set as tablet mode to display the content properly
         if ($(window).width() <= 1280 || $('body').hasClass('page-boxed')) {
-            $(".responsive").each(function () {
+            $(".responsive").each(function() {
                 var forTablet = $(this).attr('data-tablet');
                 var forDesktop = $(this).attr('data-desktop');
                 if (forTablet) {
@@ -60,7 +60,7 @@ var App = function () {
         // loops all page elements with "responsive" class and applied classes for desktop mode
         // For  higher 1280px set as desktop mode to display the content properly
         if ($(window).width() > 1280 && $('body').hasClass('page-boxed') === false) {
-            $(".responsive").each(function () {
+            $(".responsive").each(function() {
                 var forTablet = $(this).attr('data-tablet');
                 var forDesktop = $(this).attr('data-desktop');
                 if (forTablet) {
@@ -71,14 +71,14 @@ var App = function () {
         }
     }
 
-    var handleSidebarState = function () {
+    var handleSidebarState = function() {
         // remove sidebar toggler if window width smaller than 900(for table and phone mode)
         if ($(window).width() < 980) {
             $('body').removeClass("page-sidebar-closed");
         }
     }
 
-    var runResponsiveHandlers = function () {
+    var runResponsiveHandlers = function() {
         // reinitialize other subscribed elements
         for (var i in responsiveHandlers) {
             var each = responsiveHandlers[i];
@@ -86,7 +86,7 @@ var App = function () {
         }
     }
 
-    var handleResponsive = function () {
+    var handleResponsive = function() {
         handleTooltips();
         handleSidebarState();
         handleDesktopTabletContents();
@@ -96,25 +96,25 @@ var App = function () {
         runResponsiveHandlers();
     }
 
-    var handleResponsiveOnInit = function () {
+    var handleResponsiveOnInit = function() {
         handleSidebarState();
         handleDesktopTabletContents();
         handleSidebarAndContentHeight();
     }
 
-    var handleResponsiveOnResize = function () {
+    var handleResponsiveOnResize = function() {
         var resize;
         if (isIE8) {
             var currheight;
             $(window).resize(function() {
-                if(currheight == document.documentElement.clientHeight) {
+                if (currheight == document.documentElement.clientHeight) {
                     return; //quite event since only body resized not window.
-                }                
+                }
                 if (resize) {
                     clearTimeout(resize);
-                }   
+                }
                 resize = setTimeout(function() {
-                    handleResponsive();    
+                    handleResponsive();
                 }, 50); // wait 50ms until window resize finishes.                
                 currheight = document.documentElement.clientHeight; // store last body client height
             });
@@ -122,18 +122,18 @@ var App = function () {
             $(window).resize(function() {
                 if (resize) {
                     clearTimeout(resize);
-                }   
+                }
                 resize = setTimeout(function() {
-                    handleResponsive();    
+                    handleResponsive();
                 }, 50); // wait 50ms until window resize finishes.
             });
-        }   
+        }
     }
 
     //* BEGIN:CORE HANDLERS *//
     // this function handles responsive layout on screen size resize or mobile device rotate.
-  
-    var handleSidebarAndContentHeight = function () {
+
+    var handleSidebarAndContentHeight = function() {
         var content = $('.page-content');
         var sidebar = $('.page-sidebar');
         var body = $('body');
@@ -141,7 +141,7 @@ var App = function () {
 
         if (body.hasClass("page-footer-fixed") === true && body.hasClass("page-sidebar-fixed") === false) {
             var available_height = $(window).height() - $('.footer').height();
-            if (content.height() <  available_height) {
+            if (content.height() < available_height) {
                 content.attr('style', 'min-height:' + available_height + 'px !important');
             }
         } else {
@@ -152,106 +152,106 @@ var App = function () {
             }
             if (height >= content.height()) {
                 content.attr('style', 'min-height:' + height + 'px !important');
-            } 
-        }          
+            }
+        }
     }
 
-    var handleSidebarMenu = function () {
-        jQuery('.page-sidebar').on('click', 'li > a', function (e) {
-                if ($(this).next().hasClass('sub-menu') == false) {
-                    if ($('.btn-navbar').hasClass('collapsed') == false) {
-                        $('.btn-navbar').click();
+    var handleSidebarMenu = function() {
+        jQuery('.page-sidebar').on('click', 'li > a', function(e) {
+            if ($(this).next().hasClass('sub-menu') == false) {
+                if ($('.btn-navbar').hasClass('collapsed') == false) {
+                    $('.btn-navbar').click();
+                }
+                return;
+            }
+
+            var parent = $(this).parent().parent();
+            var the = $(this);
+
+            parent.children('li.open').children('a').children('.arrow').removeClass('open');
+            parent.children('li.open').children('.sub-menu').slideUp(200);
+            parent.children('li.open').removeClass('open');
+
+            var sub = jQuery(this).next();
+            var slideOffeset = -200;
+            var slideSpeed = 200;
+
+            if (sub.is(":visible")) {
+                jQuery('.arrow', jQuery(this)).removeClass("open");
+                jQuery(this).parent().removeClass("open");
+                sub.slideUp(slideSpeed, function() {
+                    if ($('body').hasClass('page-sidebar-fixed') == false && $('body').hasClass('page-sidebar-closed') == false) {
+                        App.scrollTo(the, slideOffeset);
                     }
-                    return;
-                }
+                    handleSidebarAndContentHeight();
+                });
+            } else {
+                jQuery('.arrow', jQuery(this)).addClass("open");
+                jQuery(this).parent().addClass("open");
+                sub.slideDown(slideSpeed, function() {
+                    if ($('body').hasClass('page-sidebar-fixed') == false && $('body').hasClass('page-sidebar-closed') == false) {
+                        App.scrollTo(the, slideOffeset);
+                    }
+                    handleSidebarAndContentHeight();
+                });
+            }
 
-                var parent = $(this).parent().parent();
-                var the = $(this);
-
-                parent.children('li.open').children('a').children('.arrow').removeClass('open');
-                parent.children('li.open').children('.sub-menu').slideUp(200);
-                parent.children('li.open').removeClass('open');
-
-                var sub = jQuery(this).next();
-                var slideOffeset = -200;
-                var slideSpeed = 200;
-
-                if (sub.is(":visible")) {
-                    jQuery('.arrow', jQuery(this)).removeClass("open");
-                    jQuery(this).parent().removeClass("open");
-                    sub.slideUp(slideSpeed, function () {
-                        if ($('body').hasClass('page-sidebar-fixed') == false && $('body').hasClass('page-sidebar-closed') == false) {
-                            App.scrollTo(the, slideOffeset);
-                        }                       
-                        handleSidebarAndContentHeight();
-                    });
-                } else {
-                    jQuery('.arrow', jQuery(this)).addClass("open");
-                    jQuery(this).parent().addClass("open");
-                    sub.slideDown(slideSpeed, function () {
-                        if ($('body').hasClass('page-sidebar-fixed') == false && $('body').hasClass('page-sidebar-closed') == false) {
-                            App.scrollTo(the, slideOffeset);
-                        }
-                        handleSidebarAndContentHeight();
-                    });
-                }
-
-                e.preventDefault();
-            });
+            e.preventDefault();
+        });
 
         // handle ajax links
-        jQuery('.page-sidebar').on('click', ' li > a.ajaxify', function (e) {
-                e.preventDefault();
-                App.scrollTop();
+        jQuery('.page-sidebar').on('click', ' li > a.ajaxify', function(e) {
+            e.preventDefault();
+            App.scrollTop();
 
-                var url = $(this).attr("href");
-                var menuContainer = jQuery('.page-sidebar ul');
-                var pageContent = $('.page-content');
-                var pageContentBody = $('.page-content .page-content-body');
+            var url = $(this).attr("href");
+            var menuContainer = jQuery('.page-sidebar ul');
+            var pageContent = $('.page-content');
+            var pageContentBody = $('.page-content .page-content-body');
 
-                menuContainer.children('li.active').removeClass('active');
-                menuContainer.children('arrow.open').removeClass('open');
+            menuContainer.children('li.active').removeClass('active');
+            menuContainer.children('arrow.open').removeClass('open');
 
-                $(this).parents('li').each(function () {
-                        $(this).addClass('active');
-                        $(this).children('a > span.arrow').addClass('open');
-                    });
-                $(this).parents('li').addClass('active');
+            $(this).parents('li').each(function() {
+                $(this).addClass('active');
+                $(this).children('a > span.arrow').addClass('open');
+            });
+            $(this).parents('li').addClass('active');
 
-                App.blockUI(pageContent, false);
+            App.blockUI(pageContent, false);
 
-                $.ajax({
-                    type: "GET",
-                    cache: false,
-                    url: url,
-                    dataType: "html",
-                    success: function(res) 
-                    {
-                        App.unblockUI(pageContent);
-                        pageContentBody.html(res);
-                        App.fixContentHeight(); // fix content height
-                        App.initUniform(); // initialize uniform elements
-                    },
-                    error: function(xhr, ajaxOptions, thrownError)
-                    {
-                        pageContentBody.html('<h4>Could not load the requested content.</h4>');
-                        App.unblockUI(pageContent);
-                    },
-                    async: false
-                });
+            $.ajax({
+                type: "GET",
+                cache: false,
+                url: url,
+                dataType: "html",
+                success: function(res)
+                {
+                    App.unblockUI(pageContent);
+                    pageContentBody.html(res);
+                    App.fixContentHeight(); // fix content height
+                    App.initUniform(); // initialize uniform elements
+                },
+                error: function(xhr, ajaxOptions, thrownError)
+                {
+                    pageContentBody.html('<h4>Could not load the requested content.</h4>');
+                    App.unblockUI(pageContent);
+                },
+                async: false
+            });
         });
     }
 
-    var _calculateFixedSidebarViewportHeight = function () {
+    var _calculateFixedSidebarViewportHeight = function() {
         var sidebarHeight = $(window).height() - $('.header').height() + 1;
         if ($('body').hasClass("page-footer-fixed")) {
             sidebarHeight = sidebarHeight - $('.footer').height();
         }
 
-        return sidebarHeight; 
+        return sidebarHeight;
     }
 
-    var handleFixedSidebar = function () {
+    var handleFixedSidebar = function() {
         var menu = $('.page-sidebar-menu');
 
         if (menu.parent('.slimScrollDiv').size() === 1) { // destroy existing instance before updating the height
@@ -259,7 +259,7 @@ var App = function () {
                 destroy: true
             });
             menu.removeAttr('style');
-            $('.page-sidebar').removeAttr('style');            
+            $('.page-sidebar').removeAttr('style');
         }
 
         if ($('.page-sidebar-fixed').size() === 0) {
@@ -283,12 +283,12 @@ var App = function () {
         }
     }
 
-    var handleFixedSidebarHoverable = function () {
+    var handleFixedSidebarHoverable = function() {
         if ($('body').hasClass('page-sidebar-fixed') === false) {
             return;
         }
 
-        $('.page-sidebar').off('mouseenter').on('mouseenter', function () {
+        $('.page-sidebar').off('mouseenter').on('mouseenter', function() {
             var body = $('body');
 
             if ((body.hasClass('page-sidebar-closed') === false || body.hasClass('page-sidebar-fixed') === false) || $(this).hasClass('page-sidebar-hovering')) {
@@ -296,15 +296,15 @@ var App = function () {
             }
 
             body.removeClass('page-sidebar-closed').addClass('page-sidebar-hover-on');
-            $(this).addClass('page-sidebar-hovering');                
+            $(this).addClass('page-sidebar-hovering');
             $(this).animate({
                 width: sidebarWidth
-            }, 400, '', function () {
+            }, 400, '', function() {
                 $(this).removeClass('page-sidebar-hovering');
             });
         });
 
-        $('.page-sidebar').off('mouseleave').on('mouseleave', function () {
+        $('.page-sidebar').off('mouseleave').on('mouseleave', function() {
             var body = $('body');
 
             if ((body.hasClass('page-sidebar-hover-on') === false || body.hasClass('page-sidebar-fixed') === false) || $(this).hasClass('page-sidebar-hovering')) {
@@ -314,16 +314,16 @@ var App = function () {
             $(this).addClass('page-sidebar-hovering');
             $(this).animate({
                 width: sidebarCollapsedWidth
-            }, 400, '', function () {
+            }, 400, '', function() {
                 $('body').addClass('page-sidebar-closed').removeClass('page-sidebar-hover-on');
                 $(this).removeClass('page-sidebar-hovering');
             });
         });
     }
 
-    var handleSidebarToggler = function () {
+    var handleSidebarToggler = function() {
         // handle sidebar show/hide
-        $('.page-sidebar').on('click', '.sidebar-toggler', function (e) {            
+        $('.page-sidebar').on('click', '.sidebar-toggler', function(e) {
             var body = $('body');
             var sidebar = $('.page-sidebar');
 
@@ -349,13 +349,13 @@ var App = function () {
         });
 
         // handle the search bar close
-        $('.page-sidebar').on('click', '.sidebar-search .remove', function (e) {
+        $('.page-sidebar').on('click', '.sidebar-search .remove', function(e) {
             e.preventDefault();
             $('.sidebar-search').removeClass("open");
         });
 
         // handle the search query submit on enter press
-        $('.page-sidebar').on('keypress', '.sidebar-search input', function (e) {
+        $('.page-sidebar').on('keypress', '.sidebar-search input', function(e) {
             if (e.which == 13) {
                 window.location.href = "extra_search.html";
                 return false; //<---- Add this line
@@ -363,76 +363,76 @@ var App = function () {
         });
 
         // handle the search submit
-        $('.sidebar-search .submit').on('click', function (e) {
+        $('.sidebar-search .submit').on('click', function(e) {
             e.preventDefault();
-          
-                if ($('body').hasClass("page-sidebar-closed")) {
-                    if ($('.sidebar-search').hasClass('open') == false) {
-                        if ($('.page-sidebar-fixed').size() === 1) {
-                            $('.page-sidebar .sidebar-toggler').click(); //trigger sidebar toggle button
-                        }
-                        $('.sidebar-search').addClass("open");
-                    } else {
-                        window.location.href = "extra_search.html";
+
+            if ($('body').hasClass("page-sidebar-closed")) {
+                if ($('.sidebar-search').hasClass('open') == false) {
+                    if ($('.page-sidebar-fixed').size() === 1) {
+                        $('.page-sidebar .sidebar-toggler').click(); //trigger sidebar toggle button
                     }
+                    $('.sidebar-search').addClass("open");
                 } else {
                     window.location.href = "extra_search.html";
+                }
+            } else {
+                window.location.href = "extra_search.html";
             }
         });
     }
 
-    var handleHorizontalMenu = function () {
+    var handleHorizontalMenu = function() {
         //handle hor menu search form toggler click
-        $('.header').on('click', '.hor-menu .hor-menu-search-form-toggler', function (e) {
-                if ($(this).hasClass('hide')) {
-                    $(this).removeClass('hide');
-                    $('.header .hor-menu .search-form').hide();
-                } else {
-                    $(this).addClass('hide');
-                    $('.header .hor-menu .search-form').show();
-                }
-                e.preventDefault();
-            });
+        $('.header').on('click', '.hor-menu .hor-menu-search-form-toggler', function(e) {
+            if ($(this).hasClass('hide')) {
+                $(this).removeClass('hide');
+                $('.header .hor-menu .search-form').hide();
+            } else {
+                $(this).addClass('hide');
+                $('.header .hor-menu .search-form').show();
+            }
+            e.preventDefault();
+        });
 
         //handle hor menu search button click
-        $('.header').on('click', '.hor-menu .search-form .btn', function (e) {
-                window.location.href = "extra_search.html";
-                e.preventDefault();
-            });
+        $('.header').on('click', '.hor-menu .search-form .btn', function(e) {
+            window.location.href = "extra_search.html";
+            e.preventDefault();
+        });
 
         //handle hor menu search form on enter press
-        $('.header').on('keypress', '.hor-menu .search-form input', function (e) {
-                if (e.which == 13) {
-                    window.location.href = "extra_search.html";
-                    return false;
-                }
-            });
+        $('.header').on('keypress', '.hor-menu .search-form input', function(e) {
+            if (e.which == 13) {
+                window.location.href = "extra_search.html";
+                return false;
+            }
+        });
     }
 
-    var handleGoTop = function () {
+    var handleGoTop = function() {
         /* set variables locally for increased performance */
-        jQuery('.footer').on('click', '.go-top', function (e) {
+        jQuery('.footer').on('click', '.go-top', function(e) {
             App.scrollTo();
             e.preventDefault();
         });
     }
 
-    var handlePortletTools = function () {
-        jQuery('body').on('click', '.portlet > .portlet-title > .tools > a.remove', function (e) {
+    var handlePortletTools = function() {
+        jQuery('body').on('click', '.portlet > .portlet-title > .tools > a.remove', function(e) {
             e.preventDefault();
             jQuery(this).closest(".portlet").remove();
         });
 
-        jQuery('body').on('click', '.portlet > .portlet-title > .tools > a.reload', function (e) {
+        jQuery('body').on('click', '.portlet > .portlet-title > .tools > a.reload', function(e) {
             e.preventDefault();
             var el = jQuery(this).closest(".portlet").children(".portlet-body");
             App.blockUI(el);
-            window.setTimeout(function () {
+            window.setTimeout(function() {
                 App.unblockUI(el);
             }, 1000);
         });
 
-        jQuery('body').on('click', '.portlet > .portlet-title > .tools > .collapse, .portlet .portlet-title > .tools > .expand', function (e) {
+        jQuery('body').on('click', '.portlet > .portlet-title > .tools > .collapse, .portlet .portlet-title > .tools > .expand', function(e) {
             e.preventDefault();
             var el = jQuery(this).closest(".portlet").children(".portlet-body");
             if (jQuery(this).hasClass("collapse")) {
@@ -445,13 +445,13 @@ var App = function () {
         });
     }
 
-    var handleUniform = function () {
+    var handleUniform = function() {
         if (!jQuery().uniform) {
             return;
         }
         var test = $("input[type=checkbox]:not(.toggle), input[type=radio]:not(.toggle, .star)");
         if (test.size() > 0) {
-            test.each(function () {
+            test.each(function() {
                 if ($(this).parents(".checker").size() == 0) {
                     $(this).show();
                     $(this).uniform();
@@ -460,22 +460,22 @@ var App = function () {
         }
     }
 
-    var handleAccordions = function () {
+    var handleAccordions = function() {
         $(".accordion").collapse().height('auto');
         var lastClicked;
         //add scrollable class name if you need scrollable panes
-        jQuery('body').on('click', '.accordion.scrollable .accordion-toggle', function () {
+        jQuery('body').on('click', '.accordion.scrollable .accordion-toggle', function() {
             lastClicked = jQuery(this);
         }); //move to faq section
 
-        jQuery('body').on('shown', '.accordion.scrollable', function () {
+        jQuery('body').on('shown', '.accordion.scrollable', function() {
             jQuery('html,body').animate({
                 scrollTop: lastClicked.offset().top - 150
             }, 'slow');
         });
     }
 
-    var handleTabs = function () {
+    var handleTabs = function() {
 
         // function to fix left/right tab contents
         var fixTabHeight = function(tab) {
@@ -483,17 +483,17 @@ var App = function () {
                 var content = $($($(this).attr("href")));
                 var tab = $(this).parent().parent();
                 if (tab.height() > content.height()) {
-                    content.css('min-height', tab.height());    
-                } 
-            });            
+                    content.css('min-height', tab.height());
+                }
+            });
         }
 
         // fix tab content on tab shown
-        $('body').on('shown', '.nav.nav-tabs.tabs-left a[data-toggle="tab"], .nav.nav-tabs.tabs-right a[data-toggle="tab"]', function(){
-            fixTabHeight($(this)); 
+        $('body').on('shown', '.nav.nav-tabs.tabs-left a[data-toggle="tab"], .nav.nav-tabs.tabs-right a[data-toggle="tab"]', function() {
+            fixTabHeight($(this));
         });
 
-        $('body').on('shown', '.nav.nav-tabs', function(){
+        $('body').on('shown', '.nav.nav-tabs', function() {
             handleSidebarAndContentHeight();
         });
 
@@ -501,33 +501,33 @@ var App = function () {
         fixTabHeight('.nav.nav-tabs.tabs-left > li.active > a[data-toggle="tab"], .nav.nav-tabs.tabs-right > li.active > a[data-toggle="tab"]');
 
         //activate tab if tab id provided in the URL
-        if(location.hash) {
+        if (location.hash) {
             var tabid = location.hash.substr(1);
-            $('a[href="#'+tabid+'"]').click();
+            $('a[href="#' + tabid + '"]').click();
         }
     }
 
-    var handleScrollers = function () {
-        $('.scroller').each(function () {
-                var height;
-                if ($(this).attr("data-height")) {
-                    height = $(this).attr("data-height");
-                } else {
-                    height = $(this).css('height');
-                }
-                $(this).slimScroll({
-                        size: '7px',
-                        color: '#a1b2bd',
-                        position: isRTL ? 'left' : 'right',
-                        height:  height,
-                        alwaysVisible: ($(this).attr("data-always-visible") == "1" ? true : false),
-                        railVisible: ($(this).attr("data-rail-visible") == "1" ? true : false),
-                        disableFadeOut: true
-                    });
+    var handleScrollers = function() {
+        $('.scroller').each(function() {
+            var height;
+            if ($(this).attr("data-height")) {
+                height = $(this).attr("data-height");
+            } else {
+                height = $(this).css('height');
+            }
+            $(this).slimScroll({
+                size: '7px',
+                color: '#a1b2bd',
+                position: isRTL ? 'left' : 'right',
+                height: height,
+                alwaysVisible: ($(this).attr("data-always-visible") == "1" ? true : false),
+                railVisible: ($(this).attr("data-rail-visible") == "1" ? true : false),
+                disableFadeOut: true
             });
+        });
     }
 
-    var handleTooltips = function () {
+    var handleTooltips = function() {
         if (App.isTouchDevice()) { // if touch device, some tooltips can be skipped in order to not conflict with click events
             jQuery('.tooltips:not(.no-tooltip-on-touch-device)').tooltip();
         } else {
@@ -535,54 +535,54 @@ var App = function () {
         }
     }
 
-    var handleDropdowns = function () {
-        $('body').on('click', '.dropdown-menu.hold-on-click', function(e){
+    var handleDropdowns = function() {
+        $('body').on('click', '.dropdown-menu.hold-on-click', function(e) {
             e.stopPropagation();
         })
     }
 
-    var handleModal = function () {
+    var handleModal = function() {
         // this function adds .modal-open class to body element for select2 and chosen dropdown hacks
         if (jQuery().modalmanager) {
             return; // skip if Extended Modal plugin is used
         }
 
-        $('body').on('shown', '.modal', function(e){
+        $('body').on('shown', '.modal', function(e) {
             $('body').addClass('modal-open');
         });
 
-        $('body').on('hidden', '.modal', function(e){
+        $('body').on('hidden', '.modal', function(e) {
             if ($('.modal').size() === 0) {
                 $('body').removeClass('modal-open');
             }
         });
     }
 
-    var handlePopovers = function () {
+    var handlePopovers = function() {
         jQuery('.popovers').popover();
 
         // close last poped popover
 
-        $(document).on('click.popover.data-api',function(e) {
-            if(lastPopedPopover){
+        $(document).on('click.popover.data-api', function(e) {
+            if (lastPopedPopover) {
                 lastPopedPopover.popover('hide');
-            } 
+            }
         });
     }
 
-    var handleChoosenSelect = function () {
+    var handleChoosenSelect = function() {
         if (!jQuery().chosen) {
             return;
         }
 
-        $(".chosen").each(function () {
+        $(".chosen").each(function() {
             $(this).chosen({
                 allow_single_deselect: $(this).attr("data-with-deselect") == "1" ? true : false
             });
         });
     }
 
-    var handleFancybox = function () {
+    var handleFancybox = function() {
         if (!jQuery.fancybox) {
             return;
         }
@@ -602,49 +602,49 @@ var App = function () {
         }
     }
 
-    var handleTheme = function () {
+    var handleTheme = function() {
 
         var panel = $('.color-panel');
 
         if ($('body').hasClass('page-boxed') == false) {
             $('.layout-option', panel).val("fluid");
         }
-        
+
         $('.sidebar-option', panel).val("default");
         $('.header-option', panel).val("fixed");
-        $('.footer-option', panel).val("default"); 
+        $('.footer-option', panel).val("default");
 
         //handle theme layout
-        var resetLayout = function () {
+        var resetLayout = function() {
             $("body").
-                removeClass("page-boxed").
-                removeClass("page-footer-fixed").
-                removeClass("page-sidebar-fixed").
-                removeClass("page-header-fixed");
+                    removeClass("page-boxed").
+                    removeClass("page-footer-fixed").
+                    removeClass("page-sidebar-fixed").
+                    removeClass("page-header-fixed");
 
             $('.header > .navbar-inner > .container').removeClass("container").addClass("container-fluid");
 
             if ($('.page-container').parent(".container").size() === 1) {
                 $('.page-container').insertAfter('.header');
-            } 
+            }
 
-            if ($('.footer > .container').size() === 1) {                        
-                $('.footer').html($('.footer > .container').html());                        
-            } else if ($('.footer').parent(".container").size() === 1) {                        
+            if ($('.footer > .container').size() === 1) {
+                $('.footer').html($('.footer > .container').html());
+            } else if ($('.footer').parent(".container").size() === 1) {
                 $('.footer').insertAfter('.page-container');
             }
 
-            $('body > .container').remove(); 
+            $('body > .container').remove();
         }
 
         var lastSelectedLayout = '';
 
-        var setLayout = function () {
+        var setLayout = function() {
 
             var layoutOption = $('.layout-option', panel).val();
             var sidebarOption = $('.sidebar-option', panel).val();
             var headerOption = $('.header-option', panel).val();
-            var footerOption = $('.footer-option', panel).val(); 
+            var footerOption = $('.footer-option', panel).val();
 
             if (sidebarOption == "fixed" && headerOption == "default") {
                 alert('Default Header with Fixed Sidebar option is not supported. Proceed with Default Header with Default Sidebar.');
@@ -666,10 +666,10 @@ var App = function () {
 
                 // set footer
                 if (footerOption === 'fixed' || sidebarOption === 'default') {
-                    $('.footer').html('<div class="container">'+$('.footer').html()+'</div>');
+                    $('.footer').html('<div class="container">' + $('.footer').html() + '</div>');
                 } else {
                     $('.footer').appendTo('body > .container');
-                }            
+                }
             }
 
             if (lastSelectedLayout != layoutOption) {
@@ -707,22 +707,22 @@ var App = function () {
         }
 
         // handle theme colors
-        var setColor = function (color) {
+        var setColor = function(color) {
             $('#style_color').attr("href", "assets/css/themes/" + color + ".css");
-            $.cookie('style_color', color);                
+            $.cookie('style_color', color);
         }
 
-        $('.icon-color', panel).click(function () {
+        $('.icon-color', panel).click(function() {
             $('.color-mode').show();
             $('.icon-color-close').show();
         });
 
-        $('.icon-color-close', panel).click(function () {
+        $('.icon-color-close', panel).click(function() {
             $('.color-mode').hide();
             $('.icon-color-close').hide();
         });
 
-        $('li', panel).click(function () {
+        $('li', panel).click(function() {
             var color = $(this).attr("data-style");
             setColor(color);
             $('.inline li', panel).removeClass("current");
@@ -732,25 +732,25 @@ var App = function () {
         $('.layout-option, .header-option, .sidebar-option, .footer-option', panel).change(setLayout);
     }
 
-    var handleFixInputPlaceholderForIE = function () {
+    var handleFixInputPlaceholderForIE = function() {
         //fix html5 placeholder attribute for ie7 & ie8
         if (isIE8 || isIE9) { // ie7&ie8
             // this is html5 placeholder fix for inputs, inputs with placeholder-no-fix class will be skipped(e.g: we need this for password fields)
-            jQuery('input[placeholder]:not(.placeholder-no-fix), textarea[placeholder]:not(.placeholder-no-fix)').each(function () {
+            jQuery('input[placeholder]:not(.placeholder-no-fix), textarea[placeholder]:not(.placeholder-no-fix)').each(function() {
 
                 var input = jQuery(this);
 
-                if(input.val()=='' && input.attr("placeholder") != '') {
+                if (input.val() == '' && input.attr("placeholder") != '') {
                     input.addClass("placeholder").val(input.attr('placeholder'));
                 }
 
-                input.focus(function () {
+                input.focus(function() {
                     if (input.val() == input.attr('placeholder')) {
                         input.val('');
                     }
                 });
 
-                input.blur(function () {                         
+                input.blur(function() {
                     if (input.val() == '' || input.val() == input.attr('placeholder')) {
                         input.val(input.attr('placeholder'));
                     }
@@ -761,27 +761,27 @@ var App = function () {
 
     var handleFullScreenMode = function() {
         // mozfullscreenerror event handler
-       
+
         // toggle full screen
         function toggleFullScreen() {
-          if (!document.fullscreenElement &&    // alternative standard method
-              !document.mozFullScreenElement && !document.webkitFullscreenElement) {  // current working methods
-            if (document.documentElement.requestFullscreen) {
-              document.documentElement.requestFullscreen();
-            } else if (document.documentElement.mozRequestFullScreen) {
-              document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.webkitRequestFullscreen) {
-              document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+            if (!document.fullscreenElement && // alternative standard method
+                    !document.mozFullScreenElement && !document.webkitFullscreenElement) {  // current working methods
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                } else if (document.documentElement.mozRequestFullScreen) {
+                    document.documentElement.mozRequestFullScreen();
+                } else if (document.documentElement.webkitRequestFullscreen) {
+                    document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+                }
+            } else {
+                if (document.cancelFullScreen) {
+                    document.cancelFullScreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitCancelFullScreen) {
+                    document.webkitCancelFullScreen();
+                }
             }
-          } else {
-            if (document.cancelFullScreen) {
-              document.cancelFullScreen();
-            } else if (document.mozCancelFullScreen) {
-              document.mozCancelFullScreen();
-            } else if (document.webkitCancelFullScreen) {
-              document.webkitCancelFullScreen();
-            }
-          }
         }
 
         $('#trigger_fullscreen').click(function() {
@@ -792,16 +792,15 @@ var App = function () {
     //* END:CORE HANDLERS *//
 
     return {
-
         //main function to initiate template pages
-        init: function () {
+        init: function() {
 
             //IMPORTANT!!!: Do not modify the core handlers call order.
 
             //core handlers
             handleInit();
             handleResponsiveOnResize(); // set and handle responsive    
-            handleUniform();        
+            handleUniform();
             handleScrollers(); // handles slim scrolling contents 
             handleResponsiveOnInit(); // handler responsive elements on page load
 
@@ -828,105 +827,92 @@ var App = function () {
             App.addResponsiveHandler(handleChoosenSelect); // reinitiate chosen dropdown on main content resize. disable this line if you don't really use chosen dropdowns.
             handleFullScreenMode() // handles full screen
         },
-
-        fixContentHeight: function () {
+        fixContentHeight: function() {
             handleSidebarAndContentHeight();
         },
-
-        setLastPopedPopover: function (el) {
+        setLastPopedPopover: function(el) {
             lastPopedPopover = el;
         },
-
-        addResponsiveHandler: function (func) {
+        addResponsiveHandler: function(func) {
             responsiveHandlers.push(func);
         },
-
         // useful function to make equal height for contacts stand side by side
-        setEqualHeight: function (els) {
+        setEqualHeight: function(els) {
             var tallestEl = 0;
             els = jQuery(els);
-            els.each(function () {
-                    var currentHeight = $(this).height();
-                    if (currentHeight > tallestEl) {
-                        tallestColumn = currentHeight;
-                    }
-                });
+            els.each(function() {
+                var currentHeight = $(this).height();
+                if (currentHeight > tallestEl) {
+                    tallestColumn = currentHeight;
+                }
+            });
             els.height(tallestEl);
         },
-
         // wrapper function to scroll to an element
-        scrollTo: function (el, offeset) {
+        scrollTo: function(el, offeset) {
             pos = el ? el.offset().top : 0;
             jQuery('html,body').animate({
-                    scrollTop: pos + (offeset ? offeset : 0)
-                }, 'slow');
+                scrollTop: pos + (offeset ? offeset : 0)
+            }, 'slow');
         },
-
-        scrollTop: function () {
+        scrollTop: function() {
             App.scrollTo();
         },
-
         // wrapper function to  block element(indicate loading)
-        blockUI: function (el, centerY) {
-            var el = jQuery(el); 
+        blockUI: function(el, centerY) {
+            var el = jQuery(el);
             el.block({
-                    message: '<img src="./assets/img/ajax-loading.gif" align="">',
-                    centerY: centerY != undefined ? centerY : true,
-                    css: {
-                        top: '10%',
-                        border: 'none',
-                        padding: '2px',
-                        backgroundColor: 'none'
-                    },
-                    overlayCSS: {
-                        backgroundColor: '#000',
-                        opacity: 0.05,
-                        cursor: 'wait'
-                    }
-                });
+                message: '<img src="./assets/img/ajax-loading.gif" align="">',
+                centerY: centerY != undefined ? centerY : true,
+                css: {
+                    top: '10%',
+                    border: 'none',
+                    padding: '2px',
+                    backgroundColor: 'none'
+                },
+                overlayCSS: {
+                    backgroundColor: '#000',
+                    opacity: 0.05,
+                    cursor: 'wait'
+                }
+            });
         },
-
         // wrapper function to  un-block element(finish loading)
-        unblockUI: function (el) {
+        unblockUI: function(el) {
             jQuery(el).unblock({
-                    onUnblock: function () {
-                        jQuery(el).removeAttr("style");
-                    }
-                });
+                onUnblock: function() {
+                    jQuery(el).removeAttr("style");
+                }
+            });
         },
-
         // initializes uniform elements
-        initUniform: function (els) {
+        initUniform: function(els) {
 
             if (els) {
-                jQuery(els).each(function () {
-                        if ($(this).parents(".checker").size() == 0) {
-                            $(this).show();
-                            $(this).uniform();
-                        }
-                    });
+                jQuery(els).each(function() {
+                    if ($(this).parents(".checker").size() == 0) {
+                        $(this).show();
+                        $(this).uniform();
+                    }
+                });
             } else {
                 handleUniform();
             }
 
         },
-
-        updateUniform : function(els) {
+        updateUniform: function(els) {
             $.uniform.update(els);
         },
-
         // initializes choosen dropdowns
-        initChosenSelect: function (els) {
+        initChosenSelect: function(els) {
             $(els).chosen({
-                    allow_single_deselect: true
-                });
+                allow_single_deselect: true
+            });
         },
-
-        initFancybox: function () {
+        initFancybox: function() {
             handleFancybox();
         },
-
-        getActualVal: function (el) {
+        getActualVal: function(el) {
             var el = jQuery(el);
             if (el.val() === el.attr("placeholder")) {
                 return "";
@@ -934,10 +920,9 @@ var App = function () {
 
             return el.val();
         },
-
-        getURLParameter: function (paramName) {
+        getURLParameter: function(paramName) {
             var searchString = window.location.search.substring(1),
-                i, val, params = searchString.split("&");
+                    i, val, params = searchString.split("&");
 
             for (i = 0; i < params.length; i++) {
                 val = params[i].split("=");
@@ -947,9 +932,8 @@ var App = function () {
             }
             return null;
         },
-
         // check for device touch support
-        isTouchDevice: function () {
+        isTouchDevice: function() {
             try {
                 document.createEvent("TouchEvent");
                 return true;
@@ -957,16 +941,13 @@ var App = function () {
                 return false;
             }
         },
-
-        isIE8: function () {
+        isIE8: function() {
             return isIE8;
         },
-
-        isRTL: function () {
+        isRTL: function() {
             return isRTL;
         },
-
-        getLayoutColorCode: function (name) {
+        getLayoutColorCode: function(name) {
             if (layoutColorCodes[name]) {
                 return layoutColorCodes[name];
             } else {

@@ -13,16 +13,23 @@ public class QuizDetails implements Serializable
 {
 
     private String name;
-    private String intro;
+    private String descr;
     //private Integer timeLimit;      // in minits
-    private Boolean isActive;
+    private String difficultyLvl;
+    private Boolean active;
+    @Temporal(TemporalType.DATE)
+    private Date dateOpen;
+    @Temporal(TemporalType.DATE)
+    private Date dateClose;
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeCreated;
 
-    public QuizDetails(String name, String intro, Boolean isActive, Date timeCreated) {
+    public QuizDetails(String name, String descr, String difficultyLvl, Date dateOpen, Date dateClose, Date timeCreated) {
         this.name = name;
-        this.intro = intro;
-        this.isActive = isActive;
+        this.descr = descr;
+        this.difficultyLvl = difficultyLvl;
+        this.dateOpen = dateOpen;
+        this.dateClose = dateClose;
         this.timeCreated = timeCreated;
     }
 
@@ -34,20 +41,44 @@ public class QuizDetails implements Serializable
         this.name = name;
     }
 
-    public String getIntro() {
-        return intro;
+    public String getDescr() {
+        return descr;
     }
 
-    public void setIntro(String intro) {
-        this.intro = intro;
+    public void setDescr(String descr) {
+        this.descr = descr;
     }
 
-    public Boolean isIsActive() {
-        return isActive;
+    public String getDifficultyLvl() {
+        return difficultyLvl;
     }
 
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
+    public void setDifficultyLvl(String difficultyLvl) {
+        this.difficultyLvl = difficultyLvl;
+    }
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public Date getDateOpen() {
+        return dateOpen;
+    }
+
+    public void setDateOpen(Date dateOpen) {
+        this.dateOpen = dateOpen;
+    }
+
+    public Date getDateClose() {
+        return dateClose;
+    }
+
+    public void setDateClose(Date dateClose) {
+        this.dateClose = dateClose;
     }
 
     public Date getTimeCreated() {

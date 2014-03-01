@@ -7,7 +7,8 @@
         <meta charset="utf-8" />
         <title>GLMS | Quiz Settings</title>
         <%-- Standard imports for every page--%>
-        <%@include file="/WEB-INF/jspf/stylesheets.jspf" %> 
+        <%@include file="/WEB-INF/jspf/stylesheets.jspf" %>
+        <link rel="stylesheet" type="text/css" href="/Instructor/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" />
     </head>
     <!-- END HEAD -->
     <!-- BEGIN BODY -->
@@ -27,7 +28,7 @@
                         <div class="span12">
                             <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                             <h3 class="page-title">
-                                <%= request.getAttribute("quizName")%>
+
                             </h3>
                             <ul class="breadcrumb">
                                 <li>
@@ -36,11 +37,11 @@
                                     <i class="icon-angle-right"></i>
                                 </li>
                                 <li>
-                                    <a href="#"><%= request.getSession().getAttribute("moduleName")%></a>
+                                    <a href="#"><%= session.getAttribute("moduleName")%></a>
                                     <i class="icon-angle-right"></i>
                                 </li>
                                 <li>
-                                    <a href="#"><%= request.getAttribute("quizName")%></a>
+                                    <a href="#"><%= session.getAttribute("quizName")%></a>
                                     <i class="icon-angle-right"></i>
                                 </li>
                                 <li>
@@ -59,34 +60,57 @@
                     <div class="row-fluid">
                         <div class="span12">
                             <div class="row-fluid">
-                                <div class="span12 centered">
+                                <div class="span12 text-center">
+                                    <h3><%= session.getAttribute("quizName")%></h3>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row-fluid">
+                                <div class="span12 text-center">
                                     <h3>Tell a bit more about the quiz.</h3>
                                 </div>
                             </div>
-                            
-                            <form class="horizontal-form" id="quizForm" action="QuizServlet?action=updateQuiz&quizId=<%= request.getAttribute("quizId")%>&quizName=<%= request.getAttribute("quizName")%>">
+
+                            <form class="horizontal-form" id="quizForm" method="post" action="/Instructor/QuizServlet?action=saveQuizInfo&quizId=<%= session.getAttribute("quizId")%>">
                                 <div class="row-fluid">
                                     <div class="span6">
                                         <div class="control-group">
                                             <label class="control-label">Description</label>
                                             <div class="controls">
-                                                <textarea class="large m-wrap" rows="3"></textarea>
+                                                <textarea class="m-wrap" rows="3" name="descr" style="width:98%;"></textarea>
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="span6">
                                         <div class="control-group">
-                                            <label class="control-label">Difficulty</label>
+                                            <label class="control-label">Difficulty level</label>
                                             <div class="controls">
+                                                <select class="m-wrap span12" name="difficulty" required>
+                                                    <option value="" disabled></option>
+                                                    <option value="beginner">Beginner</option>
+                                                    <option value="intermediate">Intermediate</option>
+                                                    <option value="advanced">Advanced</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <div class="control-group">
+                                            <label class="control-label">Default Date Ranges</label>
+                                            <div class="controls">
+                                                <div class="input-prepend">
+                                                    <span class="add-on"><i class="icon-calendar"></i></span><input type="text" class="m-wrap date-range" name="datesOpen"/>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <input type="submit" name="next" value="Next: " class="btn green">
+                                <input type="submit" value="Done" class="btn green">
                             </form>
-
 
                         </div>
                     </div>
@@ -108,11 +132,29 @@
 
         <!-- BEGIN JAVASCRIPTS (Load javascripts at bottom, this will reduce page load time) -->
         <%-- Standard JS imports for every page--%>
-        <%@include file="/WEB-INF/jspf/javascripts.jspf" %> 
+        <%@include file="/WEB-INF/jspf/javascripts.jspf" %>
+        <script type="text/javascript" src="/Instructor/assets/plugins/bootstrap-daterangepicker/date.js"></script>
+        <script type="text/javascript" src="/Instructor/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script> 
         <script>
             jQuery(document).ready(function()
             {
-                App.init(); // initlayout and core plugins
+                App.init(); // initlayout and core plugin
+                if (!jQuery().daterangepicker) {
+                    return;
+                }
+
+                $('.date-range').daterangepicker(
+                        {
+                            opens: (App.isRTL() ? 'left' : 'right'),
+                            format: 'dd/MM/yyyy',
+                            separator: ' to ',
+                            startDate: Date.today(),
+                            endDate: Date.today().add({
+                                days: 7
+                            }),
+                            minDate: Date.today(),
+                        }
+                );
             });
         </script>
         <!-- END JAVASCRIPTS -->

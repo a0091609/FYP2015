@@ -32,6 +32,11 @@ public class Quiz implements Serializable
     private String descr;
     private String difficultyLvl;
     private Boolean active;
+    @Temporal(TemporalType.DATE)
+    private Date dateOpen;
+    @Temporal(TemporalType.DATE)
+    private Date dateClose;
+    private String status;
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeCreated;
 
@@ -81,6 +86,30 @@ public class Quiz implements Serializable
 
     public Date getTimeCreated() {
         return timeCreated;
+    }
+
+    public Date getDateOpen() {
+        return dateOpen;
+    }
+
+    public void setDateOpen(Date dateOpen) {
+        this.dateOpen = dateOpen;
+    }
+
+    public Date getDateClose() {
+        return dateClose;
+    }
+
+    public void setDateClose(Date dateClose) {
+        this.dateClose = dateClose;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setTimeCreated(Date timeCreated) {

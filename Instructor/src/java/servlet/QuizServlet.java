@@ -7,6 +7,10 @@ package servlet;
 
 import helper.QuizDetails;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -15,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import session.QuizBeanLocal;
 
 /**
@@ -38,11 +43,19 @@ public class QuizServlet extends HttpServlet
             System.out.println("QuizServlet action: " + action);
 
             if (action.equals("viewAllQuiz")) {
-                String moduleId = request.getParameter("moduleId");
-                String moduleName = request.getParameter("moduleName");
-                
-                request.getSession().setAttribute("moduleId", moduleId);
-                request.getSession().setAttribute("moduleName", moduleName);
+                String moduleId = "", moduleName = "";
+                HttpSession session = request.getSession();
+
+                if (session.getAttribute("moduleId") == null) {
+                    moduleId = request.getParameter("moduleId");
+                    moduleName = request.getParameter("moduleName");
+
+                    request.getSession().setAttribute("moduleId", moduleId);
+                    request.getSession().setAttribute("moduleName", moduleName);
+                }
+                else {
+                    moduleId = request.getSession().getAttribute("moduleId").toString();
+                }
 
                 List<QuizDetails> quizzes = quizBean.getModuleQuiz(moduleId);
                 request.setAttribute("quizzes", quizzes);
@@ -59,24 +72,46 @@ public class QuizServlet extends HttpServlet
 
                 Long quizId = quizBean.saveNewQuiz(quizName, moduleId);
 
-                request.setAttribute("quizId", quizId);
-                request.setAttribute("quizName", quizName);
+                request.getSession(false).setAttribute("quizId", quizId);
+                request.getSession(false).setAttribute("quizName", quizName);
 
-                request.getRequestDispatcher("/quiz/newMultiChoice.jsp").forward(request, response);
+                response.sendRedirect("quiz/newMultiChoice.jsp");
             }
-            else if (action.equals("quizInfo")) {
-                String quizId = request.getParameter("quizId");
-                String quizName = request.getParameter("quizName");
+            else if (action.equals("saveQuizInfo")) {
+                String quizId = request.getSession().getAttribute("quizId").toString();
+                String descr = request.getParameter("descr");
+                String difficultyLvl = request.getParameter("difficulty");
                 
-                request.setAttribute("quizId", quizId);
-                request.setAttribute("quizName", quizName);
+                String dateRange = request.getParameter("datesOpen");
+                String dateOpen = dateRange.substring(0, 10);
+                String dateClose = dateRange.substring(14);
 
-                request.getRequestDispatcher("/quiz/quizSettings.jsp").forward(request, response);
+                Boolean succeed = quizBean.saveQuizInfo(Long.parseLong(quizId), descr,
+                        difficultyLvl, convertToDateObj(dateOpen), convertToDateObj(dateClose));
+
+                request.getSession().removeAttribute("quizId");
+                request.getSession().removeAttribute("quizName");
+
+                response.sendRedirect("/Instructor/QuizServlet?action=viewAllQuiz");
             }
         }
         catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    private Date convertToDateObj(String date) {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Date dateObj;
+        try {
+            dateObj = df.parse(date);
+            return dateObj;
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

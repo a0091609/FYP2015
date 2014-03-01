@@ -34,7 +34,8 @@ public class QuizBean implements QuizBeanLocal
         ArrayList<QuizDetails> quizzes = new ArrayList<QuizDetails>();
 
         for (Quiz quiz : quizList) {
-            QuizDetails quizDetails = new QuizDetails(quiz.getName(), quiz.getDescr(), quiz.isActive(), quiz.getTimeCreated());
+            QuizDetails quizDetails = new QuizDetails(quiz.getName(), quiz.getDescr(),
+                    quiz.getDifficultyLvl(), quiz.getDateOpen(), quiz.getDateClose(), quiz.getTimeCreated());
             quizzes.add(quizDetails);
         }
         return quizzes;
@@ -45,12 +46,33 @@ public class QuizBean implements QuizBeanLocal
 
         quiz.setModule(em.find(Module.class, moduleId));
         quiz.setName(quizName);
-        Date date = new Date();
-        quiz.setTimeCreated(date);
 
         em.persist(quiz);
         System.out.println("New quiz created");
 
         return quiz.getQuizId();
+    }
+
+    public Boolean saveQuizInfo(Long quizId, String descr, String difficultyLvl, Date dateOpen, Date dateClose) {
+        try {
+            Quiz quiz = em.find(Quiz.class, quizId);
+            quiz.setDescr(descr);
+            quiz.setDifficultyLvl(difficultyLvl);
+
+            Date date = new Date();
+            quiz.setTimeCreated(date);
+
+            quiz.setDateOpen(dateOpen);
+            quiz.setDateClose(dateClose);
+
+            em.persist(quiz);
+            System.out.println("Quiz info saved");
+
+            return true;
+        }
+        catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
     }
 }

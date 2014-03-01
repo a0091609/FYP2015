@@ -7,7 +7,7 @@ var FormComponents = function () {
 
         if ($('.wysihtml5').size() > 0) {
             $('.wysihtml5').wysihtml5({
-                "stylesheets": ["assets/plugins/bootstrap-wysihtml5/wysiwyg-color.css"]
+                "stylesheets": ["/Instructor/assets/plugins/bootstrap-wysihtml5/wysiwyg-color.css"]
             });
         }
     }

@@ -8,6 +8,7 @@
         <title>GLMS | Instructor Dashboard</title>
         <%-- Standard imports for every page--%>
         <%@include file="WEB-INF/jspf/stylesheets.jspf" %>
+        <% session.removeAttribute("moduleId"); session.removeAttribute("moduleName"); %>
     </head>
     <!-- END HEAD -->
     <!-- BEGIN BODY -->

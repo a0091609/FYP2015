@@ -1,26 +1,24 @@
-var Index = function () {
+var Index = function() {
 
 
     return {
-
         //main function
-        init: function () {
-            App.addResponsiveHandler(function () {
-                jQuery('.vmaps').each(function () {
+        init: function() {
+            App.addResponsiveHandler(function() {
+                jQuery('.vmaps').each(function() {
                     var map = jQuery(this);
                     map.width(map.parent().width());
                 });
             });
         },
+        initJQVMAP: function() {
 
-        initJQVMAP: function () {
-
-            var showMap = function (name) {
+            var showMap = function(name) {
                 jQuery('.vmaps').hide();
                 jQuery('#vmap_' + name).show();
             }
 
-            var setMap = function (name) {
+            var setMap = function(name) {
                 var data = {
                     map: 'world_en',
                     backgroundColor: null,
@@ -37,15 +35,15 @@ var Index = function () {
                     selectedColor: '#c9dfaf',
                     selectedRegion: null,
                     showTooltip: true,
-                    onLabelShow: function (event, label, code) {
+                    onLabelShow: function(event, label, code) {
 
                     },
-                    onRegionOver: function (event, code) {
+                    onRegionOver: function(event, code) {
                         if (code == 'ca') {
                             event.preventDefault();
                         }
                     },
-                    onRegionClick: function (element, code, region) {
+                    onRegionClick: function(element, code, region) {
                         var message = 'You clicked "' + region + '" which has the code: ' + code.toUpperCase();
                         alert(message);
                     }
@@ -69,29 +67,28 @@ var Index = function () {
             setMap("germany");
             showMap("world");
 
-            jQuery('#regional_stat_world').click(function () {
+            jQuery('#regional_stat_world').click(function() {
                 showMap("world");
             });
 
-            jQuery('#regional_stat_usa').click(function () {
+            jQuery('#regional_stat_usa').click(function() {
                 showMap("usa");
             });
 
-            jQuery('#regional_stat_europe').click(function () {
+            jQuery('#regional_stat_europe').click(function() {
                 showMap("europe");
             });
-            jQuery('#regional_stat_russia').click(function () {
+            jQuery('#regional_stat_russia').click(function() {
                 showMap("russia");
             });
-            jQuery('#regional_stat_germany').click(function () {
+            jQuery('#regional_stat_germany').click(function() {
                 showMap("germany");
             });
 
             $('#region_statistics_loading').hide();
             $('#region_statistics_content').show();
         },
-
-        initCalendar: function () {
+        initCalendar: function() {
             if (!jQuery().fullCalendar) {
                 return;
             }
@@ -124,16 +121,16 @@ var Index = function () {
                         center: '',
                         right: 'prev,next,today,month,agendaWeek,agendaDay'
                     };
-                }               
+                }
             }
 
             $('#calendar').fullCalendar('destroy'); // destroy the calendar
-            $('#calendar').fullCalendar({ //re-initialize the calendar
+            $('#calendar').fullCalendar({//re-initialize the calendar
                 disableDragging: false,
                 header: h,
                 editable: true,
                 events: [{
-                        title: 'All Day Event',                        
+                        title: 'All Day Event',
                         start: new Date(y, m, 1),
                         backgroundColor: App.getLayoutColorCode('yellow')
                     }, {
@@ -177,8 +174,7 @@ var Index = function () {
                 ]
             });
         },
-
-        initCharts: function () {
+        initCharts: function() {
             if (!jQuery.plot) {
                 return;
             }
@@ -189,18 +185,22 @@ var Index = function () {
             // random data generator for plot charts
 
             function getRandomData() {
-                if (data.length > 0) data = data.slice(1);
+                if (data.length > 0)
+                    data = data.slice(1);
                 // do a random walk
                 while (data.length < totalPoints) {
                     var prev = data.length > 0 ? data[data.length - 1] : 50;
                     var y = prev + Math.random() * 10 - 5;
-                    if (y < 0) y = 0;
-                    if (y > 100) y = 100;
+                    if (y < 0)
+                        y = 0;
+                    if (y > 100)
+                        y = 100;
                     data.push(y);
                 }
                 // zip the generated y values with the x values
                 var res = [];
-                for (var i = 0; i < data.length; ++i) res.push([i, data[i]])
+                for (var i = 0; i < data.length; ++i)
+                    res.push([i, data[i]])
                 return res;
             }
 
@@ -337,7 +337,7 @@ var Index = function () {
                 });
 
                 var previousPoint = null;
-                $("#site_statistics").bind("plothover", function (event, pos, item) {
+                $("#site_statistics").bind("plothover", function(event, pos, item) {
                     $("#x").text(pos.x.toFixed(2));
                     $("#y").text(pos.y.toFixed(2));
                     if (item) {
@@ -346,7 +346,7 @@ var Index = function () {
 
                             $("#tooltip").remove();
                             var x = item.datapoint[0].toFixed(2),
-                                y = item.datapoint[1].toFixed(2);
+                                    y = item.datapoint[1].toFixed(2);
 
                             showTooltip('24 Jan 2013', item.pageX, item.pageY, item.series.label + " of " + x + " = " + y);
                         }
@@ -355,58 +355,58 @@ var Index = function () {
                         previousPoint = null;
                     }
                 });
-            }               
+            }
 
             if ($('#load_statistics').size() != 0) {
-                 //server load
+                //server load
                 $('#load_statistics_loading').hide();
                 $('#load_statistics_content').show();
-        
+
                 var updateInterval = 30;
                 var plot_statistics = $.plot($("#load_statistics"), [getRandomData()], {
-                series: {
-                    shadowSize: 1
-                },
-                lines: {
-                    show: true,
-                    lineWidth: 0.2,
-                    fill: true,
-                    fillColor: {
-                        colors: [{
-                                opacity: 0.1
-                            }, {
-                                opacity: 1
-                            }
-                        ]
+                    series: {
+                        shadowSize: 1
+                    },
+                    lines: {
+                        show: true,
+                        lineWidth: 0.2,
+                        fill: true,
+                        fillColor: {
+                            colors: [{
+                                    opacity: 0.1
+                                }, {
+                                    opacity: 1
+                                }
+                            ]
+                        }
+                    },
+                    yaxis: {
+                        min: 0,
+                        max: 100,
+                        tickFormatter: function(v) {
+                            return v + "%";
+                        }
+                    },
+                    xaxis: {
+                        show: false
+                    },
+                    colors: ["#e14e3d"],
+                    grid: {
+                        tickColor: "#a8a3a3",
+                        borderWidth: 0
                     }
-                },
-                yaxis: {
-                    min: 0,
-                    max: 100,
-                    tickFormatter: function (v) {
-                        return v + "%";
-                    }
-                },
-                xaxis: {
-                    show: false
-                },
-                colors: ["#e14e3d"],
-                grid: {
-                    tickColor: "#a8a3a3",
-                    borderWidth: 0
-                }
                 });
-                
+
                 function statisticsUpdate() {
-                plot_statistics.setData([getRandomData()]);
-                plot_statistics.draw();
-                setTimeout(statisticsUpdate, updateInterval);
-                
+                    plot_statistics.setData([getRandomData()]);
+                    plot_statistics.draw();
+                    setTimeout(statisticsUpdate, updateInterval);
+
                 }
-                
+
                 statisticsUpdate();
 
-                $('#load_statistics').bind("mouseleave", function () {
+                $('#load_statistics').bind("mouseleave", function() {
                     $("#tooltip").remove();
                 });
             }
@@ -473,7 +473,7 @@ var Index = function () {
                 ];
 
                 var plot_activities = $.plot(
-                    $("#site_activities"), [{
+                        $("#site_activities"), [{
                         data: activities,
                         color: "rgba(107,207,123, 0.9)",
                         shadowSize: 0,
@@ -511,7 +511,7 @@ var Index = function () {
                     }
                 });
 
-                $("#site_activities").bind("plothover", function (event, pos, item) {
+                $("#site_activities").bind("plothover", function(event, pos, item) {
                     $("#x").text(pos.x.toFixed(2));
                     $("#y").text(pos.y.toFixed(2));
                     if (item) {
@@ -519,20 +519,19 @@ var Index = function () {
                             previousPoint2 = item.dataIndex;
                             $("#tooltip").remove();
                             var x = item.datapoint[0].toFixed(2),
-                                y = item.datapoint[1].toFixed(2);
+                                    y = item.datapoint[1].toFixed(2);
                             showTooltip('24 Feb 2013', item.pageX, item.pageY, x);
                         }
                     }
                 });
 
-                $('#site_activities').bind("mouseleave", function () {
+                $('#site_activities').bind("mouseleave", function() {
                     $("#tooltip").remove();
                 });
             }
         },
+        initMiniCharts: function() {
 
-        initMiniCharts: function () {
-             
             $('.easy-pie-chart .number.transactions').easyPieChart({
                 animate: 1000,
                 size: 75,
@@ -546,7 +545,7 @@ var Index = function () {
                 lineWidth: 3,
                 barColor: App.getLayoutColorCode('green')
             });
-             
+
             $('.easy-pie-chart .number.bounce').easyPieChart({
                 animate: 1000,
                 size: 75,
@@ -554,15 +553,15 @@ var Index = function () {
                 barColor: App.getLayoutColorCode('red')
             });
 
-            $('.easy-pie-chart-reload').click(function(){
+            $('.easy-pie-chart-reload').click(function() {
                 $('.easy-pie-chart .number').each(function() {
-                    var newValue = Math.floor(100*Math.random());
+                    var newValue = Math.floor(100 * Math.random());
                     $(this).data('easyPieChart').update(newValue);
                     $('span', this).text(newValue);
                 });
             });
-               
-            $("#sparkline_bar").sparkline([8,9,10,11,10,10,12,10,10,11,9,12,11,10,9,11,13,13,12], {
+
+            $("#sparkline_bar").sparkline([8, 9, 10, 11, 10, 10, 12, 10, 10, 11, 9, 12, 11, 10, 9, 11, 13, 13, 12], {
                 type: 'bar',
                 width: '100',
                 barWidth: 5,
@@ -571,7 +570,7 @@ var Index = function () {
                 negBarColor: '#e02222'}
             );
 
-            $("#sparkline_bar2").sparkline([9,11,12,13,12,13,10,14,13,11,11,12,11,11,10,12,11,10], {
+            $("#sparkline_bar2").sparkline([9, 11, 12, 13, 12, 13, 10, 14, 13, 11, 11, 12, 11, 11, 10, 12, 11, 10], {
                 type: 'bar',
                 width: '100',
                 barWidth: 5,
@@ -580,7 +579,7 @@ var Index = function () {
                 negBarColor: '#e02222'}
             );
 
-            $("#sparkline_line").sparkline([9,10,9,10,10,11,12,10,10,11,11,12,11,10,12,11,10,12], {
+            $("#sparkline_line").sparkline([9, 10, 9, 10, 10, 11, 12, 10, 10, 11, 11, 12, 11, 10, 12, 11, 10, 12], {
                 type: 'line',
                 width: '100',
                 height: '55',
@@ -588,8 +587,7 @@ var Index = function () {
             });
 
         },
-
-        initChat: function () {
+        initChat: function() {
 
             var cont = $('#chats');
             var list = $('.chats', cont);
@@ -597,9 +595,9 @@ var Index = function () {
             var input = $('input', form);
             var btn = $('.btn', form);
 
-            var handleClick = function (e) {
+            var handleClick = function(e) {
                 e.preventDefault();
-                
+
                 var text = input.val();
                 if (text.length == 0) {
                     return;
@@ -628,29 +626,28 @@ var Index = function () {
             }
 
             /*
-            $('.scroller', cont).slimScroll({
-                scrollTo: list.height()
-            });
-            */
+             $('.scroller', cont).slimScroll({
+             scrollTo: list.height()
+             });
+             */
 
-            $('body').on('click', '.message .name', function(e){
+            $('body').on('click', '.message .name', function(e) {
                 e.preventDefault(); // prevent click event
 
                 var name = $(this).text(); // get clicked user's full name
-                input.val('@' +  name + ':'); // set it into the input field
+                input.val('@' + name + ':'); // set it into the input field
                 App.scrollTo(input); // scroll to input if needed
             });
 
             btn.click(handleClick);
-            input.keypress(function (e) {
+            input.keypress(function(e) {
                 if (e.which == 13) {
                     handleClick();
                     return false; //<---- Add this line
                 }
             });
         },
-
-        initDashboardDaterange: function () {
+        initDashboardDaterange: function() {
 
             $('#dashboard-report-range').daterangepicker({
                 ranges: {
@@ -690,10 +687,9 @@ var Index = function () {
                 showWeekNumbers: true,
                 buttonClasses: ['btn-danger']
             },
-
-            function (start, end) {
+            function(start, end) {
                 App.blockUI(jQuery("#dashboard"));
-                setTimeout(function () {
+                setTimeout(function() {
                     App.unblockUI(jQuery("#dashboard"));
                     $.gritter.add({
                         title: 'Dashboard',
@@ -711,15 +707,14 @@ var Index = function () {
                 days: -29
             }).toString('MMMM d, yyyy') + ' - ' + Date.today().toString('MMMM d, yyyy'));
         },
-
-        initIntro: function () {
+        initIntro: function() {
             if ($.cookie('intro_show')) {
                 return;
             }
 
             $.cookie('intro_show', 1);
 
-            setTimeout(function () {
+            setTimeout(function() {
                 var unique_id = $.gritter.add({
                     // (string | mandatory) the heading of the notification
                     title: 'Meet Metronic!',
@@ -736,7 +731,7 @@ var Index = function () {
                 });
 
                 // You can have it return a unique id, this can be used to manually remove it later using
-                setTimeout(function () {
+                setTimeout(function() {
                     $.gritter.remove(unique_id, {
                         fade: true,
                         speed: 'slow'
@@ -744,7 +739,7 @@ var Index = function () {
                 }, 12000);
             }, 2000);
 
-            setTimeout(function () {
+            setTimeout(function() {
                 var unique_id = $.gritter.add({
                     // (string | mandatory) the heading of the notification
                     title: 'Buy Metronic!',
@@ -761,7 +756,7 @@ var Index = function () {
                 });
 
                 // You can have it return a unique id, this can be used to manually remove it later using
-                setTimeout(function () {
+                setTimeout(function() {
                     $.gritter.remove(unique_id, {
                         fade: true,
                         speed: 'slow'
@@ -769,7 +764,7 @@ var Index = function () {
                 }, 13000);
             }, 8000);
 
-            setTimeout(function () {
+            setTimeout(function() {
 
                 $('#styler').pulsate({
                     color: "#bb3319",
@@ -801,7 +796,7 @@ var Index = function () {
                 });
 
                 // You can have it return a unique id, this can be used to manually remove it later using
-                setTimeout(function () {
+                setTimeout(function() {
                     $.gritter.remove(unique_id, {
                         fade: true,
                         speed: 'slow'
@@ -810,7 +805,7 @@ var Index = function () {
 
             }, 23000);
 
-            setTimeout(function () {
+            setTimeout(function() {
 
                 $.extend($.gritter.options, {
                     position: 'top-left'
@@ -831,7 +826,7 @@ var Index = function () {
                     class_name: 'my-sticky-class'
                 });
 
-                setTimeout(function () {
+                setTimeout(function() {
                     $.gritter.remove(unique_id, {
                         fade: true,
                         speed: 'slow'
@@ -853,7 +848,7 @@ var Index = function () {
 
             }, 40000);
 
-            setTimeout(function () {
+            setTimeout(function() {
 
                 $.extend($.gritter.options, {
                     position: 'top-left'
@@ -878,7 +873,7 @@ var Index = function () {
                     position: 'top-right'
                 });
 
-                setTimeout(function () {
+                setTimeout(function() {
                     $.gritter.remove(unique_id, {
                         fade: true,
                         speed: 'slow'

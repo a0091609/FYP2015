@@ -8,6 +8,8 @@ package session;
 import entity.QuestionAnswer;
 import entity.QuestionMultiChoice;
 import entity.Quiz;
+import java.sql.Timestamp;
+import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -32,6 +34,7 @@ public class QuestionBean implements QuestionBeanLocal
             quest.setQuiz(em.find(Quiz.class, Long.parseLong(quizId)));
             quest.setName(questName);
             quest.setQuestionText(questText);
+            quest.setTimeCreated(getCurrentTimestamp());
 
             em.persist(quest);
             System.out.println("New multiple choice question created.");
@@ -56,5 +59,10 @@ public class QuestionBean implements QuestionBeanLocal
             System.out.println(e);
             return false;
         }
+    }
+
+    private Timestamp getCurrentTimestamp() {
+        Date date = new Date();
+        return new Timestamp(date.getTime());
     }
 }

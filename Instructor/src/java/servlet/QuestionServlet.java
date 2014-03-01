@@ -32,9 +32,7 @@ public class QuestionServlet extends HttpServlet
             System.out.println("QuestionServlet action: " + action);
 
             if (action.equals("saveNewMultiChoice")) {
-                String quizId = request.getParameter("quizId");
-                String quizName = request.getParameter("quizName");
-
+                String quizId = request.getSession().getAttribute("quizId").toString();
                 String questName = request.getParameter("questName");
                 String questText = request.getParameter("questText");
                 String option1 = request.getParameter("option1");
@@ -43,16 +41,14 @@ public class QuestionServlet extends HttpServlet
                 String option4 = request.getParameter("option4");
                 Integer answer = Integer.parseInt(request.getParameter("answer"));
                 
-                System.out.println(quizId);
-
                 Boolean succeed = questionBean.saveMultiChoice(quizId, questName, questText, option1, option2, option3, option4, answer);
 
                 // Continue to quiz settings or add new question
                 if (request.getParameter("next").equals("Next: Quiz settings")) {
-                    response.sendRedirect("/Instructor/QuizServlet?action=quizInfo&quizId=" + quizId + "&quizName=" + quizName);
+                    response.sendRedirect("quiz/quizInfo.jsp");
                 }
                 else {
-                    request.getRequestDispatcher("/quiz/newMultiChoice.jsp").forward(request, response);
+                    response.sendRedirect("quiz/newMultiChoice.jsp");
                 }
             }
         }
