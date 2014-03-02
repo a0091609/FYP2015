@@ -1,3 +1,6 @@
+<% if (session.getAttribute("token") == null) {
+        response.sendRedirect("index.jsp");
+    }%>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
@@ -7,7 +10,9 @@
         <meta charset="utf-8" />
         <title>GLMS | Student Dashboard</title>
         <%-- Standard imports for every page--%>
-        <%@include file="WEB-INF/jspf/stylesheets.jspf" %> 
+        <%@include file="WEB-INF/jspf/stylesheets.jspf" %>
+        <% session.removeAttribute("moduleId");
+            session.removeAttribute("moduleName");%>
     </head>
     <!-- END HEAD -->
     <!-- BEGIN BODY -->
@@ -35,7 +40,7 @@
                                     <a href="#">Home</a> 
                                     <i class="icon-angle-right"></i>
                                 </li>
-                                <li><a href="#">Dashboard</a></li>
+                                <li>Dashboard </li>
                             </ul>
                             <!-- END PAGE TITLE & BREADCRUMB-->
                         </div>
@@ -48,7 +53,9 @@
                     <!-- BEGIN PAGE CONTENT-->
                     <div class="row-fluid">
                         <div class="span12">
-                            Insert Dashboard Content here!
+                            <div id="modules">
+                                <div style="text-align:center;"><img src="assets/img/loading.gif"></div>
+                            </div>
                         </div>
                     </div>
                     <!-- END PAGE CONTENT-->
@@ -68,11 +75,13 @@
 
         <!-- BEGIN JAVASCRIPTS (Load javascripts at bottom, this will reduce page load time) -->
         <%-- Standard JS imports for every page--%>
-        <%@include file="WEB-INF/jspf/javascripts.jspf" %> 
+        <%@include file="WEB-INF/jspf/javascripts.jspf" %>
+        <script type="text/javascript" src="/Student/assets/js/dashboard-custom.js"></script>
         <script>
             jQuery(document).ready(function()
             {
                 App.init(); // initlayout and core plugins
+                dashboardInit("<%=session.getAttribute("token")%>");
             });
         </script>
         <!-- END JAVASCRIPTS -->

@@ -250,7 +250,7 @@
                 <li class="dropdown user">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                         <img class="headerPhoto" src="assets/img/myAvatar.jpg" />
-                        <span class="username">Philson Nah</span>
+                        <span class="username"><%=session.getAttribute("username")%></span>
                         <i class="icon-angle-down"></i>
                     </a>
                     <ul class="dropdown-menu">
@@ -260,7 +260,7 @@
                         <li><a href="#"><i class="icon-tasks"></i> My Tasks <span class="badge badge-success">8</span></a></li>
                         <li class="divider"></li>
                         <li><a href="javascript:;" id="trigger_fullscreen"><i class="icon-move"></i> Full Screen</a></li>
-                        <li><a href="index.jsp"><i class="icon-key"></i> Log Out</a></li>
+                        <li><a href="/Student/AuthServlet?action=logout"><i class="icon-key"></i> Log Out</a></li>
                     </ul>
                 </li>
                 <!-- END USER LOGIN DROPDOWN -->

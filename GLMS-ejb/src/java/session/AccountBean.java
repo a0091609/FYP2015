@@ -11,30 +11,36 @@ import javax.persistence.PersistenceContext;
  * @author Chih Yong
  */
 @Stateless
-public class AccountBean implements AccountBeanLocal
-{
+public class AccountBean implements AccountBeanLocal {
 
     @PersistenceContext
     private EntityManager em;
 
     /* Methods for Student */
-    public void createStudent(String userId, String name, String email, String gender,
+    public Boolean createStudent(String userId, String name, String email, String gender,
             String faculty, String firstMajor, String secondMajor, Integer matriculationYear) {
 
-        if (!isStudent(userId)) {
-            Student student = new Student();
+        try {
+            // Non-student userId is allowed to login
+//            if (!isStudent(userId) && !isInstructorUserId(userId)) {
+            if (!isStudent(userId)) {
+                Student student = new Student();
 
-            student.setUserId(userId);
-            student.setName(name);
-            student.setEmail(email);
-            student.setGender(gender.toLowerCase());
-            student.setFaculty(faculty);
-            student.setFirstMajor(firstMajor);
-            student.setSecondMajor(secondMajor);
-            student.setMatriculationYear(matriculationYear);
+                student.setUserId(userId);
+                student.setName(name);
+                student.setEmail(email);
+                student.setGender(gender.toLowerCase());
+                student.setFaculty(faculty);
+                student.setFirstMajor(firstMajor);
+                student.setSecondMajor(secondMajor);
+                student.setMatriculationYear(matriculationYear);
 
-            em.persist(student);
-            System.out.println("New student created.");
+                em.persist(student);
+                System.out.println("New student created.");
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 
@@ -42,9 +48,9 @@ public class AccountBean implements AccountBeanLocal
         Student student = em.find(Student.class, userId);
 
         if (student != null) {
+            System.out.println("Student " + userId + " already exists.");
             return true;
-        }
-        else {
+        } else {
             System.out.println("Student does not exist.");
             return false;
         }
@@ -69,8 +75,7 @@ public class AccountBean implements AccountBeanLocal
                 System.out.println("New instructor created.");
             }
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -78,8 +83,7 @@ public class AccountBean implements AccountBeanLocal
     public Boolean isInstructorUserId(String userId) {
         if (userId.length() > 4 && !isNumeric(userId.substring(4))) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -87,9 +91,9 @@ public class AccountBean implements AccountBeanLocal
     public Boolean isInstructor(String userId) {
         Instructor instructor = em.find(Instructor.class, userId);
         if (instructor != null) {
+            System.out.println("Instructor " + userId + " already exists.");
             return true;
-        }
-        else {
+        } else {
             System.out.println("Instructor does not exist.");
             return false;
         }

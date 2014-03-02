@@ -21,8 +21,7 @@ import session.AccountBeanLocal;
  * @author Chih Yong
  */
 @WebServlet(name = "ProfileServlet", urlPatterns = {"/ProfileServlet", "/ProfileServlet?*"})
-public class ProfileServlet extends HttpServlet
-{
+public class ProfileServlet extends HttpServlet {
 
     @EJB
     AccountBeanLocal accountBean;
@@ -30,10 +29,8 @@ public class ProfileServlet extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String servlet = "ProfileServlet: ";
-            System.out.println(servlet);
-
             String action = request.getParameter("action");
+            System.out.println("ProfileServlet action: " + action);
 
             if (action.equals("checkIsStudent")) {
                 String userId = request.getParameter("userId");
@@ -45,8 +42,7 @@ public class ProfileServlet extends HttpServlet
                 PrintWriter pw = response.getWriter();
                 pw.print(json);
                 pw.close();
-            }
-            else if (action.equals("createStudent")) {
+            } else if (action.equals("createStudent")) {
                 String userId = request.getParameter("UserID");
                 String name = request.getParameter("Name");
                 String email = request.getParameter("Email");
@@ -54,13 +50,30 @@ public class ProfileServlet extends HttpServlet
                 String faculty = request.getParameter("Faculty");
                 String firstMajor = request.getParameter("FirstMajor");
                 String secondMajor = request.getParameter("SecondMajor");
-                Integer matriculationYear = Integer.valueOf(request.getParameter("MatriculationYear"));
-                accountBean.createStudent(userId, name, email, gender, faculty, firstMajor, secondMajor, matriculationYear);
+                String matricYr = request.getParameter("MatriculationYear");
+
+                Integer matriculationYear = isInteger(matricYr) ? Integer.valueOf(matricYr) : 0;
+
+                response.setContentType("application/json;charset=utf-8");
+                JsonObject json = new JsonObject();
+                json.addProperty("response", accountBean.createStudent(userId, name, email, gender, faculty, firstMajor, secondMajor, matriculationYear));
+
+                PrintWriter pw = response.getWriter();
+                pw.print(json);
+                pw.close();
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    private static Boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

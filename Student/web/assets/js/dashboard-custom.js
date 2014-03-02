@@ -1,33 +1,27 @@
 var APIKEY = "wslHwY4vC8n7cDdR2I8pV";
 var API_DOMAIN = "https://ivle.nus.edu.sg/";
 var API_URL = API_DOMAIN + "api/lapi.svc/";
-var LOGIN_URL = API_DOMAIN + "api/login/?apikey=" + APIKEY + "&url=http%3A%2F%2Flocalhost%3A8080%2FInstructor%2FAuthServlet";
+var LOGIN_URL = API_DOMAIN + "api/login/?apikey=" + APIKEY + "&url=http%3A%2F%2Flocalhost%3A8080%2FStudent%2FAuthServlet";
 
 function dashboardInit(token) {
     getUserId(token).done(function(data) {
         var userId = data;
-        if (userId.length > 4 && isNaN(parseInt(userId.substr(4)))) {
-            isInstructor(userId).done(function(data) {
-                if (data.response === false) {
-                    saveInstructorProfile(token);
-                    processModules(token, userId);
-                }
-                createLoginSession(userId, token).done(function(data) {
-                    setTimeout(function() {
-                        displayModules()
-                    }, 3000);
-                });
+
+        isStudent(userId).done(function(data) {
+            if (data.response === false) {
+                saveStudentProfile(token);
+                processModules(token, userId);
+            }
+            createLoginSession(userId, token).done(function(data) {
+                setTimeout(function() {
+                    displayModules()
+                }, 3000);
             });
-        }
-        else
-        {
-            window.location = "http://localhost:8080/Student/";
-        }
+        });
     });
 }
 
-function getUserId(token)
-{
+function getUserId(token) {
     // Retreive userId
     var userIdUrl = API_URL + "UserID_Get?callback=?&APIKey=" + APIKEY + "&Token=" + token + "&output=json";
 
@@ -36,23 +30,23 @@ function getUserId(token)
     });
 }
 
-function isInstructor(userId) {
-    var checkInstructorUrl = "/Instructor/ProfileServlet?action=checkIsInstructor&userId=" + userId;
-    return $.get(checkInstructorUrl, function(data) {
+function isStudent(userId) {
+    var checkStudentUrl = "/Student/ProfileServlet?action=checkIsStudent&userId=" + userId;
+    return $.get(checkStudentUrl, function(data) {
         return data.response;
     });
 }
 
-function saveInstructorProfile(token) {
+function saveStudentProfile(token) {
     var profileUrl = API_URL + "Profile_View?output=json&callback=?&APIKey=" + APIKEY + "&AuthToken=" + token;
     jQuery.getJSON(profileUrl, function(profileData) {
         $.ajax({
             type: 'post',
-            url: '/Instructor/ProfileServlet?action=createInstructor',
+            url: '/Student/ProfileServlet?action=createStudent',
             data: profileData.Results[0],
             success: function(data) {
                 if (data.response) {
-                    console.log("New instructor profile created.");
+                    console.log("New Student profile created.");
                 }
             }
         });
@@ -68,10 +62,9 @@ function createLoginSession(userId, token) {
         $('.username').html(username);
         $.ajax({
             type: 'post',
-            url: '/Instructor/AuthServlet?action=createLoginSession',
+            url: '/Student/AuthServlet?action=createLoginSession',
             data: {'userId': userId, 'username': username},
             success: function(data) {
-                console.log(data.response);
                 return true;
             }
         });
@@ -92,13 +85,13 @@ function processModules(token, userId) {
 
 function saveModule(data, userId) {
     var mData = data;
-    //var creatorId = mData.Creator["UserID"];
-    var creatorId = userId;
+
+    var creatorId = mData.Creator === null ? "" : mData.Creator["UserID"];
 
     $.ajax({
         type: 'post',
-        url: '/Instructor/ModuleServlet?action=createModule',
-        data: {id: mData.ID, code: mData.CourseCode, name: mData.CourseName, creatorId: creatorId},
+        url: '/Student/ModuleServlet?action=createModule',
+        data: {id: mData.ID, code: mData.CourseCode, name: mData.CourseName, creatorId: creatorId, userId: userId},
         success: function(data) {
             if (data.response) {
                 console.log();
@@ -108,7 +101,7 @@ function saveModule(data, userId) {
 }
 
 function displayModules() {
-    var url = "/Instructor/ModuleServlet?action=getInstructorModules";
+    var url = "/Student/ModuleServlet?action=getStudentModules";
     jQuery.getJSON(url, function(data) {
         var moduleList = '', i;
         for (i = 0; i < data.length; i++) {
@@ -128,12 +121,12 @@ function displayModules() {
             // Start of portlet-body
             moduleList += '<div class="portlet-body">';
 
-            if (!m.activated) {
-                moduleList += '<a href="/Instructor/ModuleServlet?action=activateModule&moduleId=' + m.moduleId + '&moduleCode=' + m.moduleCode + '&moduleName=' + m.moduleName + '">Activate module</a>';
-            }
-            else {
-                moduleList += '<a href="/Instructor/QuizServlet?action=viewAllQuiz&moduleId=' + m.moduleId + '&moduleName=' + m.moduleName + '">Quiz</a>';
-            }
+//            if (!m.activated) {
+//                moduleList += '<a href="/Instructor/ModuleServlet?action=activateModule&moduleId=' + m.moduleId + '&moduleCode=' + m.moduleCode + '&moduleName=' + m.moduleName + '">Activate module</a>';
+//            }
+//            else {
+//                moduleList += '<a href="/Instructor/QuizServlet?action=viewAllQuiz&moduleId=' + m.moduleId + '&moduleName=' + m.moduleName + '">Quiz</a>';
+//            }
             moduleList += '</div>\
                            </div>';
             // End of portlet-body

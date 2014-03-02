@@ -36,30 +36,16 @@ public class ModuleServlet extends HttpServlet
             String action = request.getParameter("action");
             System.out.println("ModuleServlet action: " + action);
 
-            if (action.equals("checkIsModule")) {
-                String moduleId = request.getParameter("moduleId");
-
-                response.setContentType("application/json;charset=utf-8");
-                JsonObject json = new JsonObject();
-                json.addProperty("response", moduleBean.isModule(moduleId));
-
-                PrintWriter pw = response.getWriter();
-                pw.print(json);
-                pw.close();
-            }
-            else if (action.equals("createModule")) {
+            if (action.equals("createModule")) {
                 String moduleId = request.getParameter("id");
                 String moduleCode = request.getParameter("code");
                 String moduleName = request.getParameter("name");
 
-                //Current system has no record of Instructor with creatorId return from LAPI calls.
-                //String moduleCreator = request.getParameter("creatorId");
-                String moduleCreator = request.getSession().getAttribute("userId").toString();
-                Boolean isActivated = false;
+                String moduleCreator = request.getParameter("creatorId");
 
                 response.setContentType("application/json;charset=utf-8");
                 JsonObject json = new JsonObject();
-                json.addProperty("response", moduleBean.createModule(moduleId, moduleCode, moduleName, moduleCreator, isActivated));
+                json.addProperty("response", moduleBean.createModule(moduleId, moduleCode, moduleName, moduleCreator));
 
                 PrintWriter pw = response.getWriter();
                 pw.print(json);

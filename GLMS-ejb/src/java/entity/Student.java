@@ -6,7 +6,8 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -16,8 +17,7 @@ import javax.persistence.ManyToMany;
  * @author Chih Yong
  */
 @Entity
-public class Student implements Serializable
-{
+public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -29,8 +29,8 @@ public class Student implements Serializable
     private String firstMajor;
     private String secondMajor;
     private Integer matriculationYear;
-    @ManyToMany
-    private Set<Module> modules;
+    @ManyToMany(mappedBy = "students")
+    private List<Module> modules;
 //    @OneToOne @MapsId
 //    private GameProfile gameProfile;
 
@@ -98,11 +98,11 @@ public class Student implements Serializable
         this.matriculationYear = matriculationYear;
     }
 
-    public Set<Module> getModules() {
+    public List<Module> getModules() {
         return modules;
     }
 
-    public void setModules(Set<Module> modules) {
+    public void setModules(List<Module> modules) {
         this.modules = modules;
     }
 

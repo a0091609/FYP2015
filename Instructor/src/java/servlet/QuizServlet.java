@@ -37,7 +37,7 @@ public class QuizServlet extends HttpServlet
             throws ServletException, IOException {
         try {
             if (request.getSession().getAttribute("userId") == null) {
-                response.sendRedirect("/Instructor/dashboard.jsp");
+                response.sendRedirect(request.getContextPath());
             }
             String action = request.getParameter("action");
             System.out.println("QuizServlet action: " + action);

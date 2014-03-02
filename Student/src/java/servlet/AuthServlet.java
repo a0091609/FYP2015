@@ -31,7 +31,7 @@ public class AuthServlet extends HttpServlet
                 System.out.println("AuthServlet token: " + token);
 
                 request.getSession().setAttribute("token", token);
-                response.sendRedirect("dashboard.jsp");
+                response.sendRedirect(request.getContextPath() + "/dashboard.jsp");
             }
             else {
                 String action = request.getParameter("action");
@@ -43,7 +43,7 @@ public class AuthServlet extends HttpServlet
 
                     request.getSession().setAttribute("userId", userId);
                     request.getSession().setAttribute("username", username);
-                    request.getSession().setAttribute("userType", "instructor");
+                    request.getSession().setAttribute("userType", "student");
 
                     response.setContentType("application/json;charset=utf-8");
                     JsonObject json = new JsonObject();

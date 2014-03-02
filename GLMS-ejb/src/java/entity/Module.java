@@ -1,9 +1,11 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 /**
@@ -11,19 +13,19 @@ import javax.persistence.ManyToOne;
  * @author Chih Yong
  */
 @Entity
-public class Module implements Serializable
-{
-    /* Fields to be added: quiz */
+public class Module implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     private String moduleId;
     private String moduleCode;
     private String moduleName;
+    private Boolean activated;
     @ManyToOne
     @JoinColumn(name = "CREATORUSERID")
     private Instructor creator;
-    private Boolean activated;
+    @ManyToMany
+    private List<Student> students;
 
     public String getModuleId() {
         return moduleId;
@@ -49,6 +51,14 @@ public class Module implements Serializable
         this.moduleName = moduleName;
     }
 
+    public Boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(Boolean activated) {
+        this.activated = activated;
+    }
+
     public Instructor getCreator() {
         return creator;
     }
@@ -57,12 +67,12 @@ public class Module implements Serializable
         this.creator = creator;
     }
 
-    public Boolean isActivated() {
-        return activated;
+    public List<Student> getStudents() {
+        return students;
     }
 
-    public void setActivated(Boolean activated) {
-        this.activated = activated;
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 
     @Override

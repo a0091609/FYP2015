@@ -1,3 +1,5 @@
+<% if(session.getAttribute("token") == null) response.sendRedirect("index.jsp"); %>
+
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
@@ -8,7 +10,8 @@
         <title>GLMS | Instructor Dashboard</title>
         <%-- Standard imports for every page--%>
         <%@include file="WEB-INF/jspf/stylesheets.jspf" %>
-        <% session.removeAttribute("moduleId"); session.removeAttribute("moduleName"); %>
+        <% session.removeAttribute("moduleId");
+            session.removeAttribute("moduleName");%>
     </head>
     <!-- END HEAD -->
     <!-- BEGIN BODY -->
@@ -36,7 +39,7 @@
                                     <a href="#">Home</a> 
                                     <i class="icon-angle-right"></i>
                                 </li>
-                                <li><a href="#">Dashboard</a></li>
+                                <li>Dashboard</li>
                             </ul>
                             <!-- END PAGE TITLE & BREADCRUMB-->
                         </div>
@@ -47,8 +50,12 @@
 
 
                     <!-- BEGIN PAGE CONTENT-->
-                    <div id="modules">
-                        <div style="text-align:center;"><img src="assets/img/loading.gif"></div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div id="modules">
+                                <div style="text-align:center;"><img src="assets/img/loading.gif"></div>
+                            </div>
+                        </div>
                     </div>
                     <!-- END PAGE CONTENT-->
 
@@ -73,13 +80,7 @@
             jQuery(document).ready(function()
             {
                 App.init(); // initlayout and core plugins
-                if (TOKEN.length < 1) {
-                    window.location = LOGIN_URL;
-                }
-                else {
-                    dashboardInit();
-                    displayUsername();
-                }
+                dashboardInit("<%=session.getAttribute("token")%>");
             });
         </script>
         <!-- END JAVASCRIPTS -->
