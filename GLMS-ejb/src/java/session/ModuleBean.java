@@ -29,6 +29,7 @@ public class ModuleBean implements ModuleBeanLocal {
                 module.setModuleId(moduleId);
                 module.setModuleCode(moduleCode);
                 module.setModuleName(moduleName);
+                module.setActivated(false);     // set false for modules without gamification features
 
                 Instructor instructor = em.find(Instructor.class, moduleCreator);
                 module.setCreator(instructor);
@@ -51,11 +52,11 @@ public class ModuleBean implements ModuleBeanLocal {
                 createModule(moduleId, moduleCode, moduleName, moduleCreator);
 
                 Student student = em.find(Student.class, userId);
-                Module module = em.find(Module.class,moduleId);
-                
+                Module module = em.find(Module.class, moduleId);
+
                 student.getModules().add(module);
                 module.getStudents().add(student);
-                
+
                 em.persist(module);
                 em.persist(student);
             }
@@ -77,18 +78,27 @@ public class ModuleBean implements ModuleBeanLocal {
         }
     }
 
-    public List getInstructorModules(String userId) {
+    public List<ModuleDetails> getInstructorModules(String userId) {
         Query q = em.createQuery("SELECT m FROM Module m WHERE m.creator.userId = '" + userId + "'");
 
-        return q.getResultList();
+        List<Module> moduleList = q.getResultList();
+
+        ArrayList<ModuleDetails> modules = new ArrayList<ModuleDetails>();
+
+        for (Module module : moduleList) {
+            ModuleDetails quizDetails = new ModuleDetails(module.getModuleId(), module.getModuleCode(), module.getModuleName());
+            modules.add(quizDetails);
+        }
+
+        return modules;
     }
 
     public List<ModuleDetails> getStudentModules(String userId) {
         Student student = em.find(Student.class, userId);
         List<Module> moduleList = student.getModules();
-        
+
         ArrayList<ModuleDetails> modules = new ArrayList<ModuleDetails>();
-        
+
         for (Module module : moduleList) {
             ModuleDetails quizDetails = new ModuleDetails(module.getModuleId(), module.getModuleCode(), module.getModuleName());
             modules.add(quizDetails);

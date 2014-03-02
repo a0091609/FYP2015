@@ -6,40 +6,42 @@
 <meta content="" name="author" />
 
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
-<link href="<c:url value="/assets/plugins/bootstrap/css/bootstrap.min.css"/>" rel="stylesheet" type="text/css" />
-<link href="<c:url value="/assets/plugins/bootstrap/css/bootstrap-responsive.min.css"/>" rel="stylesheet" type="text/css"/>
-<link href="<c:url value="/assets/plugins/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet" type="text/css"/>
-<link href="<c:url value="/assets/css/style-metro.css"/>" rel="stylesheet" type="text/css"/>
-<link href="<c:url value="/assets/css/style.css"/>" rel="stylesheet" type="text/css"/>
-<link href="<c:url value="/assets/css/style-responsive.css"/>" rel="stylesheet" type="text/css"/>
-<link href="<c:url value="/assets/css/themes/default.css"/>" rel="stylesheet" type="text/css" id="style_color"/>
-<link href="<c:url value="/assets/plugins/uniform/css/uniform.default.css"/>" rel="stylesheet" type="text/css"/>
+<link href="/Instructor/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/Instructor/assets/plugins/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+<link href="/Instructor/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="/Instructor/assets/css/style-metro.css" rel="stylesheet" type="text/css"/>
+<link href="/Instructor/assets/css/style.css" rel="stylesheet" type="text/css"/>
+<link href="/Instructor/assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+<link href="/Instructor/assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+<link href="/Instructor/assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
 <!-- END GLOBAL MANDATORY STYLES -->
 
 <!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
-<link href="<c:url value="/assets/plugins/gritter/css/jquery.gritter.css"/>" rel="stylesheet" type="text/css"/>
+<link href="/Instructor/assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" type="text/css"/>
 <!-- END PAGE LEVEL PLUGIN STYLES -->
 
 <!-- BEGIN PAGE LEVEL STYLES --> 
-<link href="<c:url value="/assets/css/GLOBAL.css"/>" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="/Instructor/assets/plugins/select2/select2_metro.css" />
+<link rel="stylesheet" href="/Instructor/assets/plugins/data-tables/DT_bootstrap.css" />
+<link href="/Instructor/assets/css/GLOBAL.css" rel="stylesheet" type="text/css"/>
 <!-- END PAGE LEVEL STYLES -->
 
 <!-- Favicons and shortcut icons! -->
-<link rel="shortcut icon" href="<c:url value="/assets/favicons/favicon.ico"/>">
-<link rel="apple-touch-icon" sizes="57x57" href="<c:url value="/assets/favicons/apple-touch-icon-57x57.png"/>">
-<link rel="apple-touch-icon" sizes="114x114" href="<c:url value="/assets/favicons/apple-touch-icon-114x114.png"/>">
-<link rel="apple-touch-icon" sizes="72x72" href="<c:url value="/assets/favicons/apple-touch-icon-72x72.png"/>">
-<link rel="apple-touch-icon" sizes="144x144" href="<c:url value="/assets/favicons/apple-touch-icon-144x144.png"/>">
-<link rel="apple-touch-icon" sizes="60x60" href="<c:url value="/assets/favicons/apple-touch-icon-60x60.png"/>">
-<link rel="apple-touch-icon" sizes="120x120" href="<c:url value="/assets/favicons/apple-touch-icon-120x120.png"/>">
-<link rel="apple-touch-icon" sizes="76x76" href="<c:url value="/assets/favicons/apple-touch-icon-76x76.png"/>">
-<link rel="apple-touch-icon" sizes="152x152" href="<c:url value="/assets/favicons/apple-touch-icon-152x152.png"/>">
-<link rel="apple-touch-icon-precomposed" href="<c:url value="/assets/favicons/apple-touch-icon-152x152.png"/>">
-<link rel="icon" type="image/png" sizes="196x196" href="${icon196}<c:url value="/assets/favicons/favicon-196x196.png"/>">
-<link rel="icon" type="image/png" sizes="160x160" href="${icon160}<c:url value="/assets/favicons/favicon-160x160.png"/>">
-<link rel="icon" type="image/png" sizes="96x96" href="<c:url value="/assets/favicons/favicon-96x96.png"/>">
-<link rel="icon" type="image/png" sizes="32x32" href="<c:url value="/assets/favicons/favicon-32x32.png"/>">
-<link rel="icon" type="image/png" sizes="16x16" href="<c:url value="/assets/favicons/favicon-16x16.png"/>">
+<link rel="shortcut icon" href="/Instructor/assets/favicons/favicon.ico"/>
+<link rel="apple-touch-icon" sizes="57x57" href="/Instructor/assets/favicons/apple-touch-icon-57x57.png"/>
+<link rel="apple-touch-icon" sizes="114x114" href="/Instructor/assets/favicons/apple-touch-icon-114x114.png"/>
+<link rel="apple-touch-icon" sizes="72x72" href="/Instructor/assets/favicons/apple-touch-icon-72x72.png"/>
+<link rel="apple-touch-icon" sizes="144x144" href="/Instructor/assets/favicons/apple-touch-icon-144x144.png"/>
+<link rel="apple-touch-icon" sizes="60x60" href="/Instructor/assets/favicons/apple-touch-icon-60x60.png"/>
+<link rel="apple-touch-icon" sizes="120x120" href="/Instructor/assets/favicons/apple-touch-icon-120x120.png"/>
+<link rel="apple-touch-icon" sizes="76x76" href="/Instructor/assets/favicons/apple-touch-icon-76x76.png"/>
+<link rel="apple-touch-icon" sizes="152x152" href="/Instructor/assets/favicons/apple-touch-icon-152x152.png"/>
+<link rel="apple-touch-icon-precomposed" href="/Instructor/assets/favicons/apple-touch-icon-152x152.png"/>
+<link rel="icon" type="image/png" sizes="196x196" href="/Instructor/assets/favicons/favicon-196x196.png"/>
+<link rel="icon" type="image/png" sizes="160x160" href="/Instructor/assets/favicons/favicon-160x160.png"/>
+<link rel="icon" type="image/png" sizes="96x96" href="/Instructor/assets/favicons/favicon-96x96.png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/Instructor/assets/favicons/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/Instructor/assets/favicons/favicon-16x16.png"/>
 
 <meta name="msapplication-TileColor" content="#000000">
 <meta name="msapplication-TileImage" content="/Instructor/assets/favicons/mstile-144x144.png">
@@ -48,3 +50,5 @@
 <meta name="msapplication-square150x150logo" content="/Instructor/assets/favicons/mstile-150x150.png">
 <meta name="msapplication-square310x310logo" content="/Instructor/assets/favicons/mstile-310x310.png">
 <meta name="msapplication-wide310x150logo" content="/Instructor/assets/favicons/mstile-310x150.png">
+
+

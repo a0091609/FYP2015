@@ -69,8 +69,7 @@ $('#feature-coins').change(function()
     {
         deactivateCoins();
     }
-});
-$('#feature-globalLB').change(function()
+});$('#feature-globalLB').change(function()
 {
     if ($(this).is(':checked'))
     {
@@ -78,10 +77,9 @@ $('#feature-globalLB').change(function()
     }
     else
     {
-        deactivateGlobalLB();
+        deactivateglobalLB();
     }
-});
-$('#feature-socialLB').change(function()
+});$('#feature-socialLB').change(function()
 {
     if ($(this).is(':checked'))
     {
@@ -91,8 +89,7 @@ $('#feature-socialLB').change(function()
     {
         deactivateSocialLB();
     }
-});
-$('#feature-autoRW').change(function()
+});$('#feature-autoRW').change(function()
 {
     if ($(this).is(':checked'))
     {
@@ -102,8 +99,7 @@ $('#feature-autoRW').change(function()
     {
         deactivateAutoRW();
     }
-});
-$('#feature-mkt').change(function()
+});$('#feature-mkt').change(function()
 {
     if ($(this).is(':checked'))
     {
@@ -113,8 +109,7 @@ $('#feature-mkt').change(function()
     {
         deactivateMkt();
     }
-});
-$('#feature-quest').change(function()
+});$('#feature-quest').change(function()
 {
     if ($(this).is(':checked'))
     {
@@ -124,8 +119,7 @@ $('#feature-quest').change(function()
     {
         deactivateQuest();
     }
-});
-$('#feature-quiz').change(function()
+});$('#feature-quiz').change(function()
 {
     if ($(this).is(':checked'))
     {
@@ -135,8 +129,7 @@ $('#feature-quiz').change(function()
     {
         deactivateQuiz();
     }
-});
-$('#feature-buddy').change(function()
+});$('#feature-buddy').change(function()
 {
     if ($(this).is(':checked'))
     {
@@ -146,8 +139,7 @@ $('#feature-buddy').change(function()
     {
         deactivateBuddy();
     }
-});
-$('#feature-avatar').change(function()
+});$('#feature-avatar').change(function()
 {
     if ($(this).is(':checked'))
     {

@@ -7,7 +7,7 @@ package servlet;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import entity.Module;
+import helper.ModuleDetails;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -53,7 +53,7 @@ public class ModuleServlet extends HttpServlet
             }
             else if (action.equals("getInstructorModules")) {
                 String userId = request.getSession().getAttribute("userId").toString();
-                List<Module> list = moduleBean.getInstructorModules(userId);
+                List<ModuleDetails> list = moduleBean.getInstructorModules(userId);
                 response.setContentType("application/json;charset=utf-8");
                 response.getWriter().write(new Gson().toJson(list));
             }
