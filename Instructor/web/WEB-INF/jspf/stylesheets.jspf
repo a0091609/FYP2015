@@ -26,6 +26,7 @@
 <link href="/Instructor/assets/css/GLOBAL.css" rel="stylesheet" type="text/css"/>
 <!-- END PAGE LEVEL STYLES -->
 
+
 <!-- Favicons and shortcut icons! -->
 <link rel="shortcut icon" href="/Instructor/assets/favicons/favicon.ico"/>
 <link rel="apple-touch-icon" sizes="57x57" href="/Instructor/assets/favicons/apple-touch-icon-57x57.png"/>
@@ -50,5 +51,3 @@
 <meta name="msapplication-square150x150logo" content="/Instructor/assets/favicons/mstile-150x150.png">
 <meta name="msapplication-square310x310logo" content="/Instructor/assets/favicons/mstile-310x310.png">
 <meta name="msapplication-wide310x150logo" content="/Instructor/assets/favicons/mstile-310x150.png">
-
-

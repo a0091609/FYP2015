@@ -11,5 +11,5 @@ function setActivePage(ID)
 {
     $(".page-sidebar-menu .active").removeClass("active");
     $(".page-sidebar-menu .start").removeClass("start");
-    $('#' + ID).addClass("start active");
+    $('#'+ID).addClass("start active");
 }
