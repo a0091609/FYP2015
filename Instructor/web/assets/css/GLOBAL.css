@@ -13,3 +13,10 @@ This is a global CSS file to fix styling issues
     max-width: 30px !important;
     padding-right: 3px;
 }
+
+
+@media (max-width: 768px) 
+{
+    #sample_1_filter, #sample_1_info, #sample_2_filter, #sample_2_info, #sample_3_filter, #sample_3_info, #sample_4_filter, #sample_4_info
+    { margin-bottom:-30px; }
+}

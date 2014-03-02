@@ -21,10 +21,8 @@
 <!-- END PAGE LEVEL PLUGIN STYLES -->
 <!-- BEGIN PAGE LEVEL STYLES --> 
 <link href="assets/css/pages/tasks.css" rel="stylesheet" type="text/css" media="screen"/>
-<link href="assets/css/GLOBAL.css" rel="stylesheet" type="text/css"/>
-<!-- END PAGE LEVEL STYLES -->
-
-
+<link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2_metro.css" />
+<link rel="stylesheet" href="assets/plugins/data-tables/DT_bootstrap.css" />
 <!-- Favicons and shortcut icons! -->
 <link rel="shortcut icon" href="assets/favicons/favicon.ico">
 <link rel="apple-touch-icon" sizes="57x57" href="assets/favicons/apple-touch-icon-57x57.png">
@@ -48,3 +46,5 @@
 <meta name="msapplication-square150x150logo" content="assets/favicons/mstile-150x150.png">
 <meta name="msapplication-square310x310logo" content="assets/favicons/mstile-310x310.png">
 <meta name="msapplication-wide310x150logo" content="assets/favicons/mstile-310x150.png">
+
+<link href="assets/css/GLOBAL.css" rel="stylesheet" type="text/css"/>

@@ -9,6 +9,7 @@
 //Simple function to toggle active page
 function setActivePage(ID)
 {
-    $(".active").removeClass("active");
-    $('#'+ID).addClass("active");
+    $(".page-sidebar-menu .active").removeClass("active");
+    $(".page-sidebar-menu .start").removeClass("start");
+    $('#'+ID).addClass("start active");
 }

@@ -23,10 +23,10 @@
             </a>
         </li>
         
-        <li>
-            <a href="activateModule.jsp">
+        <li id="link-items">
+            <a href="itemMgt.jsp">
                 <i class="icon-file-text"></i> 
-                <span class="title">Create Module</span>
+                <span class="title">Items</span>
             </a>
         </li>
         <li>
