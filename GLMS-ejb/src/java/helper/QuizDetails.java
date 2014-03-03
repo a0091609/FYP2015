@@ -32,6 +32,14 @@ public class QuizDetails implements Serializable
         this.dateClose = dateClose;
         this.timeCreated = timeCreated;
     }
+    
+    public QuizDetails(String name, String descr, String difficultyLvl, Date dateOpen, Date dateClose) {
+        this.name = name;
+        this.descr = descr;
+        this.difficultyLvl = difficultyLvl;
+        this.dateOpen = dateOpen;
+        this.dateClose = dateClose;
+    }
 
     public String getName() {
         return name;

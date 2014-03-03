@@ -14,7 +14,7 @@ function dashboardInit(token) {
             }
             createLoginSession(userId, token).done(function(data) {
                 setTimeout(function() {
-                    displayModules()
+                    displayModules();
                 }, 3000);
             });
         });
@@ -122,11 +122,11 @@ function displayModules() {
             moduleList += '<div class="portlet-body">';
 
 //            if (!m.activated) {
-//                moduleList += '<a href="/Instructor/ModuleServlet?action=activateModule&moduleId=' + m.moduleId + '&moduleCode=' + m.moduleCode + '&moduleName=' + m.moduleName + '">Activate module</a>';
 //            }
 //            else {
-//                moduleList += '<a href="/Instructor/QuizServlet?action=viewAllQuiz&moduleId=' + m.moduleId + '&moduleName=' + m.moduleName + '">Quiz</a>';
+//                moduleList += '<a href="/Student/QuizServlet?action=viewAllQuiz&moduleId=' + m.moduleId + '&moduleName=' + m.moduleName + '">Quiz</a>';
 //            }
+            moduleList += '<a href="/Student/QuizServlet?action=viewAllQuiz&moduleId=' + m.moduleId + '&moduleName=' + m.moduleName + '">Quiz</a>';
             moduleList += '</div>\
                            </div>';
             // End of portlet-body

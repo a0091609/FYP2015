@@ -1,13 +1,16 @@
 package servlet;
 
+import helper.QuizDetails;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import session.QuizBeanLocal;
 
 /**
@@ -29,8 +32,24 @@ public class QuizServlet extends HttpServlet {
             String action = request.getParameter("action");
             System.out.println("QuizServlet action: " + action);
 
-            if (action.equals("viewQuiz")) {
-                
+            if (action.equals("viewAllQuiz")) {
+                String moduleId = "", moduleName = "";
+                HttpSession session = request.getSession();
+
+                if (session.getAttribute("moduleId") == null) {
+                    moduleId = request.getParameter("moduleId");
+                    moduleName = request.getParameter("moduleName");
+
+                    request.getSession().setAttribute("moduleId", moduleId);
+                    request.getSession().setAttribute("moduleName", moduleName);
+                } else {
+                    moduleId = request.getSession().getAttribute("moduleId").toString();
+                }
+
+                List<QuizDetails> quizzes = quizBean.studentGetModuleQuiz(moduleId);
+                request.setAttribute("quizzes", quizzes);
+
+                request.getRequestDispatcher("/quiz/quiz.jsp").forward(request, response);
             }
         } catch (Exception e) {
 

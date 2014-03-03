@@ -75,6 +75,15 @@ public class Module implements Serializable {
         this.students = students;
     }
 
+    public void addStudent(Student student) {
+        if (!getStudents().contains(student)) {
+            getStudents().add(student);
+        }
+        if (!student.getModules().contains(this)) {
+            student.getModules().add(this);
+        }
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

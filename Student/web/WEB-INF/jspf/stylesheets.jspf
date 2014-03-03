@@ -15,7 +15,10 @@
 <!-- BEGIN PAGE LEVEL PLUGIN STYLES --> 
 <link href="/Student/assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" type="text/css"/>
 <!-- END PAGE LEVEL PLUGIN STYLES -->
-<!-- BEGIN PAGE LEVEL STYLES --> 
+
+<!-- BEGIN PAGE LEVEL STYLES -->
+<link rel="stylesheet" type="text/css" href="/Student/assets/plugins/select2/select2_metro.css" />
+<link rel="stylesheet" href="/Student/assets/plugins/data-tables/DT_bootstrap.css" />
 <link href="/Student/assets/css/GLOBAL.css" rel="stylesheet" type="text/css"/>
 <!-- END PAGE LEVEL STYLES -->
 

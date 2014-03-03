@@ -54,9 +54,7 @@ public class ModuleBean implements ModuleBeanLocal {
                 Student student = em.find(Student.class, userId);
                 Module module = em.find(Module.class, moduleId);
 
-                student.getModules().add(module);
-                module.getStudents().add(student);
-
+                student.addModule(module);
                 em.persist(module);
                 em.persist(student);
             }
@@ -86,7 +84,7 @@ public class ModuleBean implements ModuleBeanLocal {
         ArrayList<ModuleDetails> modules = new ArrayList<ModuleDetails>();
 
         for (Module module : moduleList) {
-            ModuleDetails quizDetails = new ModuleDetails(module.getModuleId(), module.getModuleCode(), module.getModuleName());
+            ModuleDetails quizDetails = new ModuleDetails(module.getModuleId(), module.getModuleCode(), module.getModuleName(), module.isActivated());
             modules.add(quizDetails);
         }
 

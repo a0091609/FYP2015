@@ -11,11 +11,19 @@ public class ModuleDetails implements Serializable {
     private String moduleId;
     private String moduleCode;
     private String moduleName;
+    private Boolean activated;
 
     public ModuleDetails(String moduleId, String moduleCode, String moduleName) {
         this.moduleId = moduleId;
         this.moduleCode = moduleCode;
         this.moduleName = moduleName;
+    }
+
+    public ModuleDetails(String moduleId, String moduleCode, String moduleName, Boolean activated) {
+        this.moduleId = moduleId;
+        this.moduleCode = moduleCode;
+        this.moduleName = moduleName;
+        this.activated = activated;
     }
 
     public String getModuleId() {
@@ -41,6 +49,13 @@ public class ModuleDetails implements Serializable {
     public void setModuleName(String moduleName) {
         this.moduleName = moduleName;
     }
-    
-    
+
+    public Boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(Boolean activated) {
+        this.activated = activated;
+    }
+
 }
