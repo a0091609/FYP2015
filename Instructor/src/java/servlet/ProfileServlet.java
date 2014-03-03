@@ -21,7 +21,7 @@ import session.AccountBeanLocal;
  * @author Chih Yong
  */
 @WebServlet(name = "ProfileServlet", urlPatterns = {"/ProfileServlet", "/ProfileServlet?*"})
-public class ProfileServlet extends HttpServlet
+public class ProfileServlet extends HttpServlet 
 {
 
     @EJB
