@@ -57,7 +57,7 @@ public class QuizServlet extends HttpServlet
                     moduleId = request.getSession().getAttribute("moduleId").toString();
                 }
 
-                List<QuizDetails> quizzes = quizBean.getModuleQuiz(moduleId);
+                List<QuizDetails> quizzes = quizBean.instructorGetModuleQuiz(moduleId);
                 request.setAttribute("quizzes", quizzes);
 
                 request.getRequestDispatcher("/quiz/allQuizzes.jsp").forward(request, response);

@@ -27,7 +27,7 @@ public class QuizBean implements QuizBeanLocal
     @PersistenceContext
     private EntityManager em;
 
-    public List<QuizDetails> getModuleQuiz(String moduleId) {
+    public List<QuizDetails> instructorGetModuleQuiz(String moduleId) {
         Query q = em.createQuery("SELECT q FROM Quiz q WHERE q.module.moduleId = '" + moduleId + "'");
         List<Quiz> quizList = q.getResultList();
 
@@ -74,5 +74,19 @@ public class QuizBean implements QuizBeanLocal
             System.out.println(e);
             return false;
         }
+    }
+    
+    public List<QuizDetails> studentGetModuleQuiz(String moduleId) {
+        Query q = em.createQuery("SELECT q FROM Quiz q WHERE q.module.moduleId = '" + moduleId + "'");
+        List<Quiz> quizList = q.getResultList();
+
+        ArrayList<QuizDetails> quizzes = new ArrayList<>();
+
+        for (Quiz quiz : quizList) {
+            QuizDetails quizDetails = new QuizDetails(quiz.getName(), quiz.getDescr(),
+                    quiz.getDifficultyLvl(), quiz.getDateOpen(), quiz.getDateClose());
+            quizzes.add(quizDetails);
+        }
+        return quizzes;
     }
 }

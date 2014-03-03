@@ -106,6 +106,15 @@ public class Student implements Serializable {
         this.modules = modules;
     }
 
+    public void addModule(Module module) {
+        if (!getModules().contains(module)) {
+            getModules().add(module);
+        }
+        if (!module.getStudents().contains(this)) {
+            module.getStudents().add(this);
+        }
+    }
+
 //    public GameProfile getGameProfile() {
 //        return gameProfile;
 //    }

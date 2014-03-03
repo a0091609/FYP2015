@@ -7,14 +7,11 @@
     <!-- BEGIN HEAD -->
     <head>
         <meta charset="utf-8" />
-        <title>GLMS | Instructor Dashboard</title>
+        <title>GLMS | Student Dashboard</title>
         <%-- Standard imports for every page--%>
         <%@include file="/WEB-INF/jspf/stylesheets.jspf" %>
         <link rel="stylesheet" type="text/css" href="assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.css"/>
         <link href="assets/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css"/>
-
-        <link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2_metro.css" />
-        <link rel="stylesheet" href="assets/plugins/data-tables/DT_bootstrap.css" />
     </head>
     <!-- END HEAD -->
     <!-- BEGIN BODY -->
@@ -66,9 +63,6 @@
                                     <div class="portlet box grey">
                                         <div class="portlet-title">
                                             <div class="caption">Quiz</div>
-                                            <div class="actions">
-                                                <a class="btn blue" data-toggle="modal" href="#newQuiz-form"><i class="icon-plus"></i> New Quiz</a>
-                                            </div>
                                         </div>
                                         <div class="portlet-body">
                                             <table class="table table-striped table-bordered table-hover" id="sample_2">
@@ -78,8 +72,8 @@
                                                         <th>Difficulty</th>
                                                         <th>Date Open</th>
                                                         <th>Date Close</th>
-                                                        <th>Time Created</th>
                                                         <th>Status</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -94,7 +88,7 @@
                                                         <td><%=quiz.getDifficultyLvl()%></td>
                                                         <td><%=dateFormat.format(quiz.getDateOpen())%></td>
                                                         <td><%=dateFormat.format(quiz.getDateClose())%></td>
-                                                        <td><%=quiz.getTimeCreated()%></td>
+                                                        <td></td>
                                                         <td></td>
                                                     </tr>
                                                     <%
