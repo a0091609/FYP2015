@@ -99,7 +99,7 @@
                                 <div class="row-fluid">
                                     <div class="span6">
                                         <div class="control-group">
-                                            <label class="control-label">Default Date Ranges</label>
+                                            <label class="control-label">Dates Open</label>
                                             <div class="controls">
                                                 <div class="input-prepend">
                                                     <span class="add-on"><i class="icon-calendar"></i></span><input type="text" class="m-wrap date-range" name="datesOpen"/>

@@ -11,10 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-/**
- *
- * @author Chih Yong
- */
 @Stateless
 public class ModuleBean implements ModuleBeanLocal {
 

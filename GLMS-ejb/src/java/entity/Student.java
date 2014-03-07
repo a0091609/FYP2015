@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 /**
@@ -31,6 +32,9 @@ public class Student implements Serializable {
     private Integer matriculationYear;
     @ManyToMany(mappedBy = "students")
     private List<Module> modules;
+    @JoinTable(name="buddyList")
+    @ManyToMany
+    private List<Student> buddies;
 //    @OneToOne @MapsId
 //    private GameProfile gameProfile;
 
@@ -115,6 +119,22 @@ public class Student implements Serializable {
         }
     }
 
+    public List<Student> getBuddies() {
+        return buddies;
+    }
+
+    public void setBuddies(List<Student> buddies) {
+        this.buddies = buddies;
+    }
+
+    public void addStudent(Student student) {
+        if (!getBuddies().contains(student)) {
+            getBuddies().add(student);
+        }
+        if (!student.getBuddies().contains(this)) {
+            student.getBuddies().add(this);
+        }
+    }
 //    public GameProfile getGameProfile() {
 //        return gameProfile;
 //    }

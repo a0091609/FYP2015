@@ -20,6 +20,7 @@ public class Module implements Serializable {
     private String moduleId;
     private String moduleCode;
     private String moduleName;
+    private String descr;
     private Boolean activated;
     @ManyToOne
     @JoinColumn(name = "CREATORUSERID")
@@ -49,6 +50,14 @@ public class Module implements Serializable {
 
     public void setModuleName(String moduleName) {
         this.moduleName = moduleName;
+    }
+
+    public String getDescr() {
+        return descr;
+    }
+
+    public void setDescr(String descr) {
+        this.descr = descr;
     }
 
     public Boolean isActivated() {

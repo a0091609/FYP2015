@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package session;
 
 import entity.Module;
@@ -16,13 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-/**
- *
- * @author Chih Yong
- */
 @Stateless
-public class QuizBean implements QuizBeanLocal
-{
+public class QuizBean implements QuizBeanLocal {
 
     @PersistenceContext
     private EntityManager em;
@@ -69,13 +59,12 @@ public class QuizBean implements QuizBeanLocal
             System.out.println("Quiz info saved");
 
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
             return false;
         }
     }
-    
+
     public List<QuizDetails> studentGetModuleQuiz(String moduleId) {
         Query q = em.createQuery("SELECT q FROM Quiz q WHERE q.module.moduleId = '" + moduleId + "'");
         List<Quiz> quizList = q.getResultList();

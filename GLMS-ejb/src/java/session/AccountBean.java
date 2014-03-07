@@ -6,10 +6,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-/**
- *
- * @author Chih Yong
- */
 @Stateless
 public class AccountBean implements AccountBeanLocal {
 

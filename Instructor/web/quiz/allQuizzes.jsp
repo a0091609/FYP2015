@@ -71,37 +71,39 @@
                                             </div>
                                         </div>
                                         <div class="portlet-body">
-                                            <table class="table table-striped table-bordered table-hover" id="sample_2">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Quiz</th>
-                                                        <th>Difficulty</th>
-                                                        <th>Date Open</th>
-                                                        <th>Date Close</th>
-                                                        <th>Time Created</th>
-                                                        <th>Status</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <%
-                                                        ArrayList quizzes = (ArrayList) request.getAttribute("quizzes");
-                                                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                                                        for (Object o : quizzes) {
-                                                            QuizDetails quiz = (QuizDetails) o;
-                                                    %>
-                                                    <tr class="odd gradeX">
-                                                        <td><%=quiz.getName()%></td>
-                                                        <td><%=quiz.getDifficultyLvl()%></td>
-                                                        <td><%=dateFormat.format(quiz.getDateOpen())%></td>
-                                                        <td><%=dateFormat.format(quiz.getDateClose())%></td>
-                                                        <td><%=quiz.getTimeCreated()%></td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <%
-                                                        }
-                                                    %>
-                                                </tbody>
-                                            </table>
+                                            <div class="no-more-tables">
+                                                <table class="table table-striped table-bordered table-hover cf" id="sample_1">
+                                                    <thead class="cf">
+                                                        <tr>
+                                                            <th>Quiz</th>
+                                                            <th>Difficulty</th>
+                                                            <th>Date Open</th>
+                                                            <th>Date Close</th>
+                                                            <th>Time Created</th>
+                                                            <th>Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <%
+                                                            ArrayList quizzes = (ArrayList) request.getAttribute("quizzes");
+                                                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                                            for (Object o : quizzes) {
+                                                                QuizDetails quiz = (QuizDetails) o;
+                                                        %>
+                                                        <tr class="odd gradeX">
+                                                            <td data-title="Quiz"><%=quiz.getName()%></td>
+                                                            <td data-title="Difficulty"><%=quiz.getDifficultyLvl()%></td>
+                                                            <td data-title="Date Open"><%=dateFormat.format(quiz.getDateOpen())%></td>
+                                                            <td data-title="Date Close"><%=dateFormat.format(quiz.getDateClose())%></td>
+                                                            <td data-title="Time Created"><%=quiz.getTimeCreated()%></td>
+                                                            <td data-title="Status">&nbsp;</td>
+                                                        </tr>
+                                                        <%
+                                                            }
+                                                        %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                             <div id="newQuiz-form" class="modal hide fade" tabindex="-1" data-width="760">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
