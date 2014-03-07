@@ -7,7 +7,7 @@
         response.sendRedirect(LOGIN_URL);
     }
     else {
-        response.sendRedirect("/dashboard.jsp");
+        response.sendRedirect("dashboard.jsp");
     }
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

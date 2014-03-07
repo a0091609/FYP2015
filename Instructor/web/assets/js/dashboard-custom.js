@@ -113,7 +113,7 @@ function displayModules() {
         var moduleList = '', i;
         for (i = 0; i < data.length; i++) {
             var m = data[i];
-
+            console.log(m);
             // Start of portlet box
             moduleList += '<div class="portlet box grey">';
             // Start of portlet-title

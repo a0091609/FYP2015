@@ -7,17 +7,17 @@
         <meta charset="utf-8" />
         <title>GLMS | Items Management</title>
         <%-- Standard imports for every page--%>
-        <%@include file="WEB-INF/jspf/stylesheets.jspf" %>
+        <%@include file="/WEB-INF/jspf/stylesheets.jspf" %>
     </head>
     <!-- END HEAD -->
     <!-- BEGIN BODY -->
     <body class="page-header-fixed page-sidebar-fixed">
         <%-- Import for the header bar --%>
-        <%@include file="WEB-INF/jspf/headerBar.jspf" %> 
+        <%@include file="/WEB-INF/jspf/headerBar.jspf" %> 
         <!-- BEGIN CONTAINER -->
         <div class="page-container">
             <%-- Import for the side bar --%>
-            <%@include file="WEB-INF/jspf/sideBar.jspf" %> 
+            <%@include file="/WEB-INF/jspf/sideBar.jspf" %> 
             <!-- BEGIN PAGE -->
             <div class="page-content">
                 <!-- BEGIN PAGE CONTAINER-->
@@ -32,11 +32,11 @@
                             <ul class="breadcrumb">
                                 <li>
                                     <i class="icon-home"></i>
-                                    <a href="index.jsp">Home</a> 
+                                    <a href="/index.jsp">Home</a> 
                                     <i class="icon-angle-right"></i>
                                 </li>
                                 <li>
-                                    <a href="dashboard.jsp">Items</a>
+                                    <a href="/dashboard.jsp">Items</a>
                                 </li>
                             </ul>
                             <!-- END PAGE TITLE & BREADCRUMB-->
@@ -68,6 +68,7 @@
                                         </ul>
                                         <div class="tab-content no-more-tables">
                                             <div class="tab-pane active" id="portlet_tab1">
+                                                Tab 1
                                                 <table class="table table-striped table-bordered table-hover table-condensed cf" id="sample_3">
                                                     <thead class="cf">
                                                         <tr>
@@ -88,6 +89,7 @@
                                                 </table>
                                             </div>
                                             <div class="tab-pane " id="portlet_tab2">
+                                                Tab 2
                                                 <table class="table table-striped table-bordered table-hover table-condensed cf" id="sample_2">
                                                     <thead class="cf">
                                                         <tr>
@@ -108,6 +110,7 @@
                                                 </table>
                                             </div>
                                             <div class="tab-pane " id="portlet_tab3">
+                                                Tab 3
                                                 <table class="table table-striped table-bordered table-hover table-condensed cf" id="sample_1">
                                                     <thead class="cf">
                                                         <tr>
@@ -128,6 +131,7 @@
                                                 </table>
                                             </div>
                                             <div class="tab-pane " id="portlet_tab4">
+                                                Tab 4
                                                 <table class="table table-striped table-bordered table-hover table-condensed cf" id="sample_4">
                                                     <thead class="cf">
                                                         <tr>
@@ -167,11 +171,11 @@
         <!-- END CONTAINER -->
 
         <%-- Import for the footer bar --%>
-        <%@include file="WEB-INF/jspf/footer.jspf" %>   
+        <%@include file="/WEB-INF/jspf/footer.jspf" %>   
 
         <!-- BEGIN JAVASCRIPTS (Load javascripts at bottom, this will reduce page load time) -->
         <%-- Standard JS imports for every page--%>
-        <%@include file="WEB-INF/jspf/javascripts.jspf" %>
+        <%@include file="/WEB-INF/jspf/javascripts.jspf" %>
         <script>
             jQuery(document).ready(function()
             {
