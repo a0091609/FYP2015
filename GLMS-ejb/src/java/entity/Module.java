@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -27,6 +28,19 @@ public class Module implements Serializable {
     private Instructor creator;
     @ManyToMany
     private List<Student> students;
+    @OneToMany(mappedBy="module")
+    private List<Item> items;
+
+    
+    public List<Item> getItems()
+    {
+        return items;
+    }
+
+    public void setItems(List<Item> items)
+    {
+        this.items = items;
+    }
 
     public String getModuleId() {
         return moduleId;

@@ -7,11 +7,11 @@ package entity;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -37,6 +37,44 @@ public class Student implements Serializable {
     private List<Student> buddies;
 //    @OneToOne @MapsId
 //    private GameProfile gameProfile;
+    @ManyToMany
+    private List<Item> inventory;
+    @ManyToMany
+    private List<Item> wishlist;
+    @OneToMany
+    private List<Task> tasks;
+    
+    
+
+    public List<Task> getTasks()
+    {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks)
+    {
+        this.tasks = tasks;
+    }    
+    
+    public List<Item> getInventory()
+    {
+        return inventory;
+    }
+
+    public void setInventory(List<Item> inventory)
+    {
+        this.inventory = inventory;
+    }
+
+    public List<Item> getWishlist()
+    {
+        return wishlist;
+    }
+
+    public void setWishlist(List<Item> wishlist)
+    {
+        this.wishlist = wishlist;
+    }
 
     public String getUserId() {
         return userId;
