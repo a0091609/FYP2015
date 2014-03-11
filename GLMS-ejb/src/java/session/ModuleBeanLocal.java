@@ -1,5 +1,6 @@
 package session;
 
+import entity.Module;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -15,5 +16,7 @@ public interface ModuleBeanLocal {
     public List getInstructorModules(String userId);
 
     public List getStudentModules(String userId);
+
+    public Module getModule(String moduleId) throws Exception;
 
 }

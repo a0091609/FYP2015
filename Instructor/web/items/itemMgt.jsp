@@ -1,3 +1,4 @@
+<%@page import="entity.Module"%>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
@@ -22,6 +23,7 @@
             <div class="page-content">
                 <!-- BEGIN PAGE CONTAINER-->
                 <div class="container-fluid">
+                    <%Module mod = (Module) request.getAttribute("module");%>
                     <!-- BEGIN PAGE HEADER-->
                     <div class="row-fluid">
                         <div class="span12">
@@ -32,11 +34,15 @@
                             <ul class="breadcrumb">
                                 <li>
                                     <i class="icon-home"></i>
-                                    <a href="/index.jsp">Home</a> 
+                                    <a href="index.jsp">Home</a> 
                                     <i class="icon-angle-right"></i>
                                 </li>
                                 <li>
-                                    <a href="/dashboard.jsp">Items</a>
+                                    <a href="Items">Items</a>
+                                    <i class="icon-angle-right"></i>
+                                </li>
+                                <li>
+                                    <a href="#"><%=mod.getModuleCode()%></a>
                                 </li>
                             </ul>
                             <!-- END PAGE TITLE & BREADCRUMB-->
