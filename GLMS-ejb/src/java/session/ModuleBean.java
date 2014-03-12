@@ -100,4 +100,16 @@ public class ModuleBean implements ModuleBeanLocal {
 
         return modules;
     }
+    
+    //Helper method: retrieves the module based on moduleId
+    public Module getModule(String moduleId) throws Exception
+    {
+        Module module = em.find(Module.class, moduleId);
+        //Check if Item exists
+        if (module == null)
+        {
+            throw new Exception("ERROR: MODULE DOES NOT EXIST!");
+        }
+        return module;
+    }
 }

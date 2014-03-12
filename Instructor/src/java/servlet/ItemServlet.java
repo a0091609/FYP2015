@@ -3,7 +3,9 @@
  */
 package servlet;
 
+import entity.Module;
 import java.io.IOException;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import session.ItemBeanLocal;
+import session.ModuleBeanLocal;
 
 /**
  *
@@ -27,10 +30,13 @@ public class ItemServlet extends HttpServlet
     //Global Variables
     HttpServletRequest request;
     HttpServletResponse response;
+    private List data = null;
 
     //EJB References
     @EJB
     ItemBeanLocal itemBean;
+    @EJB
+    ModuleBeanLocal moduleBean;
 
     
     //Functionalities needed:        
@@ -49,21 +55,30 @@ public class ItemServlet extends HttpServlet
         HttpSession session = request.getSession();
         this.request = request;
         this.response = response;
+        String userId = (String) session.getAttribute("userId");
+        String moduleId = request.getParameter("moduleId");
         String action = request.getParameter("action");
-        System.out.println("ItemsServlet action: " + action);
+        System.out.println("ItemServlet action: " + action);
 
         try
         {
             //User not logged in
-            if (session.getAttribute("userId") == null)
+            if (userId == null)
             {
                 response.sendRedirect(request.getContextPath());
             }
 
-            //Default action null allowed for convenience
-            if (action == null || action.equals("viewAllItems"))
+            //Default action brings them to the module selection page
+            else if (action==null || moduleId==null)
             {
-                displayItems();
+                data = moduleBean.getInstructorModules(userId);
+                request.setAttribute("moduleList", data);
+                request.getRequestDispatcher("/items/items.jsp").forward(request, response);
+            }
+            
+            else if(action.equals("viewAllItems"))
+            {
+                displayItems(moduleId); 
             }
             else if (action.equals("createStyleItem"))
             {
@@ -92,26 +107,26 @@ public class ItemServlet extends HttpServlet
         }
         finally
         {
-            System.out.println("ItemsServlet: servlet action ended.");
+            System.out.println("ItemServlet: servlet action ended.");
         }
     }
 
+    
+    
 //Private methods, for convenience
-    private void displayItems() throws Exception
+    
+    
+    //Displays all the items for a module
+    private void displayItems(String moduleId) throws Exception
     {
-//        // Get the saved coupons
-//        data = coupons.getMySavedCoupons(username);
-//        System.out.println("Saved Coupons: " + data);
-//        request.setAttribute("saved", data);
-//
-//        data = null;
-//
-//        // Get the all the issued coupons
-//        data = coupons.getAllIssued();
-//        System.out.println("All Issued Coupons: " + data);
-//        request.setAttribute("allIssued", data);
-//
-//        data = null;
+        // Get the saved coupons
+        data = itemBean.getAllItems(moduleId);
+        System.out.println("All Items: " + data);
+        request.setAttribute("allItems", data);
+        
+        //Need to set the moduleID or it will be lost
+        Module mod = moduleBean.getModule(moduleId);
+        request.setAttribute("module", mod);
 
         //Prevents browser from caching and not updating
         response.setHeader("Cache-Control", "no-cache");

@@ -22,10 +22,10 @@
                 <span class="title">Dashboard</span>
             </a>
         </li>
-        
+
         <li id="link-items">
-            <a href="./items/itemMgt.jsp">
-                <i class="icon-file-text"></i> 
+            <a href="./Items">
+                <i class="icon-shopping-cart"></i> 
                 <span class="title">Items</span>
             </a>
         </li>
@@ -67,7 +67,7 @@
                 </li>
             </ul>
         </li>
-        
+
         <li>
             <a class="active" href="javascript:;">
                 <i class="icon-sitemap"></i> 

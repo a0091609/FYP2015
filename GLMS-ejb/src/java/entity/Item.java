@@ -29,7 +29,18 @@ public class Item implements Serializable
     private String name;
     private String description;
     private String imgURL;
+    private String status;
 
+    public String getStatus()
+    {
+        return status;
+    }
+
+    public void setStatus(String status)
+    {
+        this.status = status;
+    }
+    
     public String getImgURL()
     {
         return imgURL;
