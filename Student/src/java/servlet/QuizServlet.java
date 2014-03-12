@@ -51,6 +51,15 @@ public class QuizServlet extends HttpServlet {
 
                 request.getRequestDispatcher("/quiz/quiz.jsp").forward(request, response);
             }
+            else if(action.equals("playQuiz")){
+                String quizId = request.getParameter("quizId");
+                String userId = request.getSession().getAttribute("userId").toString();
+                String moduleId = request.getSession().getAttribute("moduleId").toString();
+                
+                System.out.println(quizId);
+                System.out.println(userId);
+                System.out.println(moduleId);
+            }
         } catch (Exception e) {
 
         }

@@ -17,12 +17,12 @@
         </li>
         <!-- Need to put active for the CORRECT page!! -->
         <li id="link-dashboard" class="start active">
-            <a href="./dashboard.jsp">
+            <a href="/Instructor/dashboard.jsp">
                 <i class="icon-home"></i> 
                 <span class="title">Dashboard</span>
             </a>
         </li>
-        
+
         <li id="link-items">
             <a href="./Items">
                 <i class="icon-shopping-cart"></i> 
@@ -67,7 +67,7 @@
                 </li>
             </ul>
         </li>
-        
+
         <li>
             <a class="active" href="javascript:;">
                 <i class="icon-sitemap"></i> 

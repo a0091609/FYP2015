@@ -72,24 +72,31 @@
                                                         <th>Difficulty</th>
                                                         <th>Date Open</th>
                                                         <th>Date Close</th>
-                                                        <th>Status</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <%
                                                         ArrayList quizzes = (ArrayList) request.getAttribute("quizzes");
-                                                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                                                         for (Object o : quizzes) {
                                                             QuizDetails quiz = (QuizDetails) o;
                                                     %>
                                                     <tr class="odd gradeX">
                                                         <td><%=quiz.getName()%></td>
                                                         <td><%=quiz.getDifficultyLvl()%></td>
-                                                        <td><%=dateFormat.format(quiz.getDateOpen())%></td>
-                                                        <td><%=dateFormat.format(quiz.getDateClose())%></td>
-                                                        <td></td>
-                                                        <td></td>
+                                                        <td><%=quiz.getDateOpen()%></td>
+                                                        <td><%=quiz.getDateClose()%></td>
+                                                        <td class="text-center">
+                                                            <%
+                                                                if (quiz.isActive()) {
+                                                                    out.print("<a href='/Student/QuizServlet?action=playQuiz&id="
+                                                                            + quiz.getQuizId() + "' class='btn purple'>Play <i class='m-icon-swapright m-icon-white'></i></a>");
+                                                                }
+                                                                else{
+                                                                    out.print(quiz.getStatus());
+                                                                }
+                                                            %>
+                                                        </td>
                                                     </tr>
                                                     <%
                                                         }

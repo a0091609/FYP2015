@@ -29,7 +29,7 @@ public class QuestionBean implements QuestionBeanLocal {
             em.persist(quest);
             System.out.println("New multiple choice question created.");
 
-            // Save answers
+            // Save answers into QuestionAnswer entity
             String[] options = {option1, option2, option3, option4};
             for (int i = 0; i < 4; i++) {
                 QuestionAnswer ans = new QuestionAnswer();
