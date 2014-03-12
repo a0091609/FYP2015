@@ -11,6 +11,7 @@
         <%-- Standard imports for every page--%>
         <%@include file="/WEB-INF/jspf/stylesheets.jspf" %>
         <link rel="stylesheet" type="text/css" href="/Instructor/assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
+        <link rel="stylesheet" type="text/css" href="/Instructor/assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.css"/>
     </head>
     <!-- END HEAD -->
     <!-- BEGIN BODY -->
@@ -68,9 +69,19 @@
                                     </div>
                                 </div>
                                 <div class="row-fluid">
-                                    <!-- To be replaced by CKEditor-->
                                     <div class="span12">
                                         <textarea class="span12 wysihtml5 m-wrap" rows="6" name="questText" placeholder="Please type your full question here..." required></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="row-fluid">
+                                    <div class="span12">
+                                        <div class="control-group">
+                                            <label class="control-label">Students may need some help:</label>
+                                            <div class="controls">
+                                                <input type="text" class="m-wrap span12" name="answerHint" placeholder="Please type your hints here..." required>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -108,11 +119,18 @@
                                 </div>
                                 <input type="submit" name="next" value="+ Add question" class="btn blue">
                                 <input type="submit" name="next" value="Next: Quiz settings" class="btn green">
+                                <button id="confirm_opener" class="btn red">Cancel</button>
                             </form>
 
-
+                            <div id="dialog_confirm" title="Are you sure you want to leave this page?" class="hide">
+                                <p><span class="icon icon-warning-sign"></span>
+                                    Please note that your questions won't be saved.
+                                </p>
+                            </div>
                         </div>
                     </div>
+
+
                     <!-- END PAGE CONTENT-->
 
 
@@ -148,9 +166,35 @@
                     });
                 }
 
-//                window.onbeforeunload = function(e) {
-//                    return 'Dialog text here.';
-//                };
+                //confirm dialog
+                $("#dialog_confirm").dialog({
+                    dialogClass: 'ui-dialog-green',
+                    autoOpen: false,
+                    resizable: false,
+                    height: 210,
+                    modal: true,
+                    buttons: [
+                        {
+                            'class': 'btn red',
+                            "text": "Exit",
+                            click: function() {
+                                window.location.href="/Instructor/QuizServlet?action=viewAllQuiz"; 
+                            }
+                        },
+                        {
+                            'class': 'btn',
+                            "text": "Cancel",
+                            click: function() {
+                                $(this).dialog("close");
+                            }
+                        }
+                    ]
+                });
+
+                $("#confirm_opener").click(function() {
+                    $("#dialog_confirm").dialog("open");
+                    $('.ui-dialog button').blur();// avoid button autofocus
+                });
             });
         </script>
         <!-- END JAVASCRIPTS -->

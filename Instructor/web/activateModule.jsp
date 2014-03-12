@@ -338,8 +338,6 @@
         <!-- BEGIN JAVASCRIPTS (Load javascripts at bottom, this will reduce page load time) -->
         <%-- Standard JS imports for every page--%>
         <%@include file="WEB-INF/jspf/javascripts.jspf" %>
-        <script type="text/javascript" src="/Instructor/assets/js/lapicalls.js"></script>
-        <script type="text/javascript" src="/Instructor/assets/js/dashboard-custom.js"></script>
         <script type="text/javascript" src="/Instructor/assets/js/activateModule.js"></script>
         <script>
             jQuery(document).ready(function()

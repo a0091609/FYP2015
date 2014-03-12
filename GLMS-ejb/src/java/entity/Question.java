@@ -33,6 +33,7 @@ public class Question implements Serializable
     private String name;
     @Column(length = 2000)
     private String questionText;
+    private String answerHint;
     private String image;
     private String generalFeedback;
     @Temporal(TemporalType.TIMESTAMP)
@@ -65,6 +66,14 @@ public class Question implements Serializable
 
     public void setQuestionText(String questionText) {
         this.questionText = questionText;
+    }
+
+    public String getAnswerHint() {
+        return answerHint;
+    }
+
+    public void setAnswerHint(String answerHint) {
+        this.answerHint = answerHint;
     }
 
     public String getImage() {

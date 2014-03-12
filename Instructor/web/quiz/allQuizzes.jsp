@@ -86,16 +86,17 @@
                                                     <tbody>
                                                         <%
                                                             ArrayList quizzes = (ArrayList) request.getAttribute("quizzes");
-                                                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                                                             for (Object o : quizzes) {
                                                                 QuizDetails quiz = (QuizDetails) o;
+                                                                String diffLvl = (quiz.getDifficultyLvl() == null) ? "" : quiz.getDifficultyLvl();
+                                                                String timeCreated = (quiz.getTimeCreated() == null) ? "" : quiz.getTimeCreated().toString();
                                                         %>
                                                         <tr class="odd gradeX">
                                                             <td data-title="Quiz"><%=quiz.getName()%></td>
-                                                            <td data-title="Difficulty"><%=quiz.getDifficultyLvl()%></td>
-                                                            <td data-title="Date Open"><%=dateFormat.format(quiz.getDateOpen())%></td>
-                                                            <td data-title="Date Close"><%=dateFormat.format(quiz.getDateClose())%></td>
-                                                            <td data-title="Time Created"><%=quiz.getTimeCreated()%></td>
+                                                            <td data-title="Difficulty"><%=diffLvl%></td>
+                                                            <td data-title="Date Open"><%=quiz.getDateOpen()%></td>
+                                                            <td data-title="Date Close"><%=quiz.getDateClose()%></td>
+                                                            <td data-title="Time Created"><%=timeCreated%></td>
                                                             <td data-title="Status">&nbsp;</td>
                                                         </tr>
                                                         <%

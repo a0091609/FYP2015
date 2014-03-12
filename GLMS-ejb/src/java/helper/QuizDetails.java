@@ -9,22 +9,21 @@ import javax.persistence.TemporalType;
  *
  * @author Chih Yong
  */
-public class QuizDetails implements Serializable
-{
+public class QuizDetails implements Serializable {
 
+    private Long quizId;
     private String name;
     private String descr;
     //private Integer timeLimit;      // in minits
     private String difficultyLvl;
     private Boolean active;
-    @Temporal(TemporalType.DATE)
-    private Date dateOpen;
-    @Temporal(TemporalType.DATE)
-    private Date dateClose;
+    private String dateOpen;
+    private String dateClose;
+    private String status;
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeCreated;
 
-    public QuizDetails(String name, String descr, String difficultyLvl, Date dateOpen, Date dateClose, Date timeCreated) {
+    public QuizDetails(String name, String descr, String difficultyLvl, String dateOpen, String dateClose, Date timeCreated) {
         this.name = name;
         this.descr = descr;
         this.difficultyLvl = difficultyLvl;
@@ -32,13 +31,24 @@ public class QuizDetails implements Serializable
         this.dateClose = dateClose;
         this.timeCreated = timeCreated;
     }
-    
-    public QuizDetails(String name, String descr, String difficultyLvl, Date dateOpen, Date dateClose) {
+
+    public QuizDetails(Long quizId, String name, String descr, String difficultyLvl, String dateOpen, String dateClose, Boolean active, String status) {
+        this.quizId = quizId;
         this.name = name;
         this.descr = descr;
         this.difficultyLvl = difficultyLvl;
         this.dateOpen = dateOpen;
         this.dateClose = dateClose;
+        this.active = active;
+        this.status = status;
+    }
+
+    public Long getQuizId() {
+        return quizId;
+    }
+
+    public void setQuizId(Long quizId) {
+        this.quizId = quizId;
     }
 
     public String getName() {
@@ -73,20 +83,28 @@ public class QuizDetails implements Serializable
         this.active = active;
     }
 
-    public Date getDateOpen() {
+    public String getDateOpen() {
         return dateOpen;
     }
 
-    public void setDateOpen(Date dateOpen) {
+    public void setDateOpen(String dateOpen) {
         this.dateOpen = dateOpen;
     }
 
-    public Date getDateClose() {
+    public String getDateClose() {
         return dateClose;
     }
 
-    public void setDateClose(Date dateClose) {
+    public void setDateClose(String dateClose) {
         this.dateClose = dateClose;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Date getTimeCreated() {
