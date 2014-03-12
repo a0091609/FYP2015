@@ -5,6 +5,7 @@ package servlet;
 
 import entity.Module;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -38,16 +39,13 @@ public class ItemServlet extends HttpServlet
     @EJB
     ModuleBeanLocal moduleBean;
 
-    
     //Functionalities needed:        
-        //  1. Retrieve all the Items for a particular module      [NOT DONE]
-        //  2. Create a Style Item                                 [NOT DONE]
-        //  3. Create a Pet                                        [NOT DONE]
-        //  4. Create a Booster Pack                               [NOT DONE]
-        //  5. Create a Quest Item                                 [NOT DONE]
-        //  6. Delete an Item                                      [NOT DONE]
-
-    
+    //  1. Retrieve all the Items for a particular module      [NOT DONE]
+    //  2. Create a Style Item                                 [NOT DONE]
+    //  3. Create a Pet                                        [NOT DONE]
+    //  4. Create a Booster Pack                               [NOT DONE]
+    //  5. Create a Quest Item                                 [NOT DONE]
+    //  6. Delete an Item                                      [NOT DONE]
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
@@ -69,16 +67,15 @@ public class ItemServlet extends HttpServlet
             }
 
             //Default action brings them to the module selection page
-            else if (action==null || moduleId==null)
+            else if (action == null || moduleId == null)
             {
                 data = moduleBean.getInstructorModules(userId);
                 request.setAttribute("moduleList", data);
                 request.getRequestDispatcher("/items/items.jsp").forward(request, response);
             }
-            
-            else if(action.equals("viewAllItems"))
+            else if (action.equals("viewAllItems"))
             {
-                displayItems(moduleId); 
+                displayItems(moduleId);
             }
             else if (action.equals("createStyleItem"))
             {
@@ -86,7 +83,8 @@ public class ItemServlet extends HttpServlet
             }
             else if (action.equals("createPet"))
             {
-                //todo
+                createPet(moduleId);
+                displayItems(moduleId);
             }
             else if (action.equals("createBoosterPack"))
             {
@@ -98,7 +96,8 @@ public class ItemServlet extends HttpServlet
             }
             else if (action.equals("deleteItem"))
             {
-                //todo
+                delete();
+                displayItems(moduleId);
             }
         }
         catch (Exception ex)
@@ -111,11 +110,7 @@ public class ItemServlet extends HttpServlet
         }
     }
 
-    
-    
 //Private methods, for convenience
-    
-    
     //Displays all the items for a module
     private void displayItems(String moduleId) throws Exception
     {
@@ -123,7 +118,7 @@ public class ItemServlet extends HttpServlet
         data = itemBean.getAllItems(moduleId);
         System.out.println("All Items: " + data);
         request.setAttribute("allItems", data);
-        
+
         //Need to set the moduleID or it will be lost
         Module mod = moduleBean.getModule(moduleId);
         request.setAttribute("module", mod);
@@ -136,8 +131,43 @@ public class ItemServlet extends HttpServlet
         //Direct them to the display page!
         request.getRequestDispatcher("/items/itemMgt.jsp").forward(request, response);
     }
-                
-                
+
+    //Create a new pet item
+    private void createPet(String moduleId) throws Exception
+    {
+        //Extract the form parameters
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        int cost = Integer.parseInt(request.getParameter("cost"));
+        int bonus = Integer.parseInt(request.getParameter("bonus"));
+
+        //Create the pet
+        itemBean.createPet(moduleId, name, description, cost, bonus);
+
+        //Send a server msg to feedback
+        data = new ArrayList();
+        data.add("New Pet: " + name + " has been created");
+        request.setAttribute("serverMsg", data);
+        System.out.println("New Pet: " + name + " has been created");
+        data = null;
+    }
+
+    //Delete an item
+    private void delete() throws Exception
+    {
+        //Delete the item
+        long itemId = Long.parseLong(request.getParameter("itemId"));
+        String name = itemBean.getItem(itemId).getName();
+        itemBean.deleteItem(itemId);
+
+        //Send a server msg to feedback
+        data = new ArrayList();
+        data.add("Item: " + name + " has been deleted.");
+        request.setAttribute("serverMsg", data);
+        System.out.println("Item: " + name + " has been deleted.");
+        data = null;
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

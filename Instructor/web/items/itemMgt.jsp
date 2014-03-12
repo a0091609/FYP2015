@@ -1,3 +1,5 @@
+<%@page import="entity.Pet"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="entity.Module"%>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
@@ -74,7 +76,8 @@
                                         </ul>
                                         <div class="tab-content no-more-tables">
                                             <div class="tab-pane active" id="portlet_tab1">
-                                                Tab 1
+                                                Temporarily disabled.
+                                                <!--
                                                 <table class="table table-striped table-bordered table-hover table-condensed cf" id="sample_3">
                                                     <thead class="cf">
                                                         <tr>
@@ -87,73 +90,169 @@
                                                     <tbody>
                                                         <tr class="odd gradeX">
                                                             <td data-title="title"><input type="checkbox" class="checkboxes" value="1" /></td>
-                                                            <td data-title="title">shuxer</td>
-                                                            <td data-title="title"><a href="mailto:shuxer@gmail.com">shuxer@gmail.com</a></td>
+                                                            <td data-title="title">xxxx</td>
+                                                            <td data-title="title"><a href="mailto:xxx">xxxxx</a></td>
                                                             <td data-title="title"><span class="label label-success">Approved</span></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                -->
+
                                             </div>
                                             <div class="tab-pane " id="portlet_tab2">
-                                                Tab 2
+                                                <h2>Pets</h2>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sagittis eu turpis nec tempus. Sed aliquam fringilla tellus et fringilla. Fusce sed vehicula eros, ut iaculis risus. Quisque auctor nibh quis ligula tincidunt, non aliquet ligula laoreet. Nunc ante dui, condimentum nec purus ac, aliquet tempor augue. Nullam egestas lacus sit amet turpis mollis, sed dictum nisl laoreet. Aliquam tempus bibendum ligula vitae tempus. Nulla tristique viverra metus et feugiat. Quisque augue mauris, consequat et diam et, posuere lobortis enim.
+                                                </p>
+                                                <div class="actions">
+                                                    <a class="btn blue" data-toggle="modal" href="#newPetForm"><i class="icon-plus"></i> New Pet</a>
+                                                </div><br>
+
+                                                <!-- Modal Form for new Pet -->
+                                                <div id="newPetForm" class="modal hide fade" tabindex="-1" data-width="760">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                        <h3>New Pet</h3>
+                                                    </div>
+                                                    <form action="Items?action=createPet" method="post" class="form-horizontal" id="petForm">
+                                                        <div class="modal-body">
+                                                            <div class="scroller" style="height:300px" data-always-visible="1" data-rail-visible1="1">
+                                                                <div class="row-fluid">
+                                                                    <div class="span12">
+                                                                        <p><label>Image: <input type="file" class="span12 m-wrap"></label></p>
+                                                                        <p><label>Name: <input type="text" name="name" class="span12 m-wrap" placeholder="Give the pet a name"></label></p>
+                                                                        <p>
+                                                                            <label>Description: 
+                                                                                <textarea name="description" class="span12 m-wrap" style="resize: none" rows="4" placeholder="Enter a brief description about this pet"></textarea>
+                                                                            </label>
+                                                                        </p>
+                                                                        <p><label>Cost:
+                                                                                <input name="cost" type="number" placeholder="Enter the cost of this pet" class="span12 m-wrap">
+                                                                            </label>
+                                                                            <span class="help-inline">Recommended: Cost = 10 x Bonus</span>
+                                                                        </p>
+                                                                        <p><label>Max Bonus:
+                                                                                <input name="bonus" type="number" placeholder="The max amt of gold this pet gives" class="span12 m-wrap">
+                                                                            </label>
+                                                                            <span class="help-inline">The pet will give a random amount of gold between 1 and this number.</span>
+                                                                        </p>
+                                                                        <input type="hidden" name="moduleId" value='<%=mod.getModuleId()%>'>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" data-dismiss="modal" class="btn">Close</button>
+                                                            <input type="submit" value="Go" class="btn blue">
+                                                        </div>
+                                                    </form>
+                                                </div>
+
                                                 <table class="table table-striped table-bordered table-hover table-condensed cf" id="sample_2">
                                                     <thead class="cf">
                                                         <tr>
-                                                            <th>test</th>
-                                                            <th>Username</th>
-                                                            <th>Email</th>
-                                                            <th>Status</th>
+                                                            <th>Image</th>
+                                                            <th>Name</th>
+                                                            <th>Description</th>
+                                                            <th>Cost</th>
+                                                            <th>Bonus</th>                                                            
+                                                            <th>&nbsp;</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr class="odd gradeX">
-                                                            <td data-title="title"><input type="checkbox" class="checkboxes" value="1" /></td>
-                                                            <td data-title="title">shuxer</td>
-                                                            <td data-title="title"><a href="mailto:shuxer@gmail.com">shuxer@gmail.com</a></td>
-                                                            <td data-title="title"><span class="label label-success">Approved</span></td>
-                                                        </tr>
+
+                                                        <%
+                                                            ArrayList allItems = (ArrayList) request.getAttribute("allItems");
+
+                                                            //Print all the Pets
+                                                            for (Object o : allItems)
+                                                            {
+                                                                if (o instanceof Pet)
+                                                                {
+                                                                    Pet pet = (Pet) o;
+                                                                    String image = pet.getImgURL();
+                                                                    String name = pet.getName();
+                                                                    String des = pet.getDescription();
+                                                                    int cost = pet.getCost();
+                                                                    int bonus = pet.getMaxBonus();
+                                                                    String delete = "Items?action=deleteItem&itemId=" + pet.getId() + "&moduleId=" + mod.getModuleId();
+                                                        %>
+
+                                                        <tr class="gradeX">
+                                                            <td data-title="Image"><img class="smallTableImg" src="<%=image%>"></td>
+                                                            <td data-title="Name"><%=name%></td>
+                                                            <td data-title="Description"><%=des%></td>
+                                                            <td data-title="Cost"><%=cost%></td>
+                                                            <td data-title="Bonus"><%=bonus%></td>
+                                                            <td data-title="Actions"><center><a href="<%=delete%>" class="btn red"><i class="icon-trash"></i> Delete</a></center></td>
+                                                    </tr>
+
+                                                    <%  //Done printing
+                                                            }
+                                                        }
+                                                    %>
                                                     </tbody>
                                                 </table>
                                             </div>
                                             <div class="tab-pane " id="portlet_tab3">
-                                                Tab 3
+                                                <h2>Keys</h2>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sagittis eu turpis nec tempus. Sed aliquam fringilla tellus et fringilla. Fusce sed vehicula eros, ut iaculis risus. Quisque auctor nibh quis ligula tincidunt, non aliquet ligula laoreet. Nunc ante dui, condimentum nec purus ac, aliquet tempor augue. Nullam egestas lacus sit amet turpis mollis, sed dictum nisl laoreet. Aliquam tempus bibendum ligula vitae tempus. Nulla tristique viverra metus et feugiat. Quisque augue mauris, consequat et diam et, posuere lobortis enim.
+                                                </p>
+                                                <div class="actions">
+                                                    <a class="btn blue" data-toggle="modal" href="#newQuiz-form"><i class="icon-plus"></i> New Key</a>
+                                                </div><br>
                                                 <table class="table table-striped table-bordered table-hover table-condensed cf" id="sample_1">
                                                     <thead class="cf">
                                                         <tr>
-                                                            <th>test</th>
-                                                            <th>Username</th>
-                                                            <th>Email</th>
-                                                            <th>Status</th>
+                                                            <th>Image</th>
+                                                            <th>Name</th>
+                                                            <th>Description</th>
+                                                            <th>Cost</th>
+                                                            <th>Bonus</th>                                                            
+                                                            <th>&nbsp;</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr class="odd gradeX">
-                                                            <td data-title="title"><input type="checkbox" class="checkboxes" value="1" /></td>
-                                                            <td data-title="title">shuxer</td>
-                                                            <td data-title="title"><a href="mailto:shuxer@gmail.com">shuxer@gmail.com</a></td>
-                                                            <td data-title="title"><span class="label label-success">Approved</span></td>
-                                                        </tr>
+                                                        <tr class="gradeX">
+                                                            <td data-title="Image"><img class="smallTableImg"></td>
+                                                            <td data-title="Name">Pikachu</td>
+                                                            <td data-title="Description">A cute electric mouse. It zaps!</td>
+                                                            <td data-title="Cost">500</td>
+                                                            <td data-title="Bonus">5</td>
+                                                            <td data-title="Actions"><center><a href="#" class="btn red"><i class="icon-trash"></i> Delete</a></center></td>
+                                                    </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                             <div class="tab-pane " id="portlet_tab4">
-                                                Tab 4
+                                                <h2>Booster</h2>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sagittis eu turpis nec tempus. Sed aliquam fringilla tellus et fringilla. Fusce sed vehicula eros, ut iaculis risus. Quisque auctor nibh quis ligula tincidunt, non aliquet ligula laoreet. Nunc ante dui, condimentum nec purus ac, aliquet tempor augue. Nullam egestas lacus sit amet turpis mollis, sed dictum nisl laoreet. Aliquam tempus bibendum ligula vitae tempus. Nulla tristique viverra metus et feugiat. Quisque augue mauris, consequat et diam et, posuere lobortis enim.
+                                                </p>
+                                                <div class="actions">
+                                                    <a class="btn blue" data-toggle="modal" href="#newQuiz-form"><i class="icon-plus"></i> New Booster</a>
+                                                </div><br>
                                                 <table class="table table-striped table-bordered table-hover table-condensed cf" id="sample_4">
                                                     <thead class="cf">
                                                         <tr>
-                                                            <th>test</th>
-                                                            <th>Username</th>
-                                                            <th>Email</th>
-                                                            <th>Status</th>
+                                                            <th>Image</th>
+                                                            <th>Name</th>
+                                                            <th>Description</th>
+                                                            <th>Cost</th>
+                                                            <th>Bonus</th>                                                            
+                                                            <th>&nbsp;</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr class="odd gradeX">
-                                                            <td data-title="title"><input type="checkbox" class="checkboxes" value="1" /></td>
-                                                            <td data-title="title">shuxer</td>
-                                                            <td data-title="title"><a href="mailto:shuxer@gmail.com">shuxer@gmail.com</a></td>
-                                                            <td data-title="title"><span class="label label-success">Approved</span></td>
-                                                        </tr>
+                                                        <tr class="gradeX">
+                                                            <td data-title="Image"><img class="smallTableImg"></td>
+                                                            <td data-title="Name">Pikachu</td>
+                                                            <td data-title="Description">A cute electric mouse. It zaps!</td>
+                                                            <td data-title="Cost">500</td>
+                                                            <td data-title="Bonus">5</td>
+                                                            <td data-title="Actions"><center><a href="#" class="btn red"><i class="icon-trash"></i> Delete</a></center></td>
+                                                    </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -189,6 +288,27 @@
                 //$('#footable').footable();
                 TableManaged.init();
                 setActivePage("link-items");
+
+
+            <%
+                ArrayList serverMsg = (ArrayList) request.getAttribute("serverMsg");
+                if (serverMsg != null)
+                {
+                    //Print all the server messages
+                    for (Object o : serverMsg)
+                    {
+                        String msg = (String) o;
+            %>
+                        $.gritter.add({
+                            title: 'Items Management',
+                            text: '<%=msg%>'
+                        });
+            <%
+                    }
+                }
+            %>
+
+
             });
         </script>
         <!-- END JAVASCRIPTS -->

@@ -51,7 +51,7 @@
                         <%
                             ArrayList moduleList = (ArrayList) request.getAttribute("moduleList");
                             int i = 0;
-                            //Print all the saved coupons
+                            //Print all the modules
                             for (Object o : moduleList)
                             {
                                 i++;
