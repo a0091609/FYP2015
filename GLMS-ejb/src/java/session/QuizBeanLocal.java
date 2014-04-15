@@ -1,6 +1,6 @@
 package session;
 
-import helper.QuizDetails;
+import helper.AnswerResultsDetails;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
@@ -14,6 +14,11 @@ public interface QuizBeanLocal {
 
     public Boolean saveQuizInfo(Long quizId, String descr, String difficultyLvl, Date dateOpen, Date dateClose);
 
-    public List<QuizDetails> studentGetModuleQuiz(String moduleId);
+    public List studentGetModuleQuiz(String moduleId);
 
+    public Boolean checkAuthToPlay(String userId, String moduleId, Long quizId);
+
+    public List getQuizQuestions(Long quizId);
+
+    public AnswerResultsDetails checkAnswer(Long questionId, String answer);
 }

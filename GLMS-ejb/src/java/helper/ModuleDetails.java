@@ -2,10 +2,6 @@ package helper;
 
 import java.io.Serializable;
 
-/**
- *
- * @author Chih Yong
- */
 public class ModuleDetails implements Serializable {
 
     private String moduleId;

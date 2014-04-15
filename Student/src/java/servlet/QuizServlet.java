@@ -1,5 +1,7 @@
 package servlet;
 
+import com.google.gson.Gson;
+import helper.QuestionDetails;
 import helper.QuizDetails;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,15 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import session.QuizBeanLocal;
 
-/**
- *
- * @author Chih Yong
- */
 @WebServlet(name = "QuizServlet", urlPatterns = {"/QuizServlet", "/QuizServlet?*"})
 public class QuizServlet extends HttpServlet {
 
     @EJB
-    QuizBeanLocal quizBean;
+    private QuizBeanLocal quizBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -50,15 +48,31 @@ public class QuizServlet extends HttpServlet {
                 request.setAttribute("quizzes", quizzes);
 
                 request.getRequestDispatcher("/quiz/quiz.jsp").forward(request, response);
-            }
-            else if(action.equals("playQuiz")){
+            } else if (action.equals("playQuiz")) {
                 String quizId = request.getParameter("quizId");
                 String userId = request.getSession().getAttribute("userId").toString();
                 String moduleId = request.getSession().getAttribute("moduleId").toString();
-                
-                System.out.println(quizId);
-                System.out.println(userId);
-                System.out.println(moduleId);
+
+                Boolean authToPlay = quizBean.checkAuthToPlay(userId, moduleId, Long.valueOf(quizId));
+
+                if (authToPlay) {
+                    request.getSession().setAttribute("quizId", quizId);
+                    List<QuestionDetails> questions = quizBean.getQuizQuestions(Long.valueOf(quizId));
+
+                    request.setAttribute("questions", questions);
+                    request.getRequestDispatcher("/quiz/doQuiz.jsp").forward(request, response);
+                } else {
+                    response.sendRedirect("/Student/QuizServlet?action=viewAllQuiz");
+                }
+            } else if (action.equals("checkAnswer")) {
+                String questId = request.getParameter("questId").toString();
+                String answer = request.getParameter("option").toString();
+
+                response.setContentType("application/json;charset=utf-8");
+                Gson gson = new Gson();
+                PrintWriter pw = response.getWriter();
+                pw.print(gson.toJson(quizBean.checkAnswer(Long.valueOf(questId), answer)));
+                pw.close();
             }
         } catch (Exception e) {
 

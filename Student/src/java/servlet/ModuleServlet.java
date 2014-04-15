@@ -14,10 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import session.ModuleBeanLocal;
 
-/**
- *
- * @author Chih Yong
- */
 @WebServlet(name = "ModuleServlet", urlPatterns = {"/ModuleServlet", "/ModuleServlet?*"})
 public class ModuleServlet extends HttpServlet
 {

@@ -11,10 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import session.AccountBeanLocal;
 
-/**
- *
- * @author Chih Yong
- */
 @WebServlet(name = "ProfileServlet", urlPatterns = {"/ProfileServlet", "/ProfileServlet?*"})
 public class ProfileServlet extends HttpServlet 
 {

@@ -1,7 +1,12 @@
 package session;
 
 import entity.Module;
+import entity.Question;
+import entity.QuestionAnswer;
 import entity.Quiz;
+import entity.Student;
+import helper.AnswerResultsDetails;
+import helper.QuestionDetails;
 import helper.QuizDetails;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,8 +18,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 @Stateless
 public class QuizBean implements QuizBeanLocal {
@@ -95,8 +98,73 @@ public class QuizBean implements QuizBeanLocal {
         return quizzes;
     }
 
-    public Boolean checkAuthToPlay(String userId, String moduleId, String quizId) {
-        return false;
+    public Boolean checkAuthToPlay(String userId, String moduleId, Long quizId) {
+        //check if student is in this module & quiz is active
+        Student student = em.find(Student.class, userId);
+        if (student.getModules().contains(em.find(Module.class, moduleId)) && quizIsActive(quizId)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public List<QuestionDetails> getQuizQuestions(Long quizId) {
+        String strQuery = "SELECT q FROM Question q WHERE q.quiz.quizId = '" + quizId + "'";
+        Query q = em.createQuery(strQuery);
+
+        List<Question> qList = q.getResultList();
+        ArrayList<QuestionDetails> questions = new ArrayList<QuestionDetails>();
+
+        for (Question quest : qList) {
+            List<String> options = new ArrayList<String>();
+            strQuery = "SELECT a FROM QuestionAnswer a "
+                    + "WHERE a.question.questionId = '" + quest.getQuestionId() + "'";
+            q = em.createQuery(strQuery);
+            List<QuestionAnswer> answers = q.getResultList();
+
+            for (QuestionAnswer ans : answers) {
+                options.add(ans.getAnswer());
+            }
+            QuestionDetails qDetails = new QuestionDetails(quest.getQuestionId(),
+                    quest.getQuestionText(), quest.getAnswerHint(), options);
+            questions.add(qDetails);
+        }
+
+        return questions;
+    }
+
+    public AnswerResultsDetails checkAnswer(Long questionId, String answer) {
+        Boolean isCorrect = false;
+        String status = "Wrong!";
+        String correctAns = "", msg2 = "";
+
+        String strQuery = "SELECT a FROM QuestionAnswer a "
+                + "WHERE a.question.questionId = '" + questionId + "'";
+        Query q = em.createQuery(strQuery);
+
+        List<QuestionAnswer> answerList = q.getResultList();
+
+        for (QuestionAnswer a : answerList) {
+            if (a.isCorrectAnswer() != null && a.isCorrectAnswer()) {
+                correctAns = a.getAnswer();
+                if (a.getAnswer().equals(answer)) {
+                    isCorrect = true;
+                    status = "Correct!";
+                }
+            }
+        }
+
+        AnswerResultsDetails content = new AnswerResultsDetails(isCorrect, status, correctAns, msg2);
+        return content;
+    }
+
+    private Boolean quizIsActive(Long quizId) {
+        Quiz quiz = em.find(Quiz.class, quizId);
+        Date dateToday = new Date();
+        Date dateOpen = quiz.getDateOpen();
+        Date dateClose = quiz.getDateClose();
+
+        return (dateOpen.before(dateToday) && dateToday.before(dateClose)) ? true : false;
     }
 
     private Integer dateDifference(Date d1, Date d2) {
