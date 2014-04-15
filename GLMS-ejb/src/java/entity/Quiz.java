@@ -21,8 +21,7 @@ import javax.persistence.TemporalType;
  * @author Chih Yong
  */
 @Entity
-public class Quiz implements Serializable
-{
+public class Quiz implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,6 +36,7 @@ public class Quiz implements Serializable
     @Temporal(TemporalType.DATE)
     private Date dateClose;
     private String status;
+    private Quiz prereq;
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeCreated;
 
@@ -110,6 +110,14 @@ public class Quiz implements Serializable
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Quiz getPrereq() {
+        return prereq;
+    }
+
+    public void setPrereq(Quiz prereq) {
+        this.prereq = prereq;
     }
 
     public void setTimeCreated(Date timeCreated) {

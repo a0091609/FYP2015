@@ -3885,7 +3885,7 @@ Form wizard
 }
 
 .form-wizard .step i {
-  display: none;
+  /* display: none; */
 }
 
 .form-wizard .done .step .number {

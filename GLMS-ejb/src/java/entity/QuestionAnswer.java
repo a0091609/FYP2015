@@ -13,13 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-/**
- *
- * @author Chih Yong
- */
 @Entity
-public class QuestionAnswer implements Serializable
-{
+public class QuestionAnswer implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

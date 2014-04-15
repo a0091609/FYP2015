@@ -8,13 +8,14 @@ import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 @Stateless
 public class QuestionBean implements QuestionBeanLocal {
 
     @PersistenceContext
     private EntityManager em;
-
+    
     public Boolean saveMultiChoice(String quizId, String questName, String questText,
             String option1, String option2, String option3, String option4, Integer answer) {
 

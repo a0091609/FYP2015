@@ -9,10 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Chih Yong
- */
 @WebServlet(name = "AuthServlet", urlPatterns = {"/AuthServlet", "/AuthServlet?*"})
 public class AuthServlet extends HttpServlet
 {

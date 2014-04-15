@@ -7,7 +7,7 @@
     <!-- BEGIN HEAD -->
     <head>
         <meta charset="utf-8" />
-        <title>GLMS | Student Dashboard</title>
+        <title>GLMS | Student Quizzes</title>
         <%-- Standard imports for every page--%>
         <%@include file="/WEB-INF/jspf/stylesheets.jspf" %>
         <link rel="stylesheet" type="text/css" href="assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.css"/>
@@ -89,10 +89,9 @@
                                                         <td class="text-center">
                                                             <%
                                                                 if (quiz.isActive()) {
-                                                                    out.print("<a href='/Student/QuizServlet?action=playQuiz&id="
+                                                                    out.print("<a href='/Student/QuizServlet?action=playQuiz&quizId="
                                                                             + quiz.getQuizId() + "' class='btn purple'>Play <i class='m-icon-swapright m-icon-white'></i></a>");
-                                                                }
-                                                                else{
+                                                                } else {
                                                                     out.print(quiz.getStatus());
                                                                 }
                                                             %>
