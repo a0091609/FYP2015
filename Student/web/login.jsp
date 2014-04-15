@@ -58,7 +58,7 @@
         <!-- BEGIN LOGIN -->
         <div class="content">
             <!-- BEGIN LOGIN FORM -->
-            <form class="form-vertical login-form" action="index.jsp" method="post">
+            <form class="form-vertical login-form" action="LoginServlet" method="post">
                 <h3 class="form-title">Login to your account</h3>
                 <div class="alert alert-error hide">
                     <button class="close" data-dismiss="alert"></button>
@@ -70,7 +70,7 @@
                     <div class="controls">
                         <div class="input-icon left">
                             <i class="icon-user"></i>
-                            <input class="m-wrap placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username"/>
+                            <input class="m-wrap placeholder-no-fix" value="Philson" type="text" autocomplete="off" placeholder="Username" name="userId"/>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                     <div class="controls">
                         <div class="input-icon left">
                             <i class="icon-lock"></i>
-                            <input class="m-wrap placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password"/>
+                            <input class="m-wrap placeholder-no-fix" value="password" type="password" autocomplete="off" placeholder="Password" name="password"/>
                         </div>
                     </div>
                 </div>
@@ -91,14 +91,15 @@
                         Login <i class="m-icon-swapright m-icon-white"></i>
                     </button>            
                 </div>
+                <!-- Temporary hide
                 <div class="forget-password">
                     <h4>Forgot your password ?</h4>
                     <p>
                         click <a href="javascript:;"  id="forget-password">here</a>
                         to reset your password.
                     </p>
-                </div>
-                <div class="create-account">
+                </div>-->
+                <div class="forget-password">
                     <p>
                     <center><a href="dashboard.jsp" >LOGIN WITH NUSNET ACCOUNT</a></center>
                     </p>
