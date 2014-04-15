@@ -43,6 +43,8 @@ public class Student implements Serializable {
     private List<Item> wishlist;
     @OneToMany
     private List<Task> tasks;
+    @OneToMany
+    private List<Gold> accounts;
     
     
 
@@ -55,6 +57,16 @@ public class Student implements Serializable {
     {
         this.tasks = tasks;
     }    
+
+    public List<Gold> getAccounts()
+    {
+        return accounts;
+    }
+
+    public void setAccounts(List<Gold> accounts)
+    {
+        this.accounts = accounts;
+    }
     
     public List<Item> getInventory()
     {
