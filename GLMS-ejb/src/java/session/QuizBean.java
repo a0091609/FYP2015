@@ -4,10 +4,12 @@ import entity.Module;
 import entity.Question;
 import entity.QuestionAnswer;
 import entity.Quiz;
+import entity.QuizSession;
 import entity.Student;
 import helper.AnswerResultsDetails;
 import helper.QuestionDetails;
 import helper.QuizDetails;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -89,7 +91,7 @@ public class QuizBean implements QuizBeanLocal {
             Date dateToday = new Date();
             Date dateOpen = quiz.getDateOpen();
             Date dateClose = quiz.getDateClose();
-            
+
             String status = (dateToday.before(dateOpen)) ? "Open in " + dateDifference(dateToday, dateOpen) + " more days" : "";
 
             Boolean active = (dateOpen.before(dateToday) && dateToday.before(dateClose)) ? true : false;
@@ -110,6 +112,23 @@ public class QuizBean implements QuizBeanLocal {
         } else {
             return false;
         }
+    }
+
+    public Boolean createQuizSession(String userId, Long quizId) {
+        Student student = em.find(Student.class, userId);
+        Quiz quiz = em.find(Quiz.class, quizId);
+
+        QuizSession session = new QuizSession();
+        session.setUserId(userId);
+        session.setQuizId(quizId);
+        Date date = new Date();
+        session.setTimeStarted(date);
+        session.setStatus("incomplete");
+        em.persist(session);
+        em.flush();
+        System.out.println("Quiz session for user[" + userId + "] and quiz[" + quizId + "] created.");
+
+        return true;
     }
 
     public List<QuestionDetails> getQuizQuestions(Long quizId) {

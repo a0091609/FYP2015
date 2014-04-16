@@ -17,6 +17,8 @@ public interface QuizBeanLocal {
     public List studentGetModuleQuiz(String moduleId);
 
     public Boolean checkAuthToPlay(String userId, String moduleId, Long quizId);
+    
+    public Boolean createQuizSession(String userId, Long quizId);
 
     public List getQuizQuestions(Long quizId);
 
