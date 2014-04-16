@@ -2,12 +2,14 @@ package session;
 
 import entity.Avatar;
 import entity.Module;
+import entity.Quest;
 import entity.Skill;
 import entity.Student;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -44,6 +46,7 @@ public class StartupBean
             createStudents();
             createModules();
             createAvatar();
+            createQuests();
             createQuizzes();
 
         }
@@ -98,32 +101,56 @@ public class StartupBean
                                      "IS3260", "GAMIFICATION", "Philson", "Philson");
         System.out.println("Modules [IS1112, IS1112, IS4240, IS4224, IS3260] created.");
     }
-    
+
+    private void createQuests() throws Exception
+    {
+        Module eBiz = moduleBean.getModule("IS1112");
+        Quest q1 = new Quest();
+        //Quest q2 = new Quest(); 
+
+        q1.setName("What's that sequel!?");
+        q1.setDescription("The purpose of this assignment is getting practical experience of requirement analysis, database design, and implementing database system in MS SQL Server 2005. In this assignment, you are going to design a simple database system for Xiaoshan International Airport. You can find more detail in the following specification. Besides the database design, you also must to answer some questions.");
+        q1.setDifficulty(1);
+        q1.setFileURL("assets/quests/Assignment_1.pdf");
+        //Set closing date
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, 1);
+        q1.setClosingDate(cal.getTime());
+        //Set rewards and link up
+        q1.setGoldReward(50);
+        Skill db = new Skill("Databases", 5);
+        q1.setSkillReward(db);        
+        q1.setModule(eBiz);
+        eBiz.getQuests().add(q1);
+        //Call session bean to persist
+        quest.createQuest(eBiz, db, q1);
+    }
+
     private void createAvatar() throws Exception
     {
         Student phil = acctBean.getStudent("Philson");
         Module eBiz = moduleBean.getModule("IS1112");
         Avatar aang = new Avatar();
-        
+
         aang.setAvatarName("AzureKn1ght");
         aang.setAvatarBio("Bio text here.");
         aang.setCurrentBalance(100);
-        aang.setLifetimeEarnings(2567);        
+        aang.setLifetimeEarnings(2567);
         aang.setStudent(phil);
         aang.setModule(eBiz);
-        
+
         List<Skill> skills = new ArrayList();
-        skills.add(new Skill("Databases",5));
-        skills.add(new Skill("Marketing",5));
-        skills.add(new Skill("Security",5));
-        skills.add(new Skill("HTML",5));
-        skills.add(new Skill("PHP",5));
-        
+        skills.add(new Skill("Databases", 5));
+        skills.add(new Skill("Marketing", 5));
+        skills.add(new Skill("Security", 5));
+        skills.add(new Skill("HTML", 5));
+        skills.add(new Skill("PHP", 5));
+
         aang.setSkills(skills);
         phil.getAvatars().add(aang);
 
         acctBean.createAvatar(phil, aang);
-    }    
+    }
 
     private void createQuizzes()
     {
@@ -164,7 +191,6 @@ public class StartupBean
         questBean.saveMultiChoice(quizId.toString(), questName, questText, option1, option2, option3, option4, answer);
         System.out.println("Questions created.");
     }
-    
 
     private Date convertToDateObj(String date)
     {

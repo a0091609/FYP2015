@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,14 +24,18 @@ import javax.persistence.TemporalType;
 @Entity
 public class Quest implements Serializable
 {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    @Column(length = 2000)
     private String description;
     private String fileURL;
     private Integer difficulty;
+    private Integer goldReward;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date releaseDate;
     @Temporal(TemporalType.TIMESTAMP)
@@ -42,6 +46,16 @@ public class Quest implements Serializable
     private Skill skillReward;
     @ManyToOne
     private Module module;
+
+    public Integer getGoldReward()
+    {
+        return goldReward;
+    }
+
+    public void setGoldReward(Integer goldReward)
+    {
+        this.goldReward = goldReward;
+    }
 
     public Integer getDifficulty()
     {
@@ -170,5 +184,5 @@ public class Quest implements Serializable
     {
         return "entity.Quest[ id=" + id + " ]";
     }
-    
+
 }

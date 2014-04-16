@@ -10,6 +10,7 @@ import entity.Item;
 import entity.Key;
 import entity.Module;
 import entity.Quest;
+import entity.Skill;
 import entity.Student;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,14 @@ public class QuestBean implements QuestBeanLocal
     @EJB
     ModuleBeanLocal moduleBean;
 
+    public void createQuest(Module m, Skill s, Quest q)
+    {
+        em.persist(s);
+        em.persist(q);
+        em.persist(m);
+        em.flush();
+    }
+    
     //Retrieve all the Items for a particular module
     public List<Quest> getAllQuests(String moduleId) throws Exception
     {
