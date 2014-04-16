@@ -57,6 +57,61 @@
                     <!-- END PAGE HEADER-->
 
                     <!-- BEGIN PAGE CONTENT-->
+                    
+                    <div class="row-fluid">
+                        <!--Streak Count-->
+                        <div class="span4 responsive">
+                            <div class="dashboard-stat red">
+                                <div class="visual">
+                                    <i class="icon-fire"></i>
+                                </div>
+                                <div class="details">
+                                    <div class="number">
+                                        0
+                                    </div>
+                                    <div class="desc">                           
+                                        Streak Count
+                                    </div>
+                                </div>          
+                            </div>
+                        </div>
+                        <!--End of Streak Count-->
+                        <!--Fun Quiz Items-->
+                        <a href="#" class="span4 responsive">
+                            <div class="dashboard-stat yellow">
+                                <div class="visual">
+                                    <i class="icon-info-sign"></i>
+                                </div>
+                                <div class="details">
+                                    <div class="number">
+                                        0
+                                    </div>
+                                    <div class="desc">                           
+                                        Get Help
+                                    </div>
+                                </div>          
+                            </div>
+                        </a>
+                        <a href="#" class="span4 responsive">
+                            <div class="dashboard-stat yellow">
+                                <div class="visual">
+                                    <i class="icon-random"></i>
+                                </div>
+                                <div class="details">
+                                    <div class="number">
+                                        0
+                                    </div>
+                                    <div class="desc">                           
+                                        Fifty-Fifty
+                                    </div>
+                                </div>          
+                            </div>
+                        </a>
+                        <!--End of Fun Quiz Items-->
+                    </div>
+                    
+                    
+                    
                     <div class="row-fluid">
                         <div class="span12">
 
@@ -130,7 +185,7 @@
                                                                 <div class="span6 margin-bottom-15" style="background-color: #d9edf7;">
                                                                     <!--Answer A-->
                                                                     <label class="radio">
-                                                                        <input type="radio" name="option" id="option" value="<%=quest.getOptions().get(0)%>">
+                                                                        <input type="radio" name="option" id="option" value="<%=quest.getOptions().get(0)%>" required>
                                                                         <%=quest.getOptions().get(0)%>
                                                                     </label>
                                                                 </div>
@@ -172,33 +227,7 @@
                                             %>
                                             <!--loop end-->
                                         </div>
-                                        <div class="row-fluid">
-                                            <div class="span4 responsive">
-                                                <div class="dashboard-stat blue">
-                                                    <div class="visual">
-                                                        <i class="icon-fire"></i>
-                                                    </div>
-                                                    <div class="details">
-                                                        <div class="number">
-                                                            0
-                                                        </div>
-                                                        <div class="desc">                           
-                                                            Streak Count
-                                                        </div>
-                                                    </div>          
-                                                </div>
-                                            </div>
-                                            <a href="#" class="icon-btn span4">
-                                                <i class="icon-info-sign"></i>
-                                                <div>Get Help</div>
-                                                <span class="badge badge-success">5</span>
-                                            </a>
-                                            <a href="#" class="icon-btn span4">
-                                                <i class="icon-random"></i>
-                                                <div>Fifty-Fifty</div>
-                                                <span class="badge badge-success">3</span>
-                                            </a>
-                                        </div>
+
 
                                         <div class="form-actions clearfix">
                                             <a href="javascript:;" class="btn button-previous">
