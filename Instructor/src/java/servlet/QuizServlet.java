@@ -78,7 +78,7 @@ public class QuizServlet extends HttpServlet
                 String dateClose = dateRange.substring(14);
 
                 Boolean succeed = quizBean.saveQuizInfo(Long.parseLong(quizId), descr,
-                        difficultyLvl, convertToDateObj(dateOpen), convertToDateObj(dateClose));
+                        difficultyLvl, convertToDateObj(dateOpen), convertToDateObj(dateClose), null);
 
                 request.getSession().removeAttribute("quizId");
                 request.getSession().removeAttribute("quizName");

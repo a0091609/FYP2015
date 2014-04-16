@@ -12,7 +12,7 @@ public interface QuizBeanLocal {
 
     public Long saveNewQuiz(String quizName, String moduleId);
 
-    public Boolean saveQuizInfo(Long quizId, String descr, String difficultyLvl, Date dateOpen, Date dateClose);
+    public Boolean saveQuizInfo(Long quizId, String descr, String difficultyLvl, Date dateOpen, Date dateClose, Long prereqQuizId);
 
     public List studentGetModuleQuiz(String moduleId);
 

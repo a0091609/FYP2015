@@ -73,12 +73,12 @@ public class StartupBean {
 
     private void createQuizzes() {
         //String quizName, String moduleId
-        Long quiz1 = quizbean.saveNewQuiz("First Quiz", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
-        Long quiz2 = quizbean.saveNewQuiz("Second Quiz", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
+        Long quiz1 = quizbean.saveNewQuiz("Pre-class Quiz Week 1", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
+        Long quiz2 = quizbean.saveNewQuiz("Pre-class Quiz Week 2", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
 
         //Long quizId, String descr, String difficultyLvl, Date dateOpen, Date dateClose
-        quizbean.saveQuizInfo(quiz1, "First set of quiz.", "Beginner", convertToDateObj("16/04/2014"), convertToDateObj("23/04/2014"));
-        quizbean.saveQuizInfo(quiz2, "Second set of quiz.", "Beginner", convertToDateObj("23/04/2014"), convertToDateObj("30/04/2014"));
+        quizbean.saveQuizInfo(quiz1, "Pre-class Quiz Week 1", "Beginner", convertToDateObj("16/04/2014"), convertToDateObj("23/04/2014"), null);
+        quizbean.saveQuizInfo(quiz2, "Pre-class Quiz Week 2", "Beginner", convertToDateObj("23/04/2014"), convertToDateObj("30/04/2014"), null);
 
         /*String quizId, String questName, String questText,
          String option1, String option2, String option3, String option4, Integer answer*/
@@ -89,6 +89,13 @@ public class StartupBean {
         createQuestion(quiz2.toString(), "First Question", "Which is correct?", "Correct", "Incorrect", "Incorrect", "Incorrect", 0);
         createQuestion(quiz2.toString(), "Second Question", "Which is correct?", "Incorrect", "Correct", "Incorrect", "Incorrect", 1);
         createQuestion(quiz2.toString(), "Third Question", "Which is correct?", "Incorrect", "Incorrect", "Correct", "Incorrect", 2);
+
+        Long quiz3 = quizbean.saveNewQuiz("Week 1 Quiz Exercise", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
+        quizbean.saveQuizInfo(quiz1, "Week 1 Quiz Exercise", "Intermediate", convertToDateObj("16/04/2014"), convertToDateObj("23/04/2014"), quiz1);
+        createQuestion(quiz2.toString(), "First Question", "Which is correct?", "Correct", "Incorrect", "Incorrect", "Incorrect", 0);
+        createQuestion(quiz2.toString(), "Second Question", "Which is correct?", "Incorrect", "Correct", "Incorrect", "Incorrect", 1);
+        createQuestion(quiz2.toString(), "Third Question", "Which is correct?", "Incorrect", "Incorrect", "Correct", "Incorrect", 2);
+
     }
 
     private void createQuestion(String quizId, String questName, String questText,

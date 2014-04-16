@@ -53,7 +53,7 @@ public class QuizBean implements QuizBeanLocal {
         return quiz.getQuizId();
     }
 
-    public Boolean saveQuizInfo(Long quizId, String descr, String difficultyLvl, Date dateOpen, Date dateClose) {
+    public Boolean saveQuizInfo(Long quizId, String descr, String difficultyLvl, Date dateOpen, Date dateClose, Long prereqQuizId) {
         try {
             Quiz quiz = em.find(Quiz.class, quizId);
             quiz.setDescr(descr);
@@ -64,6 +64,9 @@ public class QuizBean implements QuizBeanLocal {
 
             quiz.setDateOpen(dateOpen);
             quiz.setDateClose(dateClose);
+            if (prereqQuizId != null) {
+                quiz.setPrereq(em.find(Quiz.class, prereqQuizId));
+            }
             quiz.setStatus("complete");
 
             em.persist(quiz);
