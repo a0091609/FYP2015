@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entity;
 
 import java.io.Serializable;
@@ -10,57 +11,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 /**
  *
  * @author Philson
  */
 @Entity
-public class Item implements Serializable
+public class Skill implements Serializable
 {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne
-    private Module module;
     private String name;
     private String description;
-    private String imgURL;
-    private String status;
-    private Integer cost;
-
-    public Integer getCost()
-    {
-        return cost;
-    }
-
-    public void setCost(Integer cost)
-    {
-        this.cost = cost;
-    }
-
-    public String getStatus()
-    {
-        return status;
-    }
-
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
-    
-    public String getImgURL()
-    {
-        return imgURL;
-    }
-
-    public void setImgURL(String imgURL)
-    {
-        this.imgURL = imgURL;
-    }
+    private Integer skillPoints;
 
     public String getName()
     {
@@ -82,14 +47,14 @@ public class Item implements Serializable
         this.description = description;
     }
 
-    public Module getModule()
+    public Integer getSkillPoints()
     {
-        return module;
+        return skillPoints;
     }
 
-    public void setModule(Module module)
+    public void setSkillPoints(Integer skillPoints)
     {
-        this.module = module;
+        this.skillPoints = skillPoints;
     }
 
     public Long getId()
@@ -114,11 +79,11 @@ public class Item implements Serializable
     public boolean equals(Object object)
     {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Item))
+        if (!(object instanceof Skill))
         {
             return false;
         }
-        Item other = (Item) object;
+        Skill other = (Skill) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
             return false;
         return true;
@@ -127,6 +92,7 @@ public class Item implements Serializable
     @Override
     public String toString()
     {
-        return "" + this.getClass() + "[ module=" + module + "name=" + name + " id=" + id + " ]";
+        return "entity.Skill[ id=" + id + " ]";
     }
+    
 }

@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,12 +31,47 @@ public class Quest implements Serializable
     private String name;
     private String description;
     private String fileURL;
+    private Integer difficulty;
     @Temporal(TemporalType.TIMESTAMP)
     private Date releaseDate;
     @Temporal(TemporalType.TIMESTAMP)
     private Date closingDate;
     @OneToOne
     private Key keyRequired;
+    @OneToOne
+    private Skill skillReward;
+    @ManyToOne
+    private Module module;
+
+    public Integer getDifficulty()
+    {
+        return difficulty;
+    }
+
+    public void setDifficulty(Integer difficulty)
+    {
+        this.difficulty = difficulty;
+    }
+
+    public Skill getSkillReward()
+    {
+        return skillReward;
+    }
+
+    public void setSkillReward(Skill skillReward)
+    {
+        this.skillReward = skillReward;
+    }
+
+    public Module getModule()
+    {
+        return module;
+    }
+
+    public void setModule(Module module)
+    {
+        this.module = module;
+    }
 
     public Key getKeyRequired()
     {

@@ -1,0 +1,150 @@
+<%-- Side bar content goes here! --%>
+
+<!-- BEGIN SIDEBAR -->
+<div class="page-sidebar nav-collapse collapse">
+    <!-- BEGIN SIDEBAR MENU -->        
+    <ul class="page-sidebar-menu">
+        <li>
+            <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
+            <form class="sidebar-search">
+                <div class="input-box">
+                    <a href="javascript:;" class="remove"></a>
+                    <input type="text" placeholder="Search" autocomplete />
+                    <input type="button" class="submit" value=" " />
+                </div>
+            </form>
+            <!-- END RESPONSIVE QUICK SEARCH FORM -->
+        </li>
+        <!-- Need to put active for the CORRECT page!! -->
+        <li class="start active">
+            <a href="Modules?action=moduleDashboard&moduleId=<%=session.getAttribute("moduleId")%>">
+                <i class="icon-home"></i> 
+                <span class="title">Dashboard</span>
+                <span class="selected"></span>
+            </a>
+        </li>
+
+
+        <!-- System Functionalities -->
+        <li>
+            <a href="#">
+                <i class="icon-cogs"></i> 
+                <span class="title">Settings</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="icon-info-sign"></i> 
+                <span class="title">Module Info</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="icon-bullhorn"></i> 
+                <span class="title">Announcements</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="icon-dropbox"></i> 
+                <span class="title">Workbin</span>
+            </a>
+        </li>
+
+
+        <!-- Gamification Functionalities -->
+        <li>
+            <a href="#">
+                <i class="icon-trophy"></i> 
+                <span class="title">Leaderboard</span>
+            </a>
+        </li>
+        <li id="link-quests">
+            <a href="#">
+                <i class="icon-compass"></i> 
+                <span class="title">Quests</span>
+            </a>
+        </li>
+        <li id="link-forums">
+            <a href="#">
+                <i class="icon-comments-alt"></i> 
+                <span class="title">As an Expert</span>
+            </a>
+        </li>
+        <li id="link-store">
+            <a href="#">
+                <i class="icon-shopping-cart"></i> 
+                <span class="title">Items Store</span>
+            </a>
+        </li>
+
+
+        <!-- Personalized Functionality -->
+        <li id="link-inventory">
+            <a href="#">
+                <i class="icon-briefcase"></i> 
+                <span class="title">My Inventory</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="icon-envelope-alt"></i> 
+                <span class="title">My Messages</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="icon-bell"></i> 
+                <span class="title">My Notifications</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="icon-calendar"></i> 
+                <span class="title">My Calender</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="icon-group"></i> 
+                <span class="title">My Buddy List</span>
+            </a>
+        </li>
+
+
+
+        <!-- Module Switcher to access other modules -->
+        <li>
+            <a href="javascript:;">
+                <i class="icon-book"></i> 
+                <span class="title">My Modules</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="Login">
+                        IS4240
+                    </a>
+                </li>
+                <li>
+                    <a href="Login">
+                        IS1112
+                    </a>
+                </li>
+                <li>
+                    <a href="Login">
+                        IS4224
+                    </a>
+                </li>
+                <li>
+                    <a href="Login">
+                        IS3260
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+    </ul>
+    <!-- END SIDEBAR MENU -->
+</div>
+<!-- END SIDEBAR -->

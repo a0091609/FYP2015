@@ -2989,6 +2989,7 @@ Custom portlet tabs
      -webkit-border-radius: 0px;
         -moz-border-radius: 0px;
              border-radius: 0px;   
+  color: white;
 }
 
 .portlet-tabs .nav-tabs > li:last-child > a {

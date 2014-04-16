@@ -5,10 +5,7 @@
  */
 package servlet;
 
-import entity.Module;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -17,16 +14,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import session.ItemBeanLocal;
 import session.ModuleBeanLocal;
 
 /**
  *
  * @author Philson
  */
-@WebServlet(name = "LoginServlet", urlPatterns =
+@WebServlet(name = "Login", urlPatterns =
 {
-    "/LoginServlet", "/LoginServlet?*"
+    "/Login", "/Login?*"
 })
 public class LoginServlet extends HttpServlet
 {
@@ -38,14 +34,12 @@ public class LoginServlet extends HttpServlet
 
     //EJB References
     @EJB
-    ItemBeanLocal itemBean;
-    @EJB
     ModuleBeanLocal moduleBean;
 
     //Functionalities needed:        
-    //  1. Login the Student                                   [NOT DONE]
-    //  2. Retrieve his list of modules                        [NOT DONE]
-    //  3. Redirect to dashboard2                              [NOT DONE]
+    //  1. Login the Student                                   [DONE]
+    //  2. Retrieve his list of modules                        [DONE]
+    //  3. Redirect to dashboard2                              [DONE]
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
@@ -54,22 +48,25 @@ public class LoginServlet extends HttpServlet
         this.request = request;
         this.response = response;
         String userId = request.getParameter("userId");
-        System.out.println("LoginServlet userId: " + userId);
 
         try
         {
-            //Make sure that a userID has been specified
-            if (userId == null)
-            {
-                response.sendRedirect(request.getContextPath());
-            }
-            else
+            //Check if user is logged in
+            if (session.getAttribute("userId") == null)
             {
                 //Standard login stuff
                 session.setAttribute("userId", userId);
                 session.setAttribute("username", "Philson Nah");
                 session.setAttribute("userType", "student");
+            }
+            else if (userId == null)
+            {
+                userId = (String) session.getAttribute("userId");
+            }
+            System.out.println("LoginServlet UserId: " + userId);
 
+            if (userId != null)
+            {
                 //Get Student module list
                 data = moduleBean.getStudentModules(userId);
                 request.setAttribute("moduleList", data);
@@ -78,6 +75,11 @@ public class LoginServlet extends HttpServlet
                 //Redirect to dashboard
                 request.getRequestDispatcher("/dashboard2.jsp").forward(request, response);
             }
+            else
+                response.sendRedirect("login.jsp");
+                
+                
+                
         }
         catch (Exception ex)
         {
