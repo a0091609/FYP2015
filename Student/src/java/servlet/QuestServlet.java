@@ -29,6 +29,7 @@ import session.ModuleBeanLocal;
 })
 public class QuestServlet extends HttpServlet
 {
+
     //Global Variables
     private HttpServletRequest request;
     private HttpServletResponse response;
@@ -41,13 +42,15 @@ public class QuestServlet extends HttpServlet
     @EJB
     ModuleBeanLocal moduleBean;
 
+    
     //Functionalities needed:        
-    //  1. Retrieve all the Items for a particular module      [NOT DONE]
-    //  2. Create a Style Item                                 [NOT DONE]
-    //  3. Create a Pet                                        [NOT DONE]
-    //  4. Create a Booster Pack                               [NOT DONE]
-    //  5. Create a Quest Item                                 [NOT DONE]
-    //  6. Delete an Item                                      [NOT DONE]
+    //  1. Retrieve all Quests for a module             [NOT DONE]
+    //  2. Retrieve all Quests submitted by Avatar      [NOT DONE]
+    //  3. Retrieve all Keys owned by Avatar            [NOT DONE]
+    //  4. Retrieve all details for partcular Quest     [NOT DONE]
+    //  5. Submit a quest and update rewards            [NOT DONE]
+    //  6. Notify user of their accomplishment          [NOT DONE]
+    
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
@@ -69,44 +72,26 @@ public class QuestServlet extends HttpServlet
                 response.sendRedirect("login.jsp");
             }
             //Module ID not specified
-            else if(moduleId == null)
+            else if (moduleId == null)
             {
                 response.sendRedirect("Login");
             }
 
-            
             //Default action brings them to the quest display page
             else if (action == null || action.equals("viewAllQuests"))
             {
-                data = moduleBean.getInstructorModules(userId);
-                request.setAttribute("moduleList", data);
-                request.getRequestDispatcher("/items/items.jsp").forward(request, response);
+                //1. Retrieve all Quests for a module
+                //2. Retrieve all Quests submitted by Avatar
+                //3. Retrieve all Keys owned by Avatar
             }
-            else if (action.equals("viewAllItems"))
+            else if (action.equals("openQuest"))
             {
-                displayItems(moduleId);
+                //  4. Retrieve all details for partcular Quest 
             }
-            else if (action.equals("createStyleItem"))
+            else if (action.equals("submitQuest"))
             {
-                //todo
-            }
-            else if (action.equals("createPet"))
-            {
-                createPet(moduleId);
-                displayItems(moduleId);
-            }
-            else if (action.equals("createBoosterPack"))
-            {
-                //todo
-            }
-            else if (action.equals("createQuestItem"))
-            {
-                //todo
-            }
-            else if (action.equals("deleteItem"))
-            {
-                delete();
-                displayItems(moduleId);
+                //  5. Submit a quest and update rewards            
+                //  6. Notify user of their accomplishment          
             }
         }
         catch (Exception ex)
