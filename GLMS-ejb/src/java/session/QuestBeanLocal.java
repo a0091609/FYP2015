@@ -8,7 +8,9 @@ package session;
 
 import entity.Avatar;
 import entity.Key;
+import entity.Module;
 import entity.Quest;
+import entity.Skill;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -24,8 +26,10 @@ public interface QuestBeanLocal
 
     public Quest getQuest(Long ID) throws Exception;
 
-    public Avatar getAvatar(String userId) throws Exception;
-
     public List<Quest> getAllQuests(String moduleId) throws Exception;
+
+    public Avatar getAvatar(String userId, String moduleId) throws Exception;
+
+    public void createQuest(Module m, Skill s, Quest q);
     
 }

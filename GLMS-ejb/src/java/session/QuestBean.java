@@ -8,10 +8,13 @@ package session;
 import entity.Avatar;
 import entity.Item;
 import entity.Key;
+import entity.Module;
 import entity.Quest;
+import entity.Skill;
 import entity.Student;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -35,6 +38,17 @@ public class QuestBean implements QuestBeanLocal
     @PersistenceContext
     private EntityManager em;
 
+    @EJB
+    ModuleBeanLocal moduleBean;
+
+    public void createQuest(Module m, Skill s, Quest q)
+    {
+        em.persist(s);
+        em.persist(q);
+        em.persist(m);
+        em.flush();
+    }
+    
     //Retrieve all the Items for a particular module
     public List<Quest> getAllQuests(String moduleId) throws Exception
     {
@@ -54,16 +68,25 @@ public class QuestBean implements QuestBeanLocal
         return moduleQuests;
     }
 
-    public Avatar getAvatar(String userId) throws Exception
+    public Avatar getAvatar(String userId, String moduleId) throws Exception
     {
         Student student = em.find(Student.class, userId);
-        //Check if Module exists
+        Module module = moduleBean.getModule(moduleId);
         if (student == null)
         {
             throw new Exception("ERROR: STUDENT DOES NOT EXIST!");
         }
         else
-            return student.getAvatar();
+        {
+            for (Avatar a : student.getAvatars())
+            {
+                if (a.getModule().equals(module))
+                {
+                    return a;
+                }
+            }
+        }
+        return null;
     }
 
     public Quest getQuest(Long ID) throws Exception
