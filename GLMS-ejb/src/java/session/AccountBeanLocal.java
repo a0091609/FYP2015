@@ -1,5 +1,7 @@
 package session;
 
+import entity.Avatar;
+import entity.Module;
 import entity.Student;
 import javax.ejb.Local;
 
@@ -20,4 +22,8 @@ public interface AccountBeanLocal {
     public Boolean isInstructor(String userId);
 
     /* End of methods for Instructor */
+
+    public Student getStudent(String userId);
+
+    public void createAvatar(Student s, Avatar a);
 }
