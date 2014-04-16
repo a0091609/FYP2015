@@ -42,7 +42,7 @@ public class AccountBean implements AccountBeanLocal {
 
     public Boolean isStudent(String userId) {
         Student student = em.find(Student.class, userId);
-
+        System.out.println(student.getEmail());
         if (student != null) {
             System.out.println("Student " + userId + " already exists.");
             return true;

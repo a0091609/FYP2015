@@ -40,6 +40,7 @@ function isStudent(userId) {
 function saveStudentProfile(token) {
     var profileUrl = API_URL + "Profile_View?output=json&callback=?&APIKey=" + APIKEY + "&AuthToken=" + token;
     jQuery.getJSON(profileUrl, function(profileData) {
+        console.log(profileData);
         $.ajax({
             type: 'post',
             url: '/Student/ProfileServlet?action=createStudent',
