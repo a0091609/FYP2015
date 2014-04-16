@@ -35,9 +35,6 @@ public class Student implements Serializable
 //    private GameProfile gameProfile;
 //    @ManyToMany
 //    private List<Item> inventory;
-    
-    @OneToMany
-    private List<Task> tasks;
 
     @OneToOne
     private Avatar avatar;
@@ -52,15 +49,6 @@ public class Student implements Serializable
         this.avatar = avatar;
     }
 
-    public List<Task> getTasks()
-    {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks)
-    {
-        this.tasks = tasks;
-    }
 
 //    public List<Gold> getAccounts()
 //    {
