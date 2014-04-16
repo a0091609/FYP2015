@@ -1,5 +1,6 @@
 package session;
 
+import entity.GameProfile;
 import entity.Instructor;
 import entity.Module;
 import entity.Student;
@@ -32,7 +33,7 @@ public class ModuleBean implements ModuleBeanLocal {
 
                 em.persist(module);
                 em.flush();
-                System.out.println("New module created.");
+                System.out.println("New module " + moduleId + " created.");
             } else {
                 System.out.println("Module " + moduleCode + " " + moduleName + " already exists.");
             }
@@ -50,12 +51,21 @@ public class ModuleBean implements ModuleBeanLocal {
                 Student student = em.find(Student.class, userId);
                 Module module = em.find(Module.class, moduleId);
 
-                //student.addModule(module);
-                module.addStudent(student);
+                GameProfile gameProfile = new GameProfile();
+                gameProfile.setStudent(student);
+                gameProfile.setModule(module);
+                gameProfile.setUserId(student.getUserId());
+                gameProfile.setModuleId(moduleId);
+                gameProfile.setExpPoint(0);
+                gameProfile.setLevel(0);
 
+                module.getStudentList().add(gameProfile);
+                student.getModuleList().add(gameProfile);
+
+                em.persist(gameProfile);
                 em.persist(student);
                 em.persist(module);
-                System.out.println("Module initiated: "+module.getModuleId());
+                System.out.println("Module initiated: " + module.getModuleId());
             }
 
             return true;
@@ -70,7 +80,7 @@ public class ModuleBean implements ModuleBeanLocal {
         if (module != null) {
             return true;
         } else {
-            System.out.println("Module does not exist.");
+            System.out.println("Module " + moduleId + " does not exist.");
             return false;
         }
     }

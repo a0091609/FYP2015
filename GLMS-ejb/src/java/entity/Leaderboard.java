@@ -6,10 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/**
- *
- * @author Chih Yong
- */
 @Entity
 public class Leaderboard implements Serializable {
 
@@ -17,7 +13,8 @@ public class Leaderboard implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long leaderboardId;
-    
+    private String userId;
+    private String moduleId;
     private Integer totalPoints;
 
     public Long getLeaderboardId() {
@@ -26,6 +23,22 @@ public class Leaderboard implements Serializable {
 
     public void setLeaderboardId(Long leaderboardId) {
         this.leaderboardId = leaderboardId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getModuleId() {
+        return moduleId;
+    }
+
+    public void setModuleId(String moduleId) {
+        this.moduleId = moduleId;
     }
 
     public Integer getTotalPoints() {

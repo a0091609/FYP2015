@@ -7,23 +7,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Stateless
-public class AccountBean implements AccountBeanLocal
-{
+public class AccountBean implements AccountBeanLocal {
 
     @PersistenceContext
     private EntityManager em;
 
     /* Methods for Student */
     public Boolean createStudent(String userId, String name, String email, String gender,
-                                 String faculty, String firstMajor, String secondMajor, Integer matriculationYear)
-    {
+            String faculty, String firstMajor, String secondMajor, Integer matriculationYear) {
 
-        try
-        {
+        try {
             // Non-student userId is allowed to login
 //            if (!isStudent(userId) && !isInstructorUserId(userId)) {
-            if (!isStudent(userId))
-            {
+            if (!isStudent(userId)) {
                 Student student = new Student();
 
                 student.setUserId(userId);
@@ -36,45 +32,22 @@ public class AccountBean implements AccountBeanLocal
                 student.setMatriculationYear(matriculationYear);
 
                 em.persist(student);
-                System.out.println("New student created.");
-            }
-            return true;
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
-    }
-
-    public Boolean createStudent(Student stud)
-    {
-        try
-        {
-            if (!isStudent(stud.getUserId()))
-            {
-                em.persist(stud);
                 em.flush();
-                System.out.println("New student created: "+stud.getUserId());
+                System.out.println("New student " + userId + " created.");
             }
             return true;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
 
-    public Boolean isStudent(String userId)
-    {
+    public Boolean isStudent(String userId) {
         Student student = em.find(Student.class, userId);
-        System.out.println(student.getEmail());
-        if (student != null)
-        {
+        if (student != null) {
             System.out.println("Student " + userId + " already exists.");
             return true;
-        }
-        else
-        {
+        } else {
             System.out.println("Student does not exist.");
             return false;
         }
@@ -83,13 +56,10 @@ public class AccountBean implements AccountBeanLocal
 
     /* Methods for Instructor */
     public Boolean createInstructor(String userId, String name, String email,
-                                    String gender, String faculty)
-    {
+            String gender, String faculty) {
 
-        try
-        {
-            if (!isInstructor(userId) && isInstructorUserId(userId))
-            {
+        try {
+            if (!isInstructor(userId) && isInstructorUserId(userId)) {
                 Instructor instructor = new Instructor();
 
                 instructor.setUserId(userId);
@@ -99,45 +69,34 @@ public class AccountBean implements AccountBeanLocal
                 instructor.setFaculty(faculty);
 
                 em.persist(instructor);
-                System.out.println("New instructor created.");
+                System.out.println("New instructor " + userId + " created.");
             }
             return true;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return false;
         }
     }
 
-    public Boolean isInstructorUserId(String userId)
-    {
-        if (userId.length() > 4 && !isNumeric(userId.substring(4)))
-        {
+    public Boolean isInstructorUserId(String userId) {
+        if (userId.length() > 4 && !isNumeric(userId.substring(4))) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 
-    public Boolean isInstructor(String userId)
-    {
+    public Boolean isInstructor(String userId) {
         Instructor instructor = em.find(Instructor.class, userId);
-        if (instructor != null)
-        {
+        if (instructor != null) {
             System.out.println("Instructor " + userId + " already exists.");
             return true;
-        }
-        else
-        {
+        } else {
             System.out.println("Instructor does not exist.");
             return false;
         }
     }
 
-    private static boolean isNumeric(String str)
-    {
+    private static boolean isNumeric(String str) {
         return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
     }
     /* End of methods for Instructor */
