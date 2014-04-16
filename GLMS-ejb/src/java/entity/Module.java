@@ -10,8 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Module implements Serializable
-{
+public class Module implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -34,154 +33,116 @@ public class Module implements Serializable
     @OneToMany(mappedBy = "module")
     private List<JobClass> jobs;
 
-    public List<JobClass> getJobs()
-    {
+    public List<JobClass> getJobs() {
         return jobs;
     }
 
-    public void setJobs(List<JobClass> jobs)
-    {
+    public void setJobs(List<JobClass> jobs) {
         this.jobs = jobs;
     }
 
-    public List<Quest> getQuests()
-    {
+    public List<Quest> getQuests() {
         return quests;
     }
 
-    public void setQuests(List<Quest> quests)
-    {
+    public void setQuests(List<Quest> quests) {
         this.quests = quests;
     }
 
-    public List<Item> getItems()
-    {
+    public List<Item> getItems() {
         return items;
     }
 
-    public void setItems(List<Item> items)
-    {
+    public void setItems(List<Item> items) {
         this.items = items;
     }
 
-    public String getModuleId()
-    {
+    public String getModuleId() {
         return moduleId;
     }
 
-    public void setModuleId(String moduleId)
-    {
+    public void setModuleId(String moduleId) {
         this.moduleId = moduleId;
     }
 
-    public String getModuleCode()
-    {
+    public String getModuleCode() {
         return moduleCode;
     }
 
-    public void setModuleCode(String moduleCode)
-    {
+    public void setModuleCode(String moduleCode) {
         this.moduleCode = moduleCode;
     }
 
-    public String getModuleName()
-    {
+    public String getModuleName() {
         return moduleName;
     }
 
-    public void setModuleName(String moduleName)
-    {
+    public void setModuleName(String moduleName) {
         this.moduleName = moduleName;
     }
 
-    public String getDescr()
-    {
+    public String getDescr() {
         return descr;
     }
 
-    public void setDescr(String descr)
-    {
+    public void setDescr(String descr) {
         this.descr = descr;
     }
 
-    public Boolean isActivated()
-    {
+    public Boolean isActivated() {
         return activated;
     }
 
-    public void setActivated(Boolean activated)
-    {
+    public void setActivated(Boolean activated) {
         this.activated = activated;
     }
 
-    public Instructor getCreator()
-    {
+    public Instructor getCreator() {
         return creator;
     }
 
-    public void setCreator(Instructor creator)
-    {
+    public void setCreator(Instructor creator) {
         this.creator = creator;
     }
 
-    public List<Student> getStudents()
-    {
+    public List<GameProfile> getStudentList() {
+        return studentList;
+    }
+
+    public void setStudentList(List<GameProfile> studentList) {
+        this.studentList = studentList;
+    }
+
+    public List<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(List<Student> students)
-    {
+    public void setStudents(List<Student> students) {
         this.students = students;
     }
 
-    public void addStudent(Student student)
-    {
-        GameProfile gameProfile = new GameProfile();
-        gameProfile.setStudent(student);
-        gameProfile.setModule(this);
-        gameProfile.setUserId(student.getUserId());
-        gameProfile.setModuleId(this.getModuleId());
-        gameProfile.setExpPoint(0);
-        gameProfile.setLevel(0);
-
-        this.studentList.add(gameProfile);
-        student.getModuleList().add(gameProfile);
-
-//        if (!getStudents().contains(student)) {
-//            getStudents().add(student);
-//        }
-//        if (!student.getModules().contains(this)) {
-//            student.getModules().add(this);
-//        }
-    }
-
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         int hash = 0;
         hash += (moduleId != null ? moduleId.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object)
-    {
+    public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Module))
-        {
+        if (!(object instanceof Module)) {
             return false;
         }
         Module other = (Module) object;
-        if ((this.moduleId == null && other.moduleId != null) || (this.moduleId != null && !this.moduleId.equals(other.moduleId)))
-        {
+        if ((this.moduleId == null && other.moduleId != null) || (this.moduleId != null && !this.moduleId.equals(other.moduleId))) {
             return false;
         }
         return true;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "entity.Module[ moduleId=" + moduleId + " ]";
     }
 

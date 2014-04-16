@@ -20,6 +20,4 @@ public interface AccountBeanLocal {
     public Boolean isInstructor(String userId);
 
     /* End of methods for Instructor */
-
-    public Boolean createStudent(Student stud);
 }
