@@ -59,7 +59,7 @@ public class ModuleBean implements ModuleBeanLocal {
                 gameProfile.setUserId(student.getUserId());
                 gameProfile.setModuleId(moduleId);
                 gameProfile.setExpPoint(0);
-                gameProfile.setLevel(0);
+                gameProfile.setExpLevel(0);
 
                 //CY Link
                 module.getStudentList().add(gameProfile);
