@@ -17,8 +17,6 @@ import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.LocalBean;
 import javax.ejb.Startup;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 @Singleton
 @LocalBean
@@ -48,7 +46,6 @@ public class StartupBean
             createAvatar();
             createQuests();
             createQuizzes();
-
         }
         catch (Exception e)
         {

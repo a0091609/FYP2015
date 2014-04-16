@@ -89,6 +89,7 @@ public class QuizBean implements QuizBeanLocal {
             Date dateToday = new Date();
             Date dateOpen = quiz.getDateOpen();
             Date dateClose = quiz.getDateClose();
+            
             String status = (dateToday.before(dateOpen)) ? "Open in " + dateDifference(dateToday, dateOpen) + " more days" : "";
 
             Boolean active = (dateOpen.before(dateToday) && dateToday.before(dateClose)) ? true : false;
