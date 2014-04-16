@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 @IdClass(GameProfileId.class)
@@ -15,11 +16,13 @@ public class GameProfile implements Serializable {
     @Id
     private String moduleId;
     private Integer expPoint;
-    private Integer level;
+    private Integer expLevel;
 
     @ManyToOne
+    @PrimaryKeyJoinColumn(name = "USERID", referencedColumnName = "ID")
     private Student student;
     @ManyToOne
+    @PrimaryKeyJoinColumn(name = "MODULEID", referencedColumnName = "ID")
     private Module module;
 
     public String getUserId() {
@@ -46,12 +49,12 @@ public class GameProfile implements Serializable {
         this.expPoint = expPoint;
     }
 
-    public Integer getLevel() {
-        return level;
+    public Integer getExpLevel() {
+        return expLevel;
     }
 
-    public void setLevel(Integer level) {
-        this.level = level;
+    public void setExpLevel(Integer expLevel) {
+        this.expLevel = expLevel;
     }
 
     public Student getStudent() {

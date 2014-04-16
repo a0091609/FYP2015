@@ -176,13 +176,6 @@ public class Student implements Serializable
             student.getBuddies().add(this);
         }
     }
-//    public GameProfile getGameProfile() {
-//        return gameProfile;
-//    }
-//
-//    public void setGameProfile(GameProfile gameProfile) {
-//        this.gameProfile = gameProfile;
-//    }
 
     @Override
     public int hashCode()
