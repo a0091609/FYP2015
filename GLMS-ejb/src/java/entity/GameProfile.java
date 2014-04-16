@@ -19,10 +19,10 @@ public class GameProfile implements Serializable {
     private Integer expLevel;
 
     @ManyToOne
-    @PrimaryKeyJoinColumn(name = "USERID", referencedColumnName = "ID")
+    @PrimaryKeyJoinColumn(name = "USERID", referencedColumnName = "USERID")
     private Student student;
     @ManyToOne
-    @PrimaryKeyJoinColumn(name = "MODULEID", referencedColumnName = "ID")
+    @PrimaryKeyJoinColumn(name = "MODULEID", referencedColumnName = "MODULEID")
     private Module module;
 
     public String getUserId() {

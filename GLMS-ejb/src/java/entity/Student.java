@@ -9,8 +9,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Student implements Serializable
-{
+public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -24,6 +23,9 @@ public class Student implements Serializable
     private Integer matriculationYear;
     @OneToMany(mappedBy = "student")
     private List<GameProfile> moduleList;
+    @OneToMany(mappedBy = "student")
+    private List<QuizSession> quizzes;
+
     @ManyToMany(mappedBy = "students")
     private List<Module> modules;
     @JoinTable(name = "buddyList")
@@ -33,177 +35,142 @@ public class Student implements Serializable
     @OneToMany(mappedBy = "student")
     private List<Avatar> avatars;
 
-    public List<Avatar> getAvatars()
-    {
+    public List<Avatar> getAvatars() {
         return avatars;
     }
 
-    public void setAvatars(List<Avatar> avatars)
-    {
+    public void setAvatars(List<Avatar> avatars) {
         this.avatars = avatars;
     }
 
-    public String getUserId()
-    {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId)
-    {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getEmail()
-    {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email)
-    {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getGender()
-    {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(String gender)
-    {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
-    public String getFaculty()
-    {
+    public String getFaculty() {
         return faculty;
     }
 
-    public void setFaculty(String faculty)
-    {
+    public void setFaculty(String faculty) {
         this.faculty = faculty;
     }
 
-    public String getFirstMajor()
-    {
+    public String getFirstMajor() {
         return firstMajor;
     }
 
-    public void setFirstMajor(String firstMajor)
-    {
+    public void setFirstMajor(String firstMajor) {
         this.firstMajor = firstMajor;
     }
 
-    public String getSecondMajor()
-    {
+    public String getSecondMajor() {
         return secondMajor;
     }
 
-    public void setSecondMajor(String secondMajor)
-    {
+    public void setSecondMajor(String secondMajor) {
         this.secondMajor = secondMajor;
     }
 
-    public Integer getMatriculationYear()
-    {
+    public Integer getMatriculationYear() {
         return matriculationYear;
     }
 
-    public void setMatriculationYear(Integer matriculationYear)
-    {
+    public void setMatriculationYear(Integer matriculationYear) {
         this.matriculationYear = matriculationYear;
     }
 
-    public List<GameProfile> getModuleList()
-    {
+    public List<GameProfile> getModuleList() {
         return moduleList;
     }
 
-    public void setModuleList(List<GameProfile> moduleList)
-    {
+    public void setModuleList(List<GameProfile> moduleList) {
         this.moduleList = moduleList;
     }
 
-    public List<Module> getModules()
-    {
+    public List<Module> getModules() {
         return modules;
     }
 
-    public void setModules(List<Module> modules)
-    {
+    public void setModules(List<Module> modules) {
         this.modules = modules;
     }
 
-    public void addModule(Module module)
-    {
-        if (!getModules().contains(module))
-        {
+    public void addModule(Module module) {
+        if (!getModules().contains(module)) {
             getModules().add(module);
         }
-        if (!module.getStudents().contains(this))
-        {
+        if (!module.getStudents().contains(this)) {
             module.getStudents().add(this);
         }
     }
 
-    public List<Student> getBuddies()
-    {
+    public List<Student> getBuddies() {
         return buddies;
     }
 
-    public void setBuddies(List<Student> buddies)
-    {
+    public void setBuddies(List<Student> buddies) {
         this.buddies = buddies;
     }
 
-    public void addStudent(Student student)
-    {
-        if (!getBuddies().contains(student))
-        {
+    public void addStudent(Student student) {
+        if (!getBuddies().contains(student)) {
             getBuddies().add(student);
         }
-        if (!student.getBuddies().contains(this))
-        {
+        if (!student.getBuddies().contains(this)) {
             student.getBuddies().add(this);
         }
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         int hash = 0;
         hash += (userId != null ? userId.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object)
-    {
+    public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Student))
-        {
+        if (!(object instanceof Student)) {
             return false;
         }
         Student other = (Student) object;
-        if ((this.userId == null && other.userId != null) || (this.userId != null && !this.userId.equals(other.userId)))
-        {
+        if ((this.userId == null && other.userId != null) || (this.userId != null && !this.userId.equals(other.userId))) {
             return false;
         }
         return true;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "entity.Student[ userId=" + userId + " ]";
     }
 

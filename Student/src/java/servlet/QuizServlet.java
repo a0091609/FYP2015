@@ -17,10 +17,10 @@ import session.QuizBeanLocal;
 
 @WebServlet(name = "QuizServlet", urlPatterns = {"/QuizServlet", "/QuizServlet?*"})
 public class QuizServlet extends HttpServlet {
-
+    
     @EJB
     private QuizBeanLocal quizBean;
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
@@ -29,36 +29,39 @@ public class QuizServlet extends HttpServlet {
             }
             String action = request.getParameter("action");
             System.out.println("QuizServlet action: " + action);
-
+            
             if (action.equals("viewAllQuiz")) {
                 String moduleId = "", moduleName = "";
                 HttpSession session = request.getSession();
-
+                
                 if (session.getAttribute("moduleId") == null) {
                     moduleId = request.getParameter("moduleId");
                     moduleName = request.getParameter("moduleName");
-
+                    
                     request.getSession().setAttribute("moduleId", moduleId);
                     request.getSession().setAttribute("moduleName", moduleName);
                 } else {
                     moduleId = request.getSession().getAttribute("moduleId").toString();
                 }
-
+                
                 List<QuizDetails> quizzes = quizBean.studentGetModuleQuiz(moduleId);
                 request.setAttribute("quizzes", quizzes);
-
+                
                 request.getRequestDispatcher("/quiz/quiz.jsp").forward(request, response);
             } else if (action.equals("playQuiz")) {
                 String quizId = request.getParameter("quizId");
                 String userId = request.getSession().getAttribute("userId").toString();
                 String moduleId = request.getSession().getAttribute("moduleId").toString();
-
+                
                 Boolean authToPlay = quizBean.checkAuthToPlay(userId, moduleId, Long.valueOf(quizId));
-
+                
                 if (authToPlay) {
                     request.getSession().setAttribute("quizId", quizId);
+                    //create quiz session
+                    quizBean.createQuizSession(userId, Long.valueOf(quizId));
+                    
                     List<QuestionDetails> questions = quizBean.getQuizQuestions(Long.valueOf(quizId));
-
+                    
                     request.setAttribute("questions", questions);
                     request.getRequestDispatcher("/quiz/doQuiz.jsp").forward(request, response);
                 } else {
@@ -67,7 +70,7 @@ public class QuizServlet extends HttpServlet {
             } else if (action.equals("checkAnswer")) {
                 String questId = request.getParameter("questId").toString();
                 String answer = request.getParameter("option").toString();
-
+                
                 response.setContentType("application/json;charset=utf-8");
                 Gson gson = new Gson();
                 PrintWriter pw = response.getWriter();
@@ -75,7 +78,7 @@ public class QuizServlet extends HttpServlet {
                 pw.close();
             }
         } catch (Exception e) {
-
+            
         }
     }
 

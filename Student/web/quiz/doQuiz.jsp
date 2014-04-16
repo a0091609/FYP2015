@@ -57,7 +57,7 @@
                     <!-- END PAGE HEADER-->
 
                     <!-- BEGIN PAGE CONTENT-->
-                    
+
                     <div class="row-fluid">
                         <!--Streak Count-->
                         <div class="span4 responsive">
@@ -77,7 +77,7 @@
                         </div>
                         <!--End of Streak Count-->
                         <!--Fun Quiz Items-->
-                        <a href="#" class="span4 responsive">
+                        <a href="#" class="span4 responsive more">
                             <div class="dashboard-stat yellow">
                                 <div class="visual">
                                     <i class="icon-info-sign"></i>
@@ -92,7 +92,7 @@
                                 </div>          
                             </div>
                         </a>
-                        <a href="#" class="span4 responsive">
+                        <a href="#" class="span4 responsive more">
                             <div class="dashboard-stat yellow">
                                 <div class="visual">
                                     <i class="icon-random"></i>
@@ -109,9 +109,9 @@
                         </a>
                         <!--End of Fun Quiz Items-->
                     </div>
-                    
-                    
-                    
+
+
+
                     <div class="row-fluid">
                         <div class="span12">
 
@@ -127,7 +127,7 @@
                                 </div>
                                 <div class="portlet-body form">
                                     <div class="form-wizard">
-                                        <div class="navbar steps">
+                                        <div class="navbar steps" style="margin-bottom:5px;">
                                             <div class="navbar-inner">
                                                 <ul class="row-fluid">
                                                     <!--for loop here-->
@@ -148,14 +148,14 @@
                                             <div class="bar"></div>
                                         </div>
                                         <div class="tab-content">
-                                            <div class="alert alert-error hide">
+<!--                                            <div class="alert alert-error hide">
                                                 <button class="close" data-dismiss="alert"></button>
                                                 Error
                                             </div>
                                             <div class="alert alert-success hide">
                                                 <button class="close" data-dismiss="alert"></button>
                                                 Success
-                                            </div>
+                                            </div>-->
                                             <!--loop start-->
 
                                             <%
@@ -165,11 +165,11 @@
                                             %>
                                             <div class="tab-pane <%=(j == 1) ? "active" : ""%>" id="tab<%=j%>">
                                                 <div class="row-fluid margin-bottom-25">
-                                                    <div class="span12">
+                                                    <div class="span12" style="font-size:18px;">
                                                         <!--Question Text-->
                                                         <%=quest.getQuestionText()%>
                                                     </div>
-                                                    <div class="span12">
+                                                    <div class="span12" id="hint<%=j%>">
                                                         <!--Question Hint-->
                                                         <%=(quest.getAnswerHint() == null) ? "" : quest.getAnswerHint()%>
                                                     </div>
@@ -309,6 +309,10 @@
                             });
                         });
                     });
+                    
+                    function getHint(){
+                        
+                    }
                 });
             </script>
             <!-- END JAVASCRIPTS -->
