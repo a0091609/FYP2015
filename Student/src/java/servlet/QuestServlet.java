@@ -5,7 +5,9 @@
  */
 package servlet;
 
+import entity.Avatar;
 import entity.Module;
+import entity.Quest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +18,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import session.ItemBeanLocal;
 import session.ModuleBeanLocal;
+import session.QuestBeanLocal;
 
 /**
  *
@@ -38,11 +40,10 @@ public class QuestServlet extends HttpServlet
 
     //EJB References
     @EJB
-    ItemBeanLocal itemBean;
+    QuestBeanLocal questBean;
     @EJB
     ModuleBeanLocal moduleBean;
 
-    
     //Functionalities needed:        
     //  1. Retrieve all Quests for a module             [NOT DONE]
     //  2. Retrieve all Quests submitted by Avatar      [NOT DONE]
@@ -50,8 +51,6 @@ public class QuestServlet extends HttpServlet
     //  4. Retrieve all details for partcular Quest     [NOT DONE]
     //  5. Submit a quest and update rewards            [NOT DONE]
     //  6. Notify user of their accomplishment          [NOT DONE]
-    
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
@@ -83,6 +82,7 @@ public class QuestServlet extends HttpServlet
                 //1. Retrieve all Quests for a module
                 //2. Retrieve all Quests submitted by Avatar
                 //3. Retrieve all Keys owned by Avatar
+                displayAllQuests(moduleId, userId);
             }
             else if (action.equals("openQuest"))
             {
@@ -105,15 +105,56 @@ public class QuestServlet extends HttpServlet
     }
 
 //Private methods, for convenience
-    //Displays all the items for a module
-    private void displayItems(String moduleId) throws Exception
+    //Displays all the quests for a module
+    private void displayAllQuests(String moduleId, String userId) throws Exception
     {
-        // Get the saved coupons
-        data = itemBean.getAllItems(moduleId);
-        System.out.println("All Items: " + data);
-        request.setAttribute("allItems", data);
+        //1. Retrieve all Quests for a module
+        //2. Retrieve all Quests submitted by Avatar
+        //3. Retrieve all Keys owned by Avatar
 
-        //Need to set the moduleID or it will be lost
+        // Get all the Quests
+        List<Quest> allQuests = questBean.getAllQuests(moduleId);
+        System.out.println("All Items: " + data);
+
+        //Sort 1 star quests
+        List<Quest> oneStar = new ArrayList();
+        for (Quest quest : allQuests)
+        {
+            if (quest.getDifficulty() == 1)
+            {
+                oneStar.add(quest);
+            }
+        }
+        request.setAttribute("oneStar", oneStar);
+
+        //Sort 2 star quests
+        List<Quest> twoStar = new ArrayList();
+        for (Quest quest : allQuests)
+        {
+            if (quest.getDifficulty() == 2)
+            {
+                twoStar.add(quest);
+            }
+        }
+        request.setAttribute("twoStar", twoStar);
+
+        //Sort 3 star quests
+        List<Quest> threeStar = new ArrayList();
+        for (Quest quest : allQuests)
+        {
+            if (quest.getDifficulty() == 3)
+            {
+                threeStar.add(quest);
+            }
+        }
+        request.setAttribute("threeStar", threeStar);
+
+        //Get users stuff
+        Avatar a = questBean.getAvatar(userId, moduleId);
+        request.setAttribute("questsCompleted", a.getQuestsCompleted());
+        request.setAttribute("keys", questBean.getStudentKeys(a));
+
+        //Need to set the Module or it will be lost
         Module mod = moduleBean.getModule(moduleId);
         request.setAttribute("module", mod);
 
@@ -123,43 +164,7 @@ public class QuestServlet extends HttpServlet
         response.setDateHeader("Expires", 0);
 
         //Direct them to the display page!
-        request.getRequestDispatcher("/items/itemMgt.jsp").forward(request, response);
-    }
-
-    //Create a new pet item
-    private void createPet(String moduleId) throws Exception
-    {
-        //Extract the form parameters
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
-        int cost = Integer.parseInt(request.getParameter("cost"));
-        int bonus = Integer.parseInt(request.getParameter("bonus"));
-
-        //Create the pet
-        itemBean.createPet(moduleId, name, description, cost, bonus);
-
-        //Send a server msg to feedback
-        data = new ArrayList();
-        data.add("New Pet: " + name + " has been created");
-        request.setAttribute("serverMsg", data);
-        System.out.println("New Pet: " + name + " has been created");
-        data = null;
-    }
-
-    //Delete an item
-    private void delete() throws Exception
-    {
-        //Delete the item
-        long itemId = Long.parseLong(request.getParameter("itemId"));
-        String name = itemBean.getItem(itemId).getName();
-        itemBean.deleteItem(itemId);
-
-        //Send a server msg to feedback
-        data = new ArrayList();
-        data.add("Item: " + name + " has been deleted.");
-        request.setAttribute("serverMsg", data);
-        System.out.println("Item: " + name + " has been deleted.");
-        data = null;
+        request.getRequestDispatcher("quests.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

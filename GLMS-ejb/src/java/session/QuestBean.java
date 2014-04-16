@@ -28,7 +28,7 @@ import javax.persistence.Query;
 public class QuestBean implements QuestBeanLocal
 {
     //Functionalities needed:        
-    //  1. Retrieve all Quests for a module             [NOT DONE]
+    //  1. Retrieve all Quests for a module             [DONE!]
     //  2. Retrieve all Quests submitted by Avatar      [DONE!] //Just use the dot
     //  3. Retrieve all Keys owned by Avatar            [DONE!]
     //  4. Retrieve all details for partcular Quest     [DONE!]
@@ -53,13 +53,14 @@ public class QuestBean implements QuestBeanLocal
     public List<Quest> getAllQuests(String moduleId) throws Exception
     {
         em.flush();
+        Module mod = moduleBean.getModule(moduleId);
         Query query = em.createQuery("SELECT q FROM Quest q");
         List<Quest> allQuests = new ArrayList(query.getResultList());
         List<Quest> moduleQuests = new ArrayList();
 
         for (Quest quest : allQuests)
         {
-            if (quest.getModule().equals(moduleId))
+            if (quest.getModule().equals(mod))
             {
                 moduleQuests.add(quest);
             }
