@@ -58,7 +58,7 @@
         <!-- BEGIN LOGIN -->
         <div class="content">
             <!-- BEGIN LOGIN FORM -->
-            <form class="form-vertical login-form" action="LoginServlet" method="post">
+            <form class="form-vertical login-form" action="Login" method="post">
                 <h3 class="form-title">Login to your account</h3>
                 <div class="alert alert-error hide">
                     <button class="close" data-dismiss="alert"></button>

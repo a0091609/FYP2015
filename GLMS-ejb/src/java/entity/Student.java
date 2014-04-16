@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -37,16 +38,26 @@ public class Student implements Serializable {
     private List<Student> buddies;
 //    @OneToOne @MapsId
 //    private GameProfile gameProfile;
-    @ManyToMany
-    private List<Item> inventory;
+//    @ManyToMany
+//    private List<Item> inventory;
     @ManyToMany
     private List<Item> wishlist;
     @OneToMany
     private List<Task> tasks;
-    @OneToMany
-    private List<Gold> accounts;
-    
-    
+//    @OneToMany
+//    private List<Gold> accounts;
+    @OneToOne
+    private Avatar avatar;
+
+    public Avatar getAvatar()
+    {
+        return avatar;
+    }
+
+    public void setAvatar(Avatar avatar)
+    {
+        this.avatar = avatar;
+    }
 
     public List<Task> getTasks()
     {
@@ -58,25 +69,25 @@ public class Student implements Serializable {
         this.tasks = tasks;
     }    
 
-    public List<Gold> getAccounts()
-    {
-        return accounts;
-    }
-
-    public void setAccounts(List<Gold> accounts)
-    {
-        this.accounts = accounts;
-    }
+//    public List<Gold> getAccounts()
+//    {
+//        return accounts;
+//    }
+//
+//    public void setAccounts(List<Gold> accounts)
+//    {
+//        this.accounts = accounts;
+//    }
     
-    public List<Item> getInventory()
-    {
-        return inventory;
-    }
-
-    public void setInventory(List<Item> inventory)
-    {
-        this.inventory = inventory;
-    }
+//    public List<Item> getInventory()
+//    {
+//        return inventory;
+//    }
+//
+//    public void setInventory(List<Item> inventory)
+//    {
+//        this.inventory = inventory;
+//    }
 
     public List<Item> getWishlist()
     {

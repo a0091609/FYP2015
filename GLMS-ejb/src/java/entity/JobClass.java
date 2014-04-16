@@ -7,10 +7,12 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 /**
@@ -18,45 +20,47 @@ import javax.persistence.ManyToOne;
  * @author Philson
  */
 @Entity
-public class Gold implements Serializable
+public class JobClass implements Serializable
 {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Integer currentBalance;
-    private Integer lifetimeEarnings;
+    private String title;
+    private String description;
+    @ManyToMany
+    private List<Skill> skillRequirements;
     @ManyToOne
     private Module module;
 
-    public Long getId()
+    public String getTitle()
     {
-        return id;
+        return title;
     }
 
-    public void setId(Long id)
+    public void setTitle(String title)
     {
-        this.id = id;
+        this.title = title;
     }
 
-    public Integer getCurrentBalance()
+    public String getDescription()
     {
-        return currentBalance;
+        return description;
     }
 
-    public void setCurrentBalance(Integer currentBalance)
+    public void setDescription(String description)
     {
-        this.currentBalance = currentBalance;
+        this.description = description;
     }
 
-    public Integer getLifetimeEarnings()
+    public List<Skill> getSkillRequirements()
     {
-        return lifetimeEarnings;
+        return skillRequirements;
     }
 
-    public void setLifetimeEarnings(Integer lifetimeEarnings)
+    public void setSkillRequirements(List<Skill> skillRequirements)
     {
-        this.lifetimeEarnings = lifetimeEarnings;
+        this.skillRequirements = skillRequirements;
     }
 
     public Module getModule()
@@ -69,6 +73,16 @@ public class Gold implements Serializable
         this.module = module;
     }
     
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
     @Override
     public int hashCode()
     {
@@ -81,11 +95,11 @@ public class Gold implements Serializable
     public boolean equals(Object object)
     {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Gold))
+        if (!(object instanceof JobClass))
         {
             return false;
         }
-        Gold other = (Gold) object;
+        JobClass other = (JobClass) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
             return false;
         return true;
@@ -94,7 +108,7 @@ public class Gold implements Serializable
     @Override
     public String toString()
     {
-        return "entity.Gold[ id=" + id + " ]";
+        return "entity.JobClass[ id=" + id + " ]";
     }
     
 }

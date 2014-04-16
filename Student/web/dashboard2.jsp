@@ -90,7 +90,7 @@
                                         <%=modName%>
                                     </div>
                                 </div>
-                                <a class="more" href="Items?action=viewAllItems&moduleId=<%=moduleID%>">
+                                <a class="more" href="Modules?action=moduleDashboard&moduleId=<%=moduleID%>">
                                     Open Module <i class="m-icon-swapright m-icon-white"></i>
                                 </a>                 
                             </div>
