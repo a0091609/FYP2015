@@ -45,7 +45,9 @@ public class ModuleBean implements ModuleBeanLocal {
 
     public Boolean saveStudentModule(String moduleId, String moduleCode, String moduleName, String moduleCreator, String userId) {
         try {
-            if (!isModule(moduleId)) {
+            if (!isModule(moduleId)) 
+            {
+                
                 createModule(moduleId, moduleCode, moduleName, moduleCreator);
 
                 Student student = em.find(Student.class, userId);
@@ -59,12 +61,16 @@ public class ModuleBean implements ModuleBeanLocal {
                 gameProfile.setExpPoint(0);
                 gameProfile.setLevel(0);
 
+                //CY Link
                 module.getStudentList().add(gameProfile);
                 student.getModuleList().add(gameProfile);
+                //Phil Link
+                student.getModules().add(module);
+                module.getStudents().add(student);
 
-                em.persist(gameProfile);
-                em.persist(student);
                 em.persist(module);
+                em.persist(gameProfile);
+                em.persist(student);                
                 System.out.println("Module initiated: " + module.getModuleId());
             }
 
