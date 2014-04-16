@@ -55,6 +55,7 @@ public class ModuleBean implements ModuleBeanLocal {
 
                 em.persist(student);
                 em.persist(module);
+                System.out.println("Module initiated: "+module.getModuleId());
             }
 
             return true;
