@@ -1,26 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.ManyToOne;
 
-/**
- *
- * @author Chih Yong
- */
 @Entity
+@IdClass(GameProfileId.class)
 public class GameProfile implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     private String userId;
+    @Id
+    private String moduleId;
     private Integer expPoint;
-    private String level;
+    private Integer level;
+
+    @ManyToOne
+    private Student student;
+    @ManyToOne
+    private Module module;
 
     public String getUserId() {
         return userId;
@@ -28,6 +28,14 @@ public class GameProfile implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getModuleId() {
+        return moduleId;
+    }
+
+    public void setModuleId(String moduleId) {
+        this.moduleId = moduleId;
     }
 
     public Integer getExpPoint() {
@@ -38,32 +46,28 @@ public class GameProfile implements Serializable {
         this.expPoint = expPoint;
     }
 
-    public String getLevel() {
+    public Integer getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(Integer level) {
         this.level = level;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (userId != null ? userId.hashCode() : 0);
-        return hash;
+    public Student getStudent() {
+        return student;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof GameProfile)) {
-            return false;
-        }
-        GameProfile other = (GameProfile) object;
-        if ((this.userId == null && other.userId != null) || (this.userId != null && !this.userId.equals(other.userId))) {
-            return false;
-        }
-        return true;
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Module getModule() {
+        return module;
+    }
+
+    public void setModule(Module module) {
+        this.module = module;
     }
 
     @Override

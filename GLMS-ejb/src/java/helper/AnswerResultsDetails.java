@@ -15,4 +15,37 @@ public class AnswerResultsDetails implements Serializable {
         this.correctAns = correctAns;
         this.msg = msg;
     }
+
+    public Boolean isIsCorrect() {
+        return isCorrect;
+    }
+
+    public void setIsCorrect(Boolean isCorrect) {
+        this.isCorrect = isCorrect;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCorrectAns() {
+        return correctAns;
+    }
+
+    public void setCorrectAns(String correctAns) {
+        this.correctAns = correctAns;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
 }

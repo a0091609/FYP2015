@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
 import java.io.Serializable;
@@ -13,10 +8,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-/**
- *
- * @author Chih Yong
- */
 @Entity
 public class Student implements Serializable {
 
@@ -30,13 +21,14 @@ public class Student implements Serializable {
     private String firstMajor;
     private String secondMajor;
     private Integer matriculationYear;
+    @OneToMany(mappedBy = "student")
+    private List<GameProfile> moduleList;
     @ManyToMany(mappedBy = "students")
     private List<Module> modules;
-    @JoinTable(name="buddyList")
+    @JoinTable(name = "buddyList")
     @ManyToMany
     private List<Student> buddies;
-//    @OneToOne @MapsId
-//    private GameProfile gameProfile;
+
     @ManyToMany
     private List<Item> inventory;
     @ManyToMany
@@ -45,46 +37,36 @@ public class Student implements Serializable {
     private List<Task> tasks;
     @OneToMany
     private List<Gold> accounts;
-    
-    
 
-    public List<Task> getTasks()
-    {
+    public List<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<Task> tasks)
-    {
+    public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
-    }    
+    }
 
-    public List<Gold> getAccounts()
-    {
+    public List<Gold> getAccounts() {
         return accounts;
     }
 
-    public void setAccounts(List<Gold> accounts)
-    {
+    public void setAccounts(List<Gold> accounts) {
         this.accounts = accounts;
     }
-    
-    public List<Item> getInventory()
-    {
+
+    public List<Item> getInventory() {
         return inventory;
     }
 
-    public void setInventory(List<Item> inventory)
-    {
+    public void setInventory(List<Item> inventory) {
         this.inventory = inventory;
     }
 
-    public List<Item> getWishlist()
-    {
+    public List<Item> getWishlist() {
         return wishlist;
     }
 
-    public void setWishlist(List<Item> wishlist)
-    {
+    public void setWishlist(List<Item> wishlist) {
         this.wishlist = wishlist;
     }
 
@@ -152,6 +134,14 @@ public class Student implements Serializable {
         this.matriculationYear = matriculationYear;
     }
 
+    public List<GameProfile> getModuleList() {
+        return moduleList;
+    }
+
+    public void setModuleList(List<GameProfile> moduleList) {
+        this.moduleList = moduleList;
+    }
+
     public List<Module> getModules() {
         return modules;
     }
@@ -192,6 +182,7 @@ public class Student implements Serializable {
 //    public void setGameProfile(GameProfile gameProfile) {
 //        this.gameProfile = gameProfile;
 //    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -214,7 +205,7 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.User[ userId=" + userId + " ]";
+        return "entity.Student[ userId=" + userId + " ]";
     }
 
 }

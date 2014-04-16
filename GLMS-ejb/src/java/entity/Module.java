@@ -9,10 +9,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-/**
- *
- * @author Chih Yong
- */
 @Entity
 public class Module implements Serializable {
 
@@ -26,19 +22,18 @@ public class Module implements Serializable {
     @ManyToOne
     @JoinColumn(name = "CREATORUSERID")
     private Instructor creator;
+    @OneToMany(mappedBy = "module")
+    private List<GameProfile> studentList;
     @ManyToMany
     private List<Student> students;
-    @OneToMany(mappedBy="module")
+    @OneToMany(mappedBy = "module")
     private List<Item> items;
 
-    
-    public List<Item> getItems()
-    {
+    public List<Item> getItems() {
         return items;
     }
 
-    public void setItems(List<Item> items)
-    {
+    public void setItems(List<Item> items) {
         this.items = items;
     }
 
@@ -99,12 +94,23 @@ public class Module implements Serializable {
     }
 
     public void addStudent(Student student) {
-        if (!getStudents().contains(student)) {
-            getStudents().add(student);
-        }
-        if (!student.getModules().contains(this)) {
-            student.getModules().add(this);
-        }
+        GameProfile gameProfile = new GameProfile();
+        gameProfile.setStudent(student);
+        gameProfile.setModule(this);
+        gameProfile.setUserId(student.getUserId());
+        gameProfile.setModuleId(this.getModuleId());
+        gameProfile.setExpPoint(0);
+        gameProfile.setLevel(0);
+
+        this.studentList.add(gameProfile);
+        student.getModuleList().add(gameProfile);
+
+//        if (!getStudents().contains(student)) {
+//            getStudents().add(student);
+//        }
+//        if (!student.getModules().contains(this)) {
+//            student.getModules().add(this);
+//        }
     }
 
     @Override
