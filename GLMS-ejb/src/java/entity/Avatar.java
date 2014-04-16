@@ -8,6 +8,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,7 +35,7 @@ public class Avatar implements Serializable
     private Integer currentBalance;
     private Integer lifetimeEarnings;
     
-    @OneToOne(mappedBy="avatar")
+    @ManyToOne
     private Student student;
     @ManyToMany
     private List<Item> inventory;
@@ -42,7 +43,7 @@ public class Avatar implements Serializable
     private List<Quest> questsCompleted;
     @ManyToMany
     private List<JobClass> jobClasses;
-    @OneToMany
+    @OneToMany(cascade={CascadeType.PERSIST})
     private List<Skill> skills;
     @ManyToOne
     private Module module;
