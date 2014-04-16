@@ -1,3 +1,5 @@
+<%@page import="entity.Quest"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="entity.Module"%>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
@@ -80,39 +82,56 @@
                                                 <p>
                                                     Difficulty Level: Beginner
                                                 </p>
+
+                                                <%
+                                                    ArrayList oneStar = (ArrayList) request.getAttribute("oneStar");
+
+                                                    //Print all the Pets
+                                                    for (Object o : oneStar)
+                                                    {
+
+                                                        Quest q = (Quest) o;
+                                                        String name = q.getName();
+                                                        String description = q.getDescription();
+                                                        Integer goldReward = q.getGoldReward();
+                                                        String skill = q.getSkillReward().getName();
+                                                        Integer sp = q.getSkillReward().getSkillPoints();
+                                                        String view = "Items?action=deleteItem&itemId=";
+                                                %>
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/1star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Quest Name</h4>
+                                                            <h4><%=name%></h4>
                                                             <p class="questDesc">
-                                                                The purpose of this assignment is getting practical experience of requirement analysis, 
-                                                                database design, and implementing database system in MS SQL Server 2005. In this 
-                                                                assignment, you are going to design a simple database system for Xiaoshan International 
-                                                                Airport. You can find more detail in the following specification. Besides the database 
-                                                                design, you also must to answer some questions.
+                                                                <%=description%>
                                                             </p>
                                                         </div>
                                                     </div>
                                                     <div class="span5">
                                                         <div class="portfolio-info">
                                                             Skill Gain
-                                                            <span>Database +3</span>
+                                                            <span><%=skill%> +<%=sp%></span>
                                                         </div>
                                                         <div class="portfolio-info">
                                                             Gold Reward
-                                                            <span>Gold +100</span>
+                                                            <span>Gold +<%=goldReward%></span>
                                                         </div>
                                                     </div>
                                                     <div class="span2 portfolio-btn">
                                                         <a href="#" class="btn bigicn-only"><span>View</span></a>                        
                                                     </div>
                                                 </div>
+                                                <%  //Done printing
+                                                    }
+                                                %>
+
+
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/2stars.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Metronic - Responsive Template</h4>
+                                                            <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
                                                         </div>
                                                     </div>
@@ -134,7 +153,7 @@
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/2stars.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Metronic - Responsive Template</h4>
+                                                            <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
                                                         </div>
                                                     </div>
@@ -156,7 +175,7 @@
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/2stars.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Metronic - Responsive Template</h4>
+                                                            <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
                                                         </div>
                                                     </div>
@@ -178,7 +197,7 @@
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/2stars.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Metronic - Responsive Template</h4>
+                                                            <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit .</p>
                                                         </div>
                                                     </div>
@@ -233,7 +252,7 @@
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/2stars.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Metronic - Responsive Template</h4>
+                                                            <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
                                                         </div>
                                                     </div>
@@ -255,7 +274,7 @@
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/2stars.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Metronic - Responsive Template</h4>
+                                                            <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
                                                         </div>
                                                     </div>
@@ -277,7 +296,7 @@
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/2stars.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Metronic - Responsive Template</h4>
+                                                            <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
                                                         </div>
                                                     </div>
@@ -299,7 +318,7 @@
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/2stars.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Metronic - Responsive Template</h4>
+                                                            <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit .</p>
                                                         </div>
                                                     </div>
@@ -352,7 +371,7 @@
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/2stars.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Metronic - Responsive Template</h4>
+                                                            <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
                                                         </div>
                                                     </div>
@@ -374,7 +393,7 @@
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/2stars.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Metronic - Responsive Template</h4>
+                                                            <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
                                                         </div>
                                                     </div>
@@ -396,7 +415,7 @@
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/2stars.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Metronic - Responsive Template</h4>
+                                                            <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
                                                         </div>
                                                     </div>
@@ -418,7 +437,7 @@
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/2stars.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Metronic - Responsive Template</h4>
+                                                            <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit .</p>
                                                         </div>
                                                     </div>

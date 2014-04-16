@@ -60,7 +60,7 @@
             </a>
         </li>
         <li id="link-quests">
-            <a href="#">
+            <a href="Quests">
                 <i class="icon-compass"></i> 
                 <span class="title">Quests</span>
             </a>
