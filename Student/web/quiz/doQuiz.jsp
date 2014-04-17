@@ -1,4 +1,4 @@
-<%@page import="java.util.ArrayList, helper.QuestionDetails" %>
+<%@page import="java.util.ArrayList, helper.QuestionDetails, helper.QuizItemDetails" %>
 
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
@@ -57,7 +57,6 @@
                     <!-- END PAGE HEADER-->
 
                     <!-- BEGIN PAGE CONTENT-->
-
                     <div class="row-fluid">
                         <!--Streak Count-->
                         <div class="span4 responsive">
@@ -76,48 +75,15 @@
                             </div>
                         </div>
                         <!--End of Streak Count-->
-                        <!--Fun Quiz Items-->
-                        <a href="#" class="span4 responsive more">
-                            <div class="dashboard-stat yellow">
-                                <div class="visual">
-                                    <i class="icon-info-sign"></i>
-                                </div>
-                                <div class="details">
-                                    <div class="number">
-                                        0
-                                    </div>
-                                    <div class="desc">                           
-                                        Get Help
-                                    </div>
-                                </div>          
-                            </div>
-                        </a>
-                        <a href="#" class="span4 responsive more">
-                            <div class="dashboard-stat yellow">
-                                <div class="visual">
-                                    <i class="icon-random"></i>
-                                </div>
-                                <div class="details">
-                                    <div class="number">
-                                        0
-                                    </div>
-                                    <div class="desc">                           
-                                        Fifty-Fifty
-                                    </div>
-                                </div>          
-                            </div>
-                        </a>
-                        <!--End of Fun Quiz Items-->
                     </div>
-
-
 
                     <div class="row-fluid">
                         <div class="span12">
-
                             <%
                                 ArrayList quests = (ArrayList) request.getAttribute("questions");
                                 int questNum = quests.size(), j;
+                                
+//                                ArrayList items = (ArrayList) request.getAttribute("items");
                             %>
                             <div class="portlet box blue" id="form_wizard_1">
                                 <div class="portlet-title">
@@ -148,14 +114,14 @@
                                             <div class="bar"></div>
                                         </div>
                                         <div class="tab-content">
-<!--                                            <div class="alert alert-error hide">
-                                                <button class="close" data-dismiss="alert"></button>
-                                                Error
-                                            </div>
-                                            <div class="alert alert-success hide">
-                                                <button class="close" data-dismiss="alert"></button>
-                                                Success
-                                            </div>-->
+                                            <!--                                            <div class="alert alert-error hide">
+                                                                                            <button class="close" data-dismiss="alert"></button>
+                                                                                            Error
+                                                                                        </div>
+                                                                                        <div class="alert alert-success hide">
+                                                                                            <button class="close" data-dismiss="alert"></button>
+                                                                                            Success
+                                                                                        </div>-->
                                             <!--loop start-->
 
                                             <%
@@ -179,39 +145,75 @@
                                                 <div id="results<%=j%>">
                                                     <form id="quest<%=j%>" name="<%=j%>" method="post" action="/Student/QuizServlet?action=checkAnswer">
                                                         <input type="hidden" name="questId" id="questId" value="<%=quest.getQuestionId()%>">
-                                                        <div class="control-group">
-                                                            <label class="control-label">Choose an answer:</label>
-                                                            <div class="row-fluid">
-                                                                <div class="span6 margin-bottom-15" style="background-color: #d9edf7;">
-                                                                    <!--Answer A-->
-                                                                    <label class="radio">
-                                                                        <input type="radio" name="option" id="option" value="<%=quest.getOptions().get(0)%>" required>
-                                                                        <%=quest.getOptions().get(0)%>
-                                                                    </label>
+                                                        <div class="row-fluid">
+                                                            <div class="span8 control-group">
+                                                                <label class="control-label">Choose an answer:</label>
+                                                                <div class="row-fluid">
+                                                                    <div class="span6 margin-bottom-15" style="background-color: #d9edf7;">
+                                                                        <!--Answer A-->
+                                                                        <label class="radio">
+                                                                            <input type="radio" name="option" id="option" value="<%=quest.getOptions().get(0)%>" required>
+                                                                            <%=quest.getOptions().get(0)%>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="span6 margin-bottom-15" style="background-color: #d9edf7;">
+                                                                        <!--Answer B-->
+                                                                        <label class="radio">
+                                                                            <input type="radio" name="option" id="option" value="<%=quest.getOptions().get(1)%>">
+                                                                            <%=quest.getOptions().get(1)%>
+                                                                        </label>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="span6 margin-bottom-15" style="background-color: #d9edf7;">
-                                                                    <!--Answer B-->
-                                                                    <label class="radio">
-                                                                        <input type="radio" name="option" id="option" value="<%=quest.getOptions().get(1)%>">
-                                                                        <%=quest.getOptions().get(1)%>
-                                                                    </label>
+                                                                <div class="row-fluid">
+                                                                    <div class="span6 margin-bottom-15" style="background-color: #d9edf7;">
+                                                                        <!--Answer C-->
+                                                                        <label class="radio">
+                                                                            <input type="radio" name="option" id="option" value="<%=quest.getOptions().get(2)%>">
+                                                                            <%=quest.getOptions().get(2)%>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="span6 margin-bottom-15" style="background-color: #d9edf7;">
+                                                                        <!--Answer D-->
+                                                                        <label class="radio">
+                                                                            <input type="radio" name="option" id="option" value="<%=quest.getOptions().get(3)%>">
+                                                                            <%=quest.getOptions().get(3)%>
+                                                                        </label>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="row-fluid">
-                                                                <div class="span6 margin-bottom-15" style="background-color: #d9edf7;">
-                                                                    <!--Answer C-->
-                                                                    <label class="radio">
-                                                                        <input type="radio" name="option" id="option" value="<%=quest.getOptions().get(2)%>">
-                                                                        <%=quest.getOptions().get(2)%>
-                                                                    </label>
-                                                                </div>
-                                                                <div class="span6 margin-bottom-15" style="background-color: #d9edf7;">
-                                                                    <!--Answer D-->
-                                                                    <label class="radio">
-                                                                        <input type="radio" name="option" id="option" value="<%=quest.getOptions().get(3)%>">
-                                                                        <%=quest.getOptions().get(3)%>
-                                                                    </label>
-                                                                </div>
+                                                            <div class="span4">
+                                                                <!--Fun Quiz Items-->
+                                                                <a href="#" class="span6 responsive more">
+                                                                    <div class="dashboard-stat yellow">
+                                                                        <div class="visual">
+                                                                            <i class="icon-info-sign"></i>
+                                                                        </div>
+                                                                        <div class="details">
+                                                                            <div class="number">
+                                                                                <%--<%=%>--%>
+                                                                            </div>
+                                                                            <div class="desc">                           
+                                                                                Get Help
+                                                                            </div>
+                                                                        </div>          
+                                                                    </div>
+                                                                </a>
+                                                                <a href="#" class="span6 responsive more">
+                                                                    <div class="dashboard-stat yellow">
+                                                                        <div class="visual">
+                                                                            <i class="icon-random"></i>
+                                                                        </div>
+                                                                        <div class="details">
+                                                                            <div class="number">
+                                                                                <%--<%=%>--%>
+                                                                            </div>
+                                                                            <div class="desc">                           
+                                                                                Fifty-Fifty
+                                                                            </div>
+                                                                        </div>          
+                                                                    </div>
+                                                                </a>
+                                                                <!--End of Fun Quiz Items-->
                                                             </div>
                                                         </div>
                                                         <div class="row-fluid margin-bottom-25 text-center">
@@ -244,78 +246,79 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- END PAGE CONTENT-->
-
-
-
-
                     </div>
-                    <!-- END PAGE CONTAINER-->    
+                    <!-- END PAGE CONTENT-->
+
+
+
+
                 </div>
-                <!-- END PAGE -->
+                <!-- END PAGE CONTAINER-->    
             </div>
-            <!-- END CONTAINER -->
+            <!-- END PAGE -->
+        </div>
+        <!-- END CONTAINER -->
 
-            <%-- Import for the footer bar --%>
-            <%@include file="/WEB-INF/jspf/footer.jspf" %>   
+        <%-- Import for the footer bar --%>
+        <%@include file="/WEB-INF/jspf/footer.jspf" %>   
 
-            <!-- BEGIN JAVASCRIPTS (Load javascripts at bottom, this will reduce page load time) -->
-            <%-- Standard JS imports for every page--%>
-            <%@include file="/WEB-INF/jspf/javascripts.jspf" %>
-            <script type="text/javascript" src="/Student/assets/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
-            <script type="text/javascript" src="/Student/assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>
-            <script type="text/javascript" src="/Student/assets/plugins/select2/select2.min.js"></script>
-            <script src="/Student/assets/js/doQuiz-custom.js"></script>
-            <script>
-                jQuery(document).ready(function()
-                {
-                    App.init(); // initlayout and core plugins
-                    FormWizard.init();
+        <!-- BEGIN JAVASCRIPTS (Load javascripts at bottom, this will reduce page load time) -->
+        <%-- Standard JS imports for every page--%>
+        <%@include file="/WEB-INF/jspf/javascripts.jspf" %>
+        <script type="text/javascript" src="/Student/assets/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+        <script type="text/javascript" src="/Student/assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>
+        <script type="text/javascript" src="/Student/assets/plugins/select2/select2.min.js"></script>
+        <script src="/Student/assets/js/doQuiz-custom.js"></script>
+        <script>
+            jQuery(document).ready(function()
+            {
+                App.init(); // initlayout and core plugins
+                FormWizard.init();
 
-                    // Ajax post to check answer
-                    $("form").each(function() {
-                        $(this).submit(function(event) {
-                            event.preventDefault();
+                // Ajax post to check answer
+                $("form").each(function() {
+                    $(this).submit(function(event) {
+                        event.preventDefault();
 
-                            var form = $(this);
-                            var url = $(this).attr('action');
-                            var posting = $.post(url, {questId: $('#questId').val(), option: $('#option:checked').val()});
+                        var form = $(this);
+                        var url = $(this).attr('action');
+                        var posting = $.post(url, {questId: $('#questId').val(), option: $('#option:checked').val()});
 
-                            posting.done(function(data) {
-                                var isCorrect = data.isCorrect;
-                                var status = data.status;
-                                var correctAns = data.correctAns;
-                                var msg = data.msg;
+                        posting.done(function(data) {
+                            var isCorrect = data.isCorrect;
+                            var status = data.status;
+                            var correctAns = data.correctAns;
+                            var msg = data.msg;
 
-                                var color = '', display = '';
-                                if (isCorrect) {
-                                    color = '#1d943b';
-                                    display = '<h4>X' + ' points for you!</h4><br>'
-                                }
-                                else {
-                                    color = '#bb2413';
-                                    display = '<h4>"' + correctAns + '"</h4> was correct.<br>';
-                                }
+                            var color = '', display = '';
+                            if (isCorrect) {
+                                color = '#1d943b';
+                                display = '<h4>X' + ' points for you!</h4><br>'
+                            }
+                            else {
+                                color = '#bb2413';
+                                display = '<h4>"' + correctAns + '"</h4> was correct.<br>';
+                            }
 
-                                display += 'You\'re in ' + 'X' + ' position.';
-                                var content = '';
-                                content += '<div class="span12 text-center margin-bottom-25" style="color: #FFFFFF; background-color: ' + color + '">\
-                                         <h2>' + status + '</h2><br>\
-                                         <p>' + display + '<p>';
-                                content += '<div>';
+                            display += 'You\'re in ' + 'X' + ' position.';
+                            var content = '';
+                            content += '<div class="span12 text-center margin-bottom-25" style="color: #FFFFFF; background-color: ' + color + '">\
+                                     <h2>' + status + '</h2><br>\
+                                     <p>' + display + '<p>';
+                            content += '<div>';
 
-                                var id = 'results' + form.attr('name');
-                                $('#' + id).empty().append(content);
-                            });
+                            var id = 'results' + form.attr('name');
+                            $('#' + id).empty().append(content);
                         });
                     });
-                    
-                    function getHint(){
-                        
-                    }
                 });
-            </script>
-            <!-- END JAVASCRIPTS -->
+
+                function getHint() {
+
+                }
+            });
+        </script>
+        <!-- END JAVASCRIPTS -->
     </body>
     <!-- END BODY -->
 </html>

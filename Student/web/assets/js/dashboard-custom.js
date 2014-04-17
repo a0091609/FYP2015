@@ -104,8 +104,10 @@ function saveModule(data, userId) {
 function displayModules() {
     var url = "/Student/ModuleServlet?action=getStudentModules";
     jQuery.getJSON(url, function(data) {
+        console.log(data);
         var moduleList = '', i;
         for (i = 0; i < data.length; i++) {
+
             var m = data[i];
 
             // Start of portlet box

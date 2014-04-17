@@ -1,10 +1,13 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Leaderboard implements Serializable {
@@ -13,9 +16,11 @@ public class Leaderboard implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long leaderboardId;
-    private String userId;
+    private Long profileId;
     private String moduleId;
-    private Integer totalPoints;
+    private Integer points;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeCreated;
 
     public Long getLeaderboardId() {
         return leaderboardId;
@@ -25,12 +30,12 @@ public class Leaderboard implements Serializable {
         this.leaderboardId = leaderboardId;
     }
 
-    public String getUserId() {
-        return userId;
+    public Long getProfileId() {
+        return profileId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setProfileId(Long profileId) {
+        this.profileId = profileId;
     }
 
     public String getModuleId() {
@@ -41,12 +46,20 @@ public class Leaderboard implements Serializable {
         this.moduleId = moduleId;
     }
 
-    public Integer getTotalPoints() {
-        return totalPoints;
+    public Integer getPoints() {
+        return points;
     }
 
-    public void setTotalPoints(Integer totalPoints) {
-        this.totalPoints = totalPoints;
+    public void setPoints(Integer points) {
+        this.points = points;
+    }
+
+    public Date getTimeCreated() {
+        return timeCreated;
+    }
+
+    public void setTimeCreated(Date timeCreated) {
+        this.timeCreated = timeCreated;
     }
 
     @Override

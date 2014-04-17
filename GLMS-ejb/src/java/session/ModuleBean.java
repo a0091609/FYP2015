@@ -3,6 +3,7 @@ package session;
 import entity.GameProfile;
 import entity.Instructor;
 import entity.Module;
+import entity.QuizItem;
 import entity.Student;
 import helper.ModuleDetails;
 import java.util.ArrayList;
@@ -45,9 +46,8 @@ public class ModuleBean implements ModuleBeanLocal {
 
     public Boolean saveStudentModule(String moduleId, String moduleCode, String moduleName, String moduleCreator, String userId) {
         try {
-            if (!isModule(moduleId)) 
-            {
-                
+            if (!isModule(moduleId)) {
+
                 createModule(moduleId, moduleCode, moduleName, moduleCreator);
 
                 Student student = em.find(Student.class, userId);
@@ -70,7 +70,9 @@ public class ModuleBean implements ModuleBeanLocal {
 
                 em.persist(module);
                 em.persist(gameProfile);
-                em.persist(student);                
+                em.persist(student);
+                em.flush();
+
                 System.out.println("Module initiated: " + module.getModuleId());
             }
 

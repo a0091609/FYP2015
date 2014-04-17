@@ -1,15 +1,17 @@
 package session;
 
+import entity.GameProfile;
 import entity.Module;
 import entity.Question;
 import entity.QuestionAnswer;
 import entity.Quiz;
+import entity.QuizItem;
 import entity.QuizSession;
 import entity.Student;
 import helper.AnswerResultsDetails;
 import helper.QuestionDetails;
 import helper.QuizDetails;
-import java.sql.Timestamp;
+import helper.QuizItemDetails;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -81,21 +83,44 @@ public class QuizBean implements QuizBeanLocal {
         }
     }
 
-    public List<QuizDetails> studentGetModuleQuiz(String moduleId) {
+    public List<QuizDetails> studentGetModuleQuiz(String userId, String moduleId) {
         Query q = em.createQuery("SELECT q FROM Quiz q WHERE q.module.moduleId = '" + moduleId + "' AND q.status = 'complete'");
         List<Quiz> quizList = q.getResultList();
 
         ArrayList<QuizDetails> quizzes = new ArrayList<>();
 
         for (Quiz quiz : quizList) {
+            Boolean next = false;
+            String status = "";
+            Boolean active = false;
+            QuizSession session = null;
+            Quiz prereq = quiz.getPrereq();
+
+            if (prereq != null) {
+                String sql = "SELECT s FROM QuizSession s WHERE s.userId = '" + userId + "' AND s.quizId = " + prereq.getQuizId();
+                q = em.createQuery(sql);
+                if (!q.getResultList().isEmpty()) {
+                    session = (QuizSession) q.getSingleResult();
+                    if (session.getStatus().equals("complete")) {
+                        next = true;
+                    } else {
+                        status = "Complete " + prereq.getName() + " to unlock.";
+                    }
+                } else {
+                    status = "Complete " + prereq.getName() + " to unlock.";
+                }
+            } else {
+                next = true;
+            }
+
             Date dateToday = new Date();
             Date dateOpen = quiz.getDateOpen();
             Date dateClose = quiz.getDateClose();
 
-            String status = (dateToday.before(dateOpen)) ? "Open in " + dateDifference(dateToday, dateOpen) + " more days" : "";
-
-            Boolean active = (dateOpen.before(dateToday) && dateToday.before(dateClose)) ? true : false;
-
+            if (next) {
+                status = (dateToday.before(dateOpen)) ? "Open in " + dateDifference(dateToday, dateOpen) + " more days" : "";
+                active = (dateOpen.before(dateToday) && dateToday.before(dateClose)) ? true : false;
+            }
             QuizDetails quizDetails = new QuizDetails(quiz.getQuizId(), quiz.getName(), quiz.getDescr(),
                     quiz.getDifficultyLvl(), formatDateToString(dateOpen, "dd-MM-yyyy"), formatDateToString(dateClose, "dd-MM-yyyy"),
                     active, status);
@@ -118,16 +143,25 @@ public class QuizBean implements QuizBeanLocal {
         Student student = em.find(Student.class, userId);
         Quiz quiz = em.find(Quiz.class, quizId);
 
-        QuizSession session = new QuizSession();
-        session.setUserId(userId);
-        session.setQuizId(quizId);
-        Date date = new Date();
-        session.setTimeStarted(date);
-        session.setStatus("incomplete");
-        em.persist(session);
-        em.flush();
-        System.out.println("Quiz session for user[" + userId + "] and quiz[" + quizId + "] created.");
+        Query q = em.createQuery("SELECT s FROM QuizSession s WHERE s.userId = '" + userId + "' AND s.quizId = " + quizId);
+        if (q.getResultList().isEmpty()) {
+            QuizSession session = new QuizSession();
+            session.setUserId(userId);
+            session.setQuizId(quizId);
+            Date date = new Date();
+            session.setTimeStarted(date);
+            session.setStatus("incomplete");
+            em.persist(session);
+            em.flush();
+        } else {
+            QuizSession s = (QuizSession) q.getSingleResult();
+            Date date = new Date();
+            s.setTimeStarted(date);
+            em.persist(s);
+            em.flush();
+        }
 
+        System.out.println("Quiz session for user[" + userId + "] and quiz[" + quizId + "] created.");
         return true;
     }
 
@@ -156,6 +190,17 @@ public class QuizBean implements QuizBeanLocal {
         return questions;
     }
 
+    public List<QuizItemDetails> getProfileQuizItems(String userId, String moduleId) {
+        Query q = em.createQuery("SELECT p FROM GameProfile p WHERE p.userId = '" + userId + "' AND p.moduleId = '" + moduleId + "'");
+        GameProfile p = (GameProfile) q.getSingleResult();
+        List<QuizItemDetails> items = new ArrayList<QuizItemDetails>();
+        for(QuizItem i : p.getItems()){
+            QuizItemDetails item = new QuizItemDetails(i.getName(), i.getQty());
+            items.add(item);
+        }
+        return items;
+    }
+
     public AnswerResultsDetails checkAnswer(Long questionId, String answer) {
         Boolean isCorrect = false;
         String status = "Wrong!";
@@ -179,6 +224,26 @@ public class QuizBean implements QuizBeanLocal {
 
         AnswerResultsDetails content = new AnswerResultsDetails(isCorrect, status, correctAns, msg2);
         return content;
+    }
+
+    public Boolean createQuizItems(String userId, String moduleId, String name, Integer qty) {
+        try {
+            Query q = em.createQuery("SELECT p FROM GameProfile p WHERE p.userId = '" + userId + "' AND p.moduleId = '" + moduleId + "'");
+            GameProfile profile = (GameProfile) q.getSingleResult();
+
+            QuizItem item = new QuizItem();
+            item.setName(name);
+            item.setQty(qty);
+            item.setProfile(profile);
+            profile.getItems().add(item);
+            em.persist(profile);
+            em.persist(item);
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private Boolean quizIsActive(Long quizId) {

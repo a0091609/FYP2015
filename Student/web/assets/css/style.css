@@ -3090,7 +3090,7 @@ Dashboard stats
 }
 
 .dashboard-stat .details {
-  float: right;
+  /* float: right; */
   padding-right: 10px;
 }
 

@@ -1,7 +1,6 @@
 package session;
 
 import entity.Avatar;
-import entity.Module;
 import entity.Student;
 import javax.ejb.Local;
 

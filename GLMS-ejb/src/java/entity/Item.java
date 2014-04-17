@@ -17,8 +17,7 @@ import javax.persistence.ManyToOne;
  * @author Philson
  */
 @Entity
-public class Item implements Serializable
-{
+public class Item implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,101 +31,84 @@ public class Item implements Serializable
     private String status;
     private Integer cost;
 
-    public Integer getCost()
-    {
+    public Integer getCost() {
         return cost;
     }
 
-    public void setCost(Integer cost)
-    {
+    public void setCost(Integer cost) {
         this.cost = cost;
     }
 
-    public String getStatus()
-    {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status)
-    {
+    public void setStatus(String status) {
         this.status = status;
     }
-    
-    public String getImgURL()
-    {
+
+    public String getImgURL() {
         return imgURL;
     }
 
-    public void setImgURL(String imgURL)
-    {
+    public void setImgURL(String imgURL) {
         this.imgURL = imgURL;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description)
-    {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public Module getModule()
-    {
+    public Module getModule() {
         return module;
     }
 
-    public void setModule(Module module)
-    {
+    public void setModule(Module module) {
         this.module = module;
     }
 
-    public Long getId()
-    {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Long id)
-    {
+    public void setId(Long id) {
         this.id = id;
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object)
-    {
+    public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Item))
-        {
+        if (!(object instanceof Item)) {
             return false;
         }
         Item other = (Item) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
+        }
         return true;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "" + this.getClass() + "[ module=" + module + "name=" + name + " id=" + id + " ]";
     }
 }

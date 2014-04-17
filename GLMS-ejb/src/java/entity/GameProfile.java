@@ -1,22 +1,29 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
-@IdClass(GameProfileId.class)
 public class GameProfile implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long profileId;
     private String userId;
-    @Id
     private String moduleId;
     private Integer expPoint;
     private Integer expLevel;
+
+    @OneToMany(mappedBy = "profile")
+    private List<QuizItem> items;
 
     @ManyToOne
     @PrimaryKeyJoinColumn(name = "USERID", referencedColumnName = "USERID")
@@ -24,6 +31,14 @@ public class GameProfile implements Serializable {
     @ManyToOne
     @PrimaryKeyJoinColumn(name = "MODULEID", referencedColumnName = "MODULEID")
     private Module module;
+
+    public Long getProfileId() {
+        return profileId;
+    }
+
+    public void setProfileId(Long profileId) {
+        this.profileId = profileId;
+    }
 
     public String getUserId() {
         return userId;
@@ -57,6 +72,14 @@ public class GameProfile implements Serializable {
         this.expLevel = expLevel;
     }
 
+    public List<QuizItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<QuizItem> items) {
+        this.items = items;
+    }
+
     public Student getStudent() {
         return student;
     }
@@ -74,8 +97,28 @@ public class GameProfile implements Serializable {
     }
 
     @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (profileId != null ? profileId.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof GameProfile)) {
+            return false;
+        }
+        GameProfile other = (GameProfile) object;
+        if ((this.profileId == null && other.profileId != null) || (this.profileId != null && !this.profileId.equals(other.profileId))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public String toString() {
-        return "entity.GameProfile[ userId=" + userId + " ]";
+        return "entity.GameProfile[ profileId=" + profileId + " ]";
     }
 
 }

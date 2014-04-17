@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -29,6 +30,7 @@ public class Quiz implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dateClose;
     private String status;
+    @OneToOne
     private Quiz prereq;
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeCreated;
