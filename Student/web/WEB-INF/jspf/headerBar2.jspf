@@ -6,7 +6,7 @@
     <div class="navbar-inner">
         <div class="container-fluid">
             <!-- BEGIN LOGO -->
-            <a class="brand" href="index.jsp">
+            <a class="brand" href="Login">
                 <img src="assets/img/logo.png" alt="logo" />
             </a>
             <!-- END LOGO -->
@@ -188,11 +188,11 @@
                 <li class="dropdown" id="header_task_bar">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                         <i class="icon-tasks"></i>
-                        <span class="badge">5</span>
+                        <span class="badge">6</span>
                     </a>
                     <ul class="dropdown-menu extended tasks">
                         <li>
-                            <p>You have 12 pending tasks</p>
+                            <p>You have 6 new quests available</p>
                         </li>
                         <li>
                             <ul class="dropdown-menu-list scroller"  style="height:250px">

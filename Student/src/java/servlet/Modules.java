@@ -4,10 +4,9 @@
  */
 package servlet;
 
+import entity.Avatar;
 import entity.Module;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -16,8 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import session.ItemBeanLocal;
 import session.ModuleBeanLocal;
+import session.QuestBeanLocal;
 
 /**
  *
@@ -38,7 +37,7 @@ public class Modules extends HttpServlet
 
     //EJB References
     @EJB
-    ItemBeanLocal itemBean;
+    QuestBeanLocal questBean;
     @EJB
     ModuleBeanLocal moduleBean;
 
@@ -66,7 +65,7 @@ public class Modules extends HttpServlet
             //User not logged in
             if (userId == null)
             {
-                response.sendRedirect(request.getContextPath());
+                response.sendRedirect("login.jsp");
             }
             //Default action brings them to the module selection page
             else if (action == null || moduleId == null)
@@ -76,15 +75,17 @@ public class Modules extends HttpServlet
             //Show the module dashboard
             else if (action.equals("moduleDashboard"))
             {
-                //  1. Retrieve all module details  
+                //Retrieve all module details  
                 moduleDetails(moduleId);
-                
-                //  2. Retrieve Student Skills          [NOT DONE]
-                //  3. Retrieve Gold Details            [NOT DONE]
-                //  4. Retrieve Job Classes             [NOT DONE]
-                //  5. Retrieve Quest Completed         [NOT DONE]
-                
-                //  6. Redirect to Module Dashboard
+
+                //Retrieve Student Skills          [AVATAR]
+                //Retrieve Gold Details            [AVATAR]
+                //Retrieve Job Classes             [AVATAR]
+                //Retrieve Quest Completed         [AVATAR]
+                Avatar student = questBean.getAvatar(userId, moduleId);
+                request.setAttribute("student", student);
+
+                //Redirect to Module Dashboard
                 request.getRequestDispatcher("/moduleDashboard.jsp").forward(request, response);
             }
         }
@@ -111,42 +112,6 @@ public class Modules extends HttpServlet
         response.setHeader("Cache-Control", "no-cache");
         response.setHeader("Pragma", "no-cache");
         response.setDateHeader("Expires", 0);
-    }
-
-    //Create a new pet item
-    private void createPet(String moduleId) throws Exception
-    {
-        //Extract the form parameters
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
-        int cost = Integer.parseInt(request.getParameter("cost"));
-        int bonus = Integer.parseInt(request.getParameter("bonus"));
-
-        //Create the pet
-        itemBean.createPet(moduleId, name, description, cost, bonus);
-
-        //Send a server msg to feedback
-        data = new ArrayList();
-        data.add("New Pet: " + name + " has been created");
-        request.setAttribute("serverMsg", data);
-        System.out.println("New Pet: " + name + " has been created");
-        data = null;
-    }
-
-    //Delete an item
-    private void delete() throws Exception
-    {
-        //Delete the item
-        long itemId = Long.parseLong(request.getParameter("itemId"));
-        String name = itemBean.getItem(itemId).getName();
-        itemBean.deleteItem(itemId);
-
-        //Send a server msg to feedback
-        data = new ArrayList();
-        data.add("Item: " + name + " has been deleted.");
-        request.setAttribute("serverMsg", data);
-        System.out.println("Item: " + name + " has been deleted.");
-        data = null;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

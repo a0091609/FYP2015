@@ -12,4 +12,7 @@ function setActivePage(ID)
     $(".page-sidebar-menu .active").removeClass("active");
     $(".page-sidebar-menu .start").removeClass("start");
     $('#'+ID).addClass("start active");
+    
+    var selected = "<span class='selected'></span>";
+    $('#'+ID+" a").append(selected);
 }

@@ -93,7 +93,7 @@
                             <p><b>Quest Description: </b><br>
                                 <%=description%>
                             </p>
-                            <button class="btn" onclick="history.back(-1)">Back</button> &nbsp;&nbsp;
+                            <a href="Quests"><button class="btn" onclick="history.back(-1)">Back</button></a> &nbsp;&nbsp;
                             <a data-toggle="modal" href="#responsive"><button class="btn red">Submit <i class="m-icon-swapright m-icon-white"></i></button></a>
                         </div>
                     </div>
