@@ -112,7 +112,7 @@ public class QuestServlet extends HttpServlet
     private void submitQuest(Long questId, String moduleId, String userId) throws Exception
     {
         //Submit the quest and update rewards  
-        //questBean.submitQuest(questId, userId, moduleId); //tempt remove to test notification
+        questBean.submitQuest(questId, userId, moduleId); //tempt remove to test notification
 
         //Get the information for notifications
         Quest quest = questBean.getQuest(questId);

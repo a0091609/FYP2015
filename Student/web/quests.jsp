@@ -217,7 +217,7 @@
 
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
+                                                        <img src="assets/img/2star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
                                                             <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
@@ -239,7 +239,7 @@
                                                 </div>
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
+                                                        <img src="assets/img/2star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
                                                             <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
@@ -261,7 +261,7 @@
                                                 </div>
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
+                                                        <img src="assets/img/2star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
                                                             <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
@@ -283,7 +283,7 @@
                                                 </div>
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
+                                                        <img src="assets/img/2star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
                                                             <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit .</p>
@@ -382,7 +382,7 @@
 
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
+                                                        <img src="assets/img/3star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
                                                             <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
@@ -404,7 +404,7 @@
                                                 </div>
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
+                                                        <img src="assets/img/3star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
                                                             <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
@@ -426,7 +426,7 @@
                                                 </div>
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
+                                                        <img src="assets/img/3star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
                                                             <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
@@ -448,7 +448,7 @@
                                                 </div>
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
+                                                        <img src="assets/img/3star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
                                                             <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit .</p>
