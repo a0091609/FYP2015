@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="entity.Quest"%>
 <%@page import="entity.Pet"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="entity.Module"%>
@@ -7,8 +9,25 @@
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
     <!-- BEGIN HEAD -->
     <head>
+
+        <%
+            //Reteive Quest details
+            Quest q = (Quest) request.getAttribute("quest");
+
+            //Extract info into var
+            String name = q.getName();
+            String description = q.getDescription();
+            String file = q.getFileURL();
+            Date deadline = q.getClosingDate();
+            Integer goldReward = q.getGoldReward();
+            String skill = q.getSkillReward().getName();
+            Integer sp = q.getSkillReward().getSkillPoints();
+            Integer difficulty = q.getDifficulty();
+            String submit = "Quests?action=submitQuest&questId=" + q.getId();
+        %>
+
         <meta charset="utf-8" />
-        <title>GLMS | Insert Quest Title Here></title>
+        <title>GLMS | <%=name%>></title>
         <%-- Standard imports for every page--%>
         <%@include file="/WEB-INF/jspf/stylesheets.jspf" %>
     </head>
@@ -30,7 +49,7 @@
                         <div class="span12">
                             <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                             <h3 class="page-title">
-                                Insert Quest Title Here
+                                <%=name%>
                             </h3>
                             <ul class="breadcrumb">
                                 <li>
@@ -43,7 +62,7 @@
                                     <i class="icon-angle-right"></i>
                                 </li>
                                 <li>
-                                    <a href="#">Quests</a>
+                                    <a href="Quests">Quests</a>
                                     <i class="icon-angle-right"></i>
                                 </li>
                                 <li>
@@ -59,24 +78,20 @@
                     <!-- BEGIN PAGE CONTENT-->
                     <div class="row-fluid">                        
                         <div class="span6">
-                            <object data="assets/quests/Assignment_1.pdf" type="application/pdf" width="100%" height="580px">
+                            <object data="<%=file%>" type="application/pdf" width="100%" height="580px">
                                 <p>It appears you don't have a PDF plugin for this browser.
-                                    No biggie... you can <a href="assets/quests/Assignment_1.pdf">click here to download the PDF file.</a></p>
+                                    No biggie... you can <a href="<%=file%>">click here to download the PDF file.</a></p>
                             </object>
                         </div>
                         <div class="span6">
                             <h3>Quest Info</h3>
-                            <p><b>Quest Title: </b> Hello</p>
-                            <p><b>Difficulty: </b> 1 Star</p>
-                            <p><b>Deadline: </b> 16/4/2014</p>
-                            <p><b>Gold Reward: </b> +100 Gold</p>
-                            <p><b>Skill Gain: </b> +3 Database</p>
+                            <p><b>Quest Title: </b> <%=name%></p>
+                            <p><b>Difficulty: </b> <%=difficulty%> Star</p>
+                            <p><b>Deadline: </b> <%=deadline%></p>
+                            <p><b>Gold Reward: </b> +<%=goldReward%> Gold</p>
+                            <p><b>Skill Gain: </b> +<%=sp%> <%=skill%></p>
                             <p><b>Quest Description: </b><br>
-                                The purpose of this assignment is getting practical experience of requirement analysis, 
-                                database design, and implementing database system in MS SQL Server 2005. In this 
-                                assignment, you are going to design a simple database system for Xiaoshan International 
-                                Airport. You can find more detail in the following specification. Besides the database 
-                                design, you also must to answer some questions.
+                                <%=description%>
                             </p>
                             <button class="btn" onclick="history.back(-1)">Back</button> &nbsp;&nbsp;
                             <a data-toggle="modal" href="#responsive"><button class="btn red">Submit <i class="m-icon-swapright m-icon-white"></i></button></a>
@@ -90,26 +105,28 @@
 
                     <!-- MODAL WINDOW -->
                     <div id="responsive" class="modal hide fade" tabindex="-1" data-width="760">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                            <h3>Quest Submission</h3>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row-fluid">
-                                <div class="span3">
-                                    <img src="assets/img/1star.png" style="width:100%">
+                        <form action="<%=submit%>" method="post">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <h3>Quest Submission</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row-fluid">
+                                    <div class="span3">
+                                        <img src="assets/img/<%=difficulty%>star.png" style="width:100%">
+                                    </div>
+                                    <div class="span9">
+                                        <h4>File Upload</h4>
+                                        <p>Please select and upload your completed assignment.</p>
+                                        <p><input type="file" required class="span12 m-wrap"></p>
+                                    </div>
                                 </div>
-                                <div class="span9">
-                                    <h4>File Upload</h4>
-                                    <p>Please select and upload your completed assignment.</p>
-                                    <p><input type="file" class="span12 m-wrap"></p>
-                                </div>
-                                </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" class="btn">Close</button>
-                            <button type="button" class="btn red">Submit</button>
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" data-dismiss="modal" class="btn">Close</button>
+                                <button type="submit" class="btn red">Submit</button>
+                            </div>
+                        </form>
                     </div>
 
 

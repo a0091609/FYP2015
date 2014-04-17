@@ -31,5 +31,7 @@ public interface QuestBeanLocal
     public Avatar getAvatar(String userId, String moduleId) throws Exception;
 
     public void createQuest(Module m, Skill s, Quest q);
+
+    public void submitQuest(Long questID, String userId, String moduleId) throws Exception;
     
 }

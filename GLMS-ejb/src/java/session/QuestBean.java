@@ -48,7 +48,7 @@ public class QuestBean implements QuestBeanLocal
         em.persist(m);
         em.flush();
     }
-    
+
     //Retrieve all the Items for a particular module
     public List<Quest> getAllQuests(String moduleId) throws Exception
     {
@@ -67,6 +67,41 @@ public class QuestBean implements QuestBeanLocal
         }
         System.out.println("QUEST LIST: " + moduleQuests);
         return moduleQuests;
+    }
+
+    public void submitQuest(Long questID, String userId, String moduleId) throws Exception
+    {
+        Avatar student = getAvatar(userId, moduleId);
+        Quest quest = getQuest(questID);
+        Integer goldReward = quest.getGoldReward();
+        Skill skillReward = quest.getSkillReward();
+
+        //Add the quest to completed list
+        student.getQuestsCompleted().add(quest);
+
+        //Add the gold rewards both lifetime and current
+        student.setCurrentBalance(student.getCurrentBalance() + goldReward);
+        student.setLifetimeEarnings(student.getLifetimeEarnings() + goldReward);
+
+        //Add the skill points
+        List<Skill> mySkills = student.getSkills();
+        boolean exist = false;
+        for (Skill s : mySkills)
+        {
+            if (s.getName().equalsIgnoreCase(skillReward.getName()))
+            {
+                exist = true;
+                s.setSkillPoints(s.getSkillPoints()+skillReward.getSkillPoints());
+            }
+        }
+        if(!exist)
+        {
+            student.getSkills().add(skillReward);
+        }
+
+        //Persist everything
+        em.persist(student);
+        em.flush();
     }
 
     public Avatar getAvatar(String userId, String moduleId) throws Exception
@@ -117,5 +152,5 @@ public class QuestBean implements QuestBeanLocal
         System.out.println("List of Keys: " + keys);
         return keys;
     }
-
+    
 }

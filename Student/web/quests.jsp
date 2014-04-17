@@ -1,3 +1,4 @@
+<%@page import="entity.Skill"%>
 <%@page import="entity.Quest"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="entity.Module"%>
@@ -82,21 +83,34 @@
                                                 <p>
                                                     Difficulty Level: Beginner
                                                 </p>
-
                                                 <%
+                                                    ArrayList completed = (ArrayList) request.getAttribute("questsCompleted");
                                                     ArrayList oneStar = (ArrayList) request.getAttribute("oneStar");
 
                                                     //Print all the Pets
                                                     for (Object o : oneStar)
                                                     {
-
                                                         Quest q = (Quest) o;
                                                         String name = q.getName();
                                                         String description = q.getDescription();
                                                         Integer goldReward = q.getGoldReward();
                                                         String skill = q.getSkillReward().getName();
                                                         Integer sp = q.getSkillReward().getSkillPoints();
-                                                        String view = "Items?action=deleteItem&itemId=";
+                                                        String view = "Quests?action=openQuest&questId=" + q.getId();
+                                                        String style;
+                                                        String button;
+
+                                                        if (completed.contains(q))
+                                                        {
+                                                            style = "btn bigicn-only green disabled";
+                                                            button = "Submitted";
+                                                            view = "#";
+                                                        }
+                                                        else
+                                                        {
+                                                            style = "btn bigicn-only";
+                                                            button = "View";
+                                                        }
                                                 %>
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
@@ -119,7 +133,80 @@
                                                         </div>
                                                     </div>
                                                     <div class="span2 portfolio-btn">
-                                                        <a href="#" class="btn bigicn-only"><span>View</span></a>                        
+                                                        <a href="<%=view%>" class="<%=style%>"><span><%=button%></span></a>                        
+                                                    </div>
+                                                </div>
+                                                <%  //Done printing
+                                                    }
+                                                %>
+                                                <div class="space5"></div>           
+                                            </div>
+
+
+
+
+                                            <div class="tab-pane " id="portlet_tab2">
+                                                <h2>2 Star Quests</h2>
+                                                <p>
+                                                    Difficulty Level: Intermediate
+                                                </p>
+                                                <%
+                                                    ArrayList keys = (ArrayList) request.getAttribute("keys");
+                                                    ArrayList twoStar = (ArrayList) request.getAttribute("twoStar");
+
+                                                    //Print all the Pets
+                                                    for (Object o : twoStar)
+                                                    {
+                                                        Quest q = (Quest) o;
+                                                        String name = q.getName();
+                                                        String description = q.getDescription();
+                                                        Integer goldReward = q.getGoldReward();
+                                                        String skill = q.getSkillReward().getName();
+                                                        Integer sp = q.getSkillReward().getSkillPoints();
+                                                        String view = "Quests?action=openQuest&questId=" + q.getId();
+                                                        String style;
+                                                        String button;
+
+                                                        if (!keys.contains(q.getKeyRequired()))
+                                                        {
+                                                            style = "btn bigicn-only red disabled";
+                                                            button = "Locked";
+                                                            view = "#";
+                                                        }
+                                                        else if (completed.contains(q))
+                                                        {
+                                                            style = "btn bigicn-only green disabled";
+                                                            button = "Submitted";
+                                                            view = "#";
+                                                        }
+                                                        else
+                                                        {
+                                                            style = "btn bigicn-only";
+                                                            button = "View";
+                                                        }
+                                                %>
+                                                <div class="row-fluid portfolio-block">
+                                                    <div class="span5 portfolio-text">
+                                                        <img src="assets/img/2star.png" style="width:80px">
+                                                        <div class="portfolio-text-info">
+                                                            <h4><%=name%></h4>
+                                                            <p class="questDesc">
+                                                                <%=description%>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="span5">
+                                                        <div class="portfolio-info">
+                                                            Skill Gain
+                                                            <span><%=skill%> +<%=sp%></span>
+                                                        </div>
+                                                        <div class="portfolio-info">
+                                                            Gold Reward
+                                                            <span>Gold +<%=goldReward%></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="span2 portfolio-btn">
+                                                        <a href="<%=view%>" class="<%=style%>"><span><%=button%></span></a>                        
                                                     </div>
                                                 </div>
                                                 <%  //Done printing
@@ -127,31 +214,10 @@
                                                 %>
 
 
+
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
-                                                        <div class="portfolio-text-info">
-                                                            <h4>Quest Name</h4>
-                                                            <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="span5">
-                                                        <div class="portfolio-info">
-                                                            Skill Gain
-                                                            <span>Database +3</span>
-                                                        </div>
-                                                        <div class="portfolio-info">
-                                                            Gold Reward
-                                                            <span>Gold +100</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="span2 portfolio-btn">
-                                                        <a href="#" class="btn bigicn-only green disabled"><span>Submitted</span></a>                        
-                                                    </div>
-                                                </div>
-                                                <div class="row-fluid portfolio-block">
-                                                    <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
+                                                        <img src="assets/img/2star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
                                                             <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
@@ -173,7 +239,7 @@
                                                 </div>
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
+                                                        <img src="assets/img/2star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
                                                             <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
@@ -190,12 +256,34 @@
                                                         </div>
                                                     </div>
                                                     <div class="span2 portfolio-btn">
-                                                        <a href="#" class="btn bigicn-only"><span>View</span></a>                        
+                                                        <a href="#" class="btn bigicn-only red disabled"><span>Locked</span></a>                        
                                                     </div>
                                                 </div>
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
+                                                        <img src="assets/img/2star.png" style="width:80px">
+                                                        <div class="portfolio-text-info">
+                                                            <h4>Quest Name</h4>
+                                                            <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="span5">
+                                                        <div class="portfolio-info">
+                                                            Skill Gain
+                                                            <span>Database +3</span>
+                                                        </div>
+                                                        <div class="portfolio-info">
+                                                            Gold Reward
+                                                            <span>Gold +100</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="span2 portfolio-btn">
+                                                        <a href="#" class="btn bigicn-only red disabled"><span>Locked</span></a>                        
+                                                    </div>
+                                                </div>
+                                                <div class="row-fluid portfolio-block">
+                                                    <div class="span5 portfolio-text">
+                                                        <img src="assets/img/2star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
                                                             <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit .</p>
@@ -212,132 +300,14 @@
                                                         </div>
                                                     </div>
                                                     <div class="span2 portfolio-btn">
-                                                        <a href="#" class="btn bigicn-only"><span>View</span></a>                        
-                                                    </div>
-                                                </div>
-                                                <div class="space5"></div>           
-                                            </div>
-
-
-
-
-                                            <div class="tab-pane " id="portlet_tab2">
-                                                <h2>2 Star Quests</h2>
-                                                <p>
-                                                    Difficulty Level: Intermediate
-                                                </p>
-                                                <div class="row-fluid portfolio-block">
-                                                    <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
-                                                        <div class="portfolio-text-info">
-                                                            <h4>Quest Name</h4>
-                                                            <p>Some description of quest here.</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="span5">
-                                                        <div class="portfolio-info">
-                                                            Skill Gain
-                                                            <span>Database +3</span>
-                                                        </div>
-                                                        <div class="portfolio-info">
-                                                            Gold Reward
-                                                            <span>Gold +100</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="span2 portfolio-btn">
-                                                        <a href="#" class="btn bigicn-only"><span>View</span></a>                        
-                                                    </div>
-                                                </div>
-                                                <div class="row-fluid portfolio-block">
-                                                    <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
-                                                        <div class="portfolio-text-info">
-                                                            <h4>Quest Name</h4>
-                                                            <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="span5">
-                                                        <div class="portfolio-info">
-                                                            Skill Gain
-                                                            <span>Database +3</span>
-                                                        </div>
-                                                        <div class="portfolio-info">
-                                                            Gold Reward
-                                                            <span>Gold +100</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="span2 portfolio-btn">
-                                                        <a href="#" class="btn bigicn-only"><span>View</span></a>                        
-                                                    </div>
-                                                </div>
-                                                <div class="row-fluid portfolio-block">
-                                                    <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
-                                                        <div class="portfolio-text-info">
-                                                            <h4>Quest Name</h4>
-                                                            <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="span5">
-                                                        <div class="portfolio-info">
-                                                            Skill Gain
-                                                            <span>Database +3</span>
-                                                        </div>
-                                                        <div class="portfolio-info">
-                                                            Gold Reward
-                                                            <span>Gold +100</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="span2 portfolio-btn">
-                                                        <a href="#" class="btn bigicn-only"><span>View</span></a>                        
-                                                    </div>
-                                                </div>
-                                                <div class="row-fluid portfolio-block">
-                                                    <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
-                                                        <div class="portfolio-text-info">
-                                                            <h4>Quest Name</h4>
-                                                            <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="span5">
-                                                        <div class="portfolio-info">
-                                                            Skill Gain
-                                                            <span>Database +3</span>
-                                                        </div>
-                                                        <div class="portfolio-info">
-                                                            Gold Reward
-                                                            <span>Gold +100</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="span2 portfolio-btn">
-                                                        <a href="#" class="btn bigicn-only"><span>View</span></a>                        
-                                                    </div>
-                                                </div>
-                                                <div class="row-fluid portfolio-block">
-                                                    <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
-                                                        <div class="portfolio-text-info">
-                                                            <h4>Quest Name</h4>
-                                                            <p>Lorem ipsum dolor sit consectetuer adipiscing elit .</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="span5">
-                                                        <div class="portfolio-info">
-                                                            Skill Gain
-                                                            <span>Database +3</span>
-                                                        </div>
-                                                        <div class="portfolio-info">
-                                                            Gold Reward
-                                                            <span>Gold +100</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="span2 portfolio-btn">
-                                                        <a href="#" class="btn bigicn-only"><span>View</span></a>                        
+                                                        <a href="#" class="btn bigicn-only red disabled"><span>Locked</span></a>                        
                                                     </div>
                                                 </div>
                                                 <div class="space5"></div>                                               
                                             </div>
+
+
+
 
 
                                             <div class="tab-pane " id="portlet_tab3">
@@ -345,31 +315,74 @@
                                                 <p>
                                                     Difficulty Level: Advanced
                                                 </p>
+                                                <%
+                                                    ArrayList threeStar = (ArrayList) request.getAttribute("threeStar");
+
+                                                    //Print all the Pets
+                                                    for (Object o : threeStar)
+                                                    {
+                                                        Quest q = (Quest) o;
+                                                        String name = q.getName();
+                                                        String description = q.getDescription();
+                                                        Integer goldReward = q.getGoldReward();
+                                                        String skill = q.getSkillReward().getName();
+                                                        Integer sp = q.getSkillReward().getSkillPoints();
+                                                        String view = "Quests?action=openQuest&questId=" + q.getId();
+                                                        String style;
+                                                        String button;
+
+                                                        if (!keys.contains(q.getKeyRequired()))
+                                                        {
+                                                            style = "btn bigicn-only red disabled";
+                                                            button = "Locked";
+                                                            view = "#";
+                                                        }
+                                                        else if (completed.contains(q))
+                                                        {
+                                                            style = "btn bigicn-only green disabled";
+                                                            button = "Submitted";
+                                                            view = "#";
+                                                        }
+                                                        else
+                                                        {
+                                                            style = "btn bigicn-only";
+                                                            button = "View";
+                                                        }
+                                                %>
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
-                                                        <img src="assets/img/3stars.png" style="width:80px">
+                                                        <img src="assets/img/3star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Quest Name</h4>
-                                                            <p>Some description of quest here.</p>
+                                                            <h4><%=name%></h4>
+                                                            <p class="questDesc">
+                                                                <%=description%>
+                                                            </p> 
                                                         </div>
                                                     </div>
                                                     <div class="span5">
                                                         <div class="portfolio-info">
                                                             Skill Gain
-                                                            <span>Database +3</span>
+                                                            <span><%=skill%> +<%=sp%></span>
                                                         </div>
                                                         <div class="portfolio-info">
                                                             Gold Reward
-                                                            <span>Gold +100</span>
+                                                            <span>Gold +<%=goldReward%></span>
                                                         </div>
                                                     </div>
                                                     <div class="span2 portfolio-btn">
-                                                        <a href="#" class="btn bigicn-only"><span>View</span></a>                        
+                                                        <a href="<%=view%>" class="<%=style%>"><span><%=button%></span></a>                        
                                                     </div>
                                                 </div>
+                                                <%  //Done printing
+                                                    }
+                                                %>
+
+
+
+
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
+                                                        <img src="assets/img/3star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
                                                             <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
@@ -386,12 +399,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="span2 portfolio-btn">
-                                                        <a href="#" class="btn bigicn-only"><span>View</span></a>                        
+                                                        <a href="#" class="btn bigicn-only red disabled"><span>Locked</span></a>                        
                                                     </div>
                                                 </div>
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
+                                                        <img src="assets/img/3star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
                                                             <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
@@ -408,12 +421,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="span2 portfolio-btn">
-                                                        <a href="#" class="btn bigicn-only"><span>View</span></a>                        
+                                                        <a href="#" class="btn bigicn-only red disabled"><span>Locked</span></a>                        
                                                     </div>
                                                 </div>
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
+                                                        <img src="assets/img/3star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
                                                             <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
@@ -430,12 +443,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="span2 portfolio-btn">
-                                                        <a href="#" class="btn bigicn-only"><span>View</span></a>                        
+                                                        <a href="#" class="btn bigicn-only red disabled"><span>Locked</span></a>                        
                                                     </div>
                                                 </div>
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
-                                                        <img src="assets/img/2stars.png" style="width:80px">
+                                                        <img src="assets/img/3star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
                                                             <h4>Quest Name</h4>
                                                             <p>Lorem ipsum dolor sit consectetuer adipiscing elit .</p>
@@ -452,7 +465,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="span2 portfolio-btn">
-                                                        <a href="#" class="btn bigicn-only"><span>View</span></a>                        
+                                                        <a href="#" class="btn bigicn-only red disabled"><span>Locked</span></a>                        
                                                     </div>
                                                 </div>
                                                 <div class="space5"></div>
@@ -464,12 +477,50 @@
                             <!-- END SAMPLE FORM PORTLET-->
                         </div>
                     </div>
-
-
                     <!-- END PAGE CONTENT-->  
 
-
-
+                    <%
+                        //This part is for showing the submission msg
+                        Boolean submission = (Boolean) request.getAttribute("submission");
+                        if (submission != null)
+                        {
+                            Integer golds = (Integer) request.getAttribute("gold");
+                            Skill skill = (Skill) request.getAttribute("skill");
+                            String skillType = skill.getName();
+                            Integer sp = skill.getSkillPoints();
+                    %>
+                    <!-- MODAL WINDOW -->
+                    <div id="responsive" class="modal hide fade" tabindex="-1" data-width="760">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h3>Quest Submitted</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <center><h1>OUTSTANDING!</h1></center>
+                                </div>
+                                <br><br>
+                            </div><div class="row-fluid"><br></div>
+                            <div class="row-fluid">
+                                <div class="span4">
+                                    <img src="assets/img/winner.png" style="width:100%">
+                                </div>
+                                <div class="span8">
+                                    <h4>Your quest has been submitted</h4>
+                                    <p>You have earned the following rewards: </p>
+                                    <p><b>Gold Reward: </b> +<%=golds%> Gold</p>
+                                    <p><b>Skill Gain: </b> +<%=sp%> <%=skillType%></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn">Close</button>
+                        </div>
+                    </div>
+                    <%
+                        }
+                    %>
 
                 </div>
                 <!-- END PAGE CONTAINER-->    
@@ -495,6 +546,7 @@
                 //$('#footable').footable();
                 TableManaged.init();
                 setActivePage("link-quests");
+                $('#responsive').modal('show');
             });
         </script>
         <!-- END JAVASCRIPTS -->
