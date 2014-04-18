@@ -21,7 +21,7 @@ This is a global CSS file to fix styling issues
 
 .smallTableImg
 {
-    width: 40px; height: 40px;
+    width: 80px; height: 80px;
 }
 
 .questDesc
@@ -31,6 +31,13 @@ This is a global CSS file to fix styling issues
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.itemImg
+{
+    width: 50px;
+    /* padding-left: 30px; */
+    padding-right: 30px;
 }
 
 @media (max-width: 768px) 
