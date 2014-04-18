@@ -87,7 +87,7 @@
                                                     ArrayList completed = (ArrayList) request.getAttribute("questsCompleted");
                                                     ArrayList oneStar = (ArrayList) request.getAttribute("oneStar");
 
-                                                    //Print all the Pets
+                                                    //Print all the quests
                                                     for (Object o : oneStar)
                                                     {
                                                         Quest q = (Quest) o;

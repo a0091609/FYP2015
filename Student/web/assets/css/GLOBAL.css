@@ -27,6 +27,7 @@ This is a global CSS file to fix styling issues
 .questDesc
 {
     width: 100%;
+    /* max-width: 400px !important; */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
