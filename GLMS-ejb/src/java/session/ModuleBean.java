@@ -3,7 +3,6 @@ package session;
 import entity.GameProfile;
 import entity.Instructor;
 import entity.Module;
-import entity.QuizItem;
 import entity.Student;
 import helper.ModuleDetails;
 import java.util.ArrayList;
@@ -60,6 +59,7 @@ public class ModuleBean implements ModuleBeanLocal {
                 gameProfile.setModuleId(moduleId);
                 gameProfile.setExpPoint(0);
                 gameProfile.setExpLevel(0);
+                gameProfile.setStreak(0);
 
                 //CY Link
                 module.getStudentList().add(gameProfile);

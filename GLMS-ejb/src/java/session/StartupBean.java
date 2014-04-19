@@ -37,13 +37,13 @@ public class StartupBean {
     @PostConstruct
     private void init() {
         try {
-//            createInstructors();
-//            createStudents();
-//            createModules();
-//            createAvatar();
-//            createQuests();
-//            createQuizzes();
-//            createQuizItems();
+            createInstructors();
+            createStudents();
+            createModules();
+            createAvatar();
+            createQuests();
+            createQuizzes();
+            createQuizItems();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -152,37 +152,37 @@ public class StartupBean {
 
         /*String quizId, String questName, String questText,
          String option1, String option2, String option3, String option4, Integer answer*/
-        createQuestion(quiz1.toString(), "First Question", "Which is correct?", "Correct", "Incorrect", "Incorrect", "Incorrect", 0);
-        createQuestion(quiz1.toString(), "Second Question", "Which is correct?", "Incorrect", "Correct", "Incorrect", "Incorrect", 1);
-        createQuestion(quiz1.toString(), "Third Question", "Which is correct?", "Incorrect", "Incorrect", "Correct", "Incorrect", 2);
+        createQuestion(quiz1.toString(), "First Question", "Which is correct?", "Refer to textbook p.12", "Correct", "Incorrect", "Incorrect", "Incorrect", 0);
+        createQuestion(quiz1.toString(), "Second Question", "Which is correct?", "Refer to Reading \"What is Gamification? paragraph 2\"", "Incorrect", "Correct", "Incorrect", "Incorrect", 1);
+        createQuestion(quiz1.toString(), "Third Question", "Which is correct?", "Refer to Reading \"What is Gamifying Pedagogies?\"", "Incorrect", "Incorrect", "Correct", "Incorrect", 2);
 
-        createQuestion(quiz2.toString(), "First Question", "Which is correct?", "Correct", "Incorrect", "Incorrect", "Incorrect", 0);
-        createQuestion(quiz2.toString(), "Second Question", "Which is correct?", "Incorrect", "Correct", "Incorrect", "Incorrect", 1);
-        createQuestion(quiz2.toString(), "Third Question", "Which is correct?", "Incorrect", "Incorrect", "Correct", "Incorrect", 2);
+        createQuestion(quiz2.toString(), "First Question", "Which is correct?", "", "Correct", "Incorrect", "Incorrect", "Incorrect", 0);
+        createQuestion(quiz2.toString(), "Second Question", "Which is correct?", "", "Incorrect", "Correct", "Incorrect", "Incorrect", 1);
+        createQuestion(quiz2.toString(), "Third Question", "Which is correct?", "", "Incorrect", "Incorrect", "Correct", "Incorrect", 2);
 
         Long quiz3 = quizbean.saveNewQuiz("Week 1 Quiz Exercise", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
         quizbean.saveQuizInfo(quiz3, "Week 1 Quiz Exercise", "Intermediate", convertToDateObj("16/04/2014"), convertToDateObj("23/04/2014"), quiz1);
-        createQuestion(quiz3.toString(), "First Question", "Which is correct?", "Correct", "Incorrect", "Incorrect", "Incorrect", 0);
-        createQuestion(quiz3.toString(), "Second Question", "Which is correct?", "Incorrect", "Correct", "Incorrect", "Incorrect", 1);
-        createQuestion(quiz3.toString(), "Third Question", "Which is correct?", "Incorrect", "Incorrect", "Correct", "Incorrect", 2);
+        createQuestion(quiz3.toString(), "First Question", "Which is correct?", "", "Correct", "Incorrect", "Incorrect", "Incorrect", 0);
+        createQuestion(quiz3.toString(), "Second Question", "Which is correct?", "", "Incorrect", "Correct", "Incorrect", "Incorrect", 1);
+        createQuestion(quiz3.toString(), "Third Question", "Which is correct?", "", "Incorrect", "Incorrect", "Correct", "Incorrect", 2);
 
         System.out.println("Quizzes created.");
     }
 
-    private void createQuestion(String quizId, String questName, String questText,
+    private void createQuestion(String quizId, String questName, String questText, String hint,
             String option1, String option2, String option3, String option4, Integer answer) {
         System.out.println("Creating questions...");
         /*String quizId, String questName, String questText,
          String option1, String option2, String option3, String option4, Integer answer*/
-        questBean.saveMultiChoice(quizId.toString(), questName, questText, option1, option2, option3, option4, answer);
+        questBean.saveMultiChoice(quizId.toString(), questName, questText, hint, option1, option2, option3, option4, answer);
         System.out.println("Questions created.");
     }
 
     private void createQuizItems() {
         //String userId, String moduleId, String name, Integer qty
-        quizbean.createQuizItems("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1", "Get Help", 2);
-        quizbean.createQuizItems("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1", "Fifty-Fifty", 3);
-        quizbean.createQuizItems("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1", "Retry", 5);
+        quizbean.createQuizItems("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1", "GetHelp", 10);
+        quizbean.createQuizItems("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1", "Fifty-Fifty", 10);
+        quizbean.createQuizItems("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1", "Retry", 10);
     }
 
     private Date convertToDateObj(String date) {

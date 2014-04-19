@@ -1,7 +1,6 @@
 package session;
 
 import helper.AnswerResultsDetails;
-import helper.QuizItemDetails;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
@@ -23,9 +22,13 @@ public interface QuizBeanLocal {
 
     public List getQuizQuestions(Long quizId);
 
-    public List<QuizItemDetails> getProfileQuizItems(String userId, String moduleId);
+    public Integer getQuizItemQty(String userId, String moduleId, String itemName);
 
-    public AnswerResultsDetails checkAnswer(Long questionId, String answer);
+    public AnswerResultsDetails checkAnswer(String userId, String moduleId, Long questionId, String answer);
+
+    public Boolean enoughItem(String userId, String moduleId, String itemName);
+
+    public String useHints(String userId, String moduleId, Long questionId);
 
     public Boolean createQuizItems(String userId, String moduleId, String name, Integer qty);
 }

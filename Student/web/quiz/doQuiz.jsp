@@ -40,7 +40,7 @@
                                     <i class="icon-angle-right"></i>
                                 </li>
                                 <li>
-                                    <a href="#">Dashboard</a>
+                                    <a href="/Student/dashboard.jsp">Dashboard</a>
                                     <i class="icon-angle-right"></i>
                                 </li>
                                 <li>
@@ -58,37 +58,19 @@
 
                     <!-- BEGIN PAGE CONTENT-->
                     <div class="row-fluid">
-                        <!--Streak Count-->
-                        <div class="span4 responsive">
-                            <div class="dashboard-stat red">
-                                <div class="visual">
-                                    <i class="icon-fire"></i>
-                                </div>
-                                <div class="details">
-                                    <div class="number">
-                                        0
-                                    </div>
-                                    <div class="desc">                           
-                                        Streak Count
-                                    </div>
-                                </div>          
-                            </div>
-                        </div>
-                        <!--End of Streak Count-->
-                    </div>
-
-                    <div class="row-fluid">
                         <div class="span12">
                             <%
                                 ArrayList quests = (ArrayList) request.getAttribute("questions");
                                 int questNum = quests.size(), j;
-                                
-//                                ArrayList items = (ArrayList) request.getAttribute("items");
+
                             %>
                             <div class="portlet box blue" id="form_wizard_1">
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <span class="step-title">Question 1 of <%=questNum%></span>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="btn red tooltips" data-placement="bottom" data-original-title="Correct Streak"><i class="icon-fire"></i> <span id="streakCount"></span></div>
                                     </div>
                                 </div>
                                 <div class="portlet-body form">
@@ -114,30 +96,22 @@
                                             <div class="bar"></div>
                                         </div>
                                         <div class="tab-content">
-                                            <!--                                            <div class="alert alert-error hide">
-                                                                                            <button class="close" data-dismiss="alert"></button>
-                                                                                            Error
-                                                                                        </div>
-                                                                                        <div class="alert alert-success hide">
-                                                                                            <button class="close" data-dismiss="alert"></button>
-                                                                                            Success
-                                                                                        </div>-->
                                             <!--loop start-->
-
                                             <%
                                                 j = 1;
                                                 for (Object o : quests) {
                                                     QuestionDetails quest = (QuestionDetails) o;
                                             %>
                                             <div class="tab-pane <%=(j == 1) ? "active" : ""%>" id="tab<%=j%>">
-                                                <div class="row-fluid margin-bottom-25">
+                                                <div class="row-fluid margin-bottom-5">
                                                     <div class="span12" style="font-size:18px;">
                                                         <!--Question Text-->
                                                         <%=quest.getQuestionText()%>
                                                     </div>
+                                                </div>
+                                                <div class="row-fluid margin-bottom-10">
                                                     <div class="span12" id="hint<%=j%>">
                                                         <!--Question Hint-->
-                                                        <%=(quest.getAnswerHint() == null) ? "" : quest.getAnswerHint()%>
                                                     </div>
                                                 </div>
 
@@ -182,37 +156,39 @@
                                                                 </div>
                                                             </div>
                                                             <div class="span4">
+
                                                                 <!--Fun Quiz Items-->
-                                                                <a href="#" class="span6 responsive more">
-                                                                    <div class="dashboard-stat yellow">
-                                                                        <div class="visual">
+                                                                <div class="tiles">
+                                                                    <a href="#" id="<%=quest.getQuestionId() + " " + j%>" class="tile bg-yellow hint">
+                                                                        <div class="tile-body">
                                                                             <i class="icon-info-sign"></i>
                                                                         </div>
-                                                                        <div class="details">
-                                                                            <div class="number">
-                                                                                <%--<%=%>--%>
-                                                                            </div>
-                                                                            <div class="desc">                           
+                                                                        <div class="tile-object">
+                                                                            <div class="name">
                                                                                 Get Help
                                                                             </div>
+                                                                            <div class="number" id="itemHelp">                           
+                                                                                <%=request.getAttribute("itemHelp")%>
+                                                                            </div>
                                                                         </div>          
-                                                                    </div>
-                                                                </a>
-                                                                <a href="#" class="span6 responsive more">
-                                                                    <div class="dashboard-stat yellow">
-                                                                        <div class="visual">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="tiles">
+                                                                    <a href="#" id="<%=quest.getQuestionId() + " " + j%> " class="tile bg-yellow fifty">
+                                                                        <div class="tile-body">
                                                                             <i class="icon-random"></i>
                                                                         </div>
-                                                                        <div class="details">
-                                                                            <div class="number">
-                                                                                <%--<%=%>--%>
-                                                                            </div>
-                                                                            <div class="desc">                           
+                                                                        <div class="tile-object">
+                                                                            <div class="name">                           
                                                                                 Fifty-Fifty
                                                                             </div>
+                                                                            <div class="number" id="itemFifty">
+                                                                                <%=request.getAttribute("itemFifty")%>
+                                                                            </div>
+
                                                                         </div>          
-                                                                    </div>
-                                                                </a>
+                                                                    </a>
+                                                                </div>
                                                                 <!--End of Fun Quiz Items-->
                                                             </div>
                                                         </div>
@@ -313,9 +289,39 @@
                     });
                 });
 
-                function getHint() {
+                $('.hint').click(function() {
+                    var values = this.id.split(" ");
+                    var qId = values[0];
+                    var qId2 = values[1];
 
-                }
+                    //TODO: need to check if enough items
+                    var getHintsUrl = "/Student/QuizServlet?action=useHints&qId=" + qId;
+                    $.get(getHintsUrl, function(data) {
+                        var content = '<div class="alert alert-success"><i class="icon-info-sign"></i> ' + data + '</div>';
+                        $('#hint' + qId2).html(content);
+
+                        // get new item qty
+                        var getItemQtyUrl = "/Student/QuizServlet?action=getItemQty&itemName=GetHelp";
+                        $.get(getItemQtyUrl, function(data) {
+                            $('#itemHelp').html(data);
+                        });
+                        return false;
+                    });
+
+
+                });
+
+                $('.fifty').click(function() {
+                    var values = this.id.split(" ");
+                    var qId = values[0];
+                    var qId2 = values[1];
+                    
+                    //TODO: need to check if enough items
+                    var useFiftyUrl = "/Student/QuizServlet?action=useFifty&qId=" + qId;
+                    
+
+                    return false;
+                });
             });
         </script>
         <!-- END JAVASCRIPTS -->

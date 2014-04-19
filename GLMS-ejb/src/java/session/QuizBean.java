@@ -104,10 +104,10 @@ public class QuizBean implements QuizBeanLocal {
                     if (session.getStatus().equals("complete")) {
                         next = true;
                     } else {
-                        status = "Complete " + prereq.getName() + " to unlock.";
+                        status = "Complete <b>" + prereq.getName() + "</b> to unlock.";
                     }
                 } else {
-                    status = "Complete " + prereq.getName() + " to unlock.";
+                    status = "Complete <b>" + prereq.getName() + "</b> to unlock.";
                 }
             } else {
                 next = true;
@@ -190,18 +190,17 @@ public class QuizBean implements QuizBeanLocal {
         return questions;
     }
 
-    public List<QuizItemDetails> getProfileQuizItems(String userId, String moduleId) {
+    public Integer getQuizItemQty(String userId, String moduleId, String itemName) {
         Query q = em.createQuery("SELECT p FROM GameProfile p WHERE p.userId = '" + userId + "' AND p.moduleId = '" + moduleId + "'");
         GameProfile p = (GameProfile) q.getSingleResult();
-        List<QuizItemDetails> items = new ArrayList<QuizItemDetails>();
-        for(QuizItem i : p.getItems()){
-            QuizItemDetails item = new QuizItemDetails(i.getName(), i.getQty());
-            items.add(item);
-        }
-        return items;
+
+        q = em.createQuery("SELECT i FROM QuizItem i WHERE i.profile.profileId = " + p.getProfileId() + " AND i.name = '" + itemName + "'");
+        QuizItem item = (QuizItem) q.getSingleResult();
+
+        return item.getQty();
     }
 
-    public AnswerResultsDetails checkAnswer(Long questionId, String answer) {
+    public AnswerResultsDetails checkAnswer(String userId, String moduleId, Long questionId, String answer) {
         Boolean isCorrect = false;
         String status = "Wrong!";
         String correctAns = "", msg2 = "";
@@ -226,10 +225,45 @@ public class QuizBean implements QuizBeanLocal {
         return content;
     }
 
+    public Integer updateExpPoints(String userId, String moduleId, Integer pts) {
+        GameProfile p = getGameProfile(userId, moduleId);
+        
+        int p1 = p.getExpPoint();
+        p.setExpPoint(p1+pts);
+        em.persist(p);
+        
+        return 0;
+    }
+
+    public Boolean enoughItem(String userId, String moduleId, String itemName) {
+        GameProfile profile = getGameProfile(userId, moduleId);
+
+        for (QuizItem i : profile.getItems()) {
+            if (i.getName().equals(itemName) && i.getQty() > 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public String useHints(String userId, String moduleId, Long questionId) {
+        Question q = em.find(Question.class, questionId);
+        GameProfile profile = getGameProfile(userId, moduleId);
+
+        for (QuizItem i : profile.getItems()) {
+            if (i.getName().equals("GetHelp")) {
+                int qty = i.getQty();
+                i.setQty(qty - 1);
+            }
+        }
+
+        return q.getAnswerHint();
+    }
+
     public Boolean createQuizItems(String userId, String moduleId, String name, Integer qty) {
         try {
-            Query q = em.createQuery("SELECT p FROM GameProfile p WHERE p.userId = '" + userId + "' AND p.moduleId = '" + moduleId + "'");
-            GameProfile profile = (GameProfile) q.getSingleResult();
+            GameProfile profile = getGameProfile(userId, moduleId);
 
             QuizItem item = new QuizItem();
             item.setName(name);
@@ -244,6 +278,11 @@ public class QuizBean implements QuizBeanLocal {
             e.printStackTrace();
             return false;
         }
+    }
+
+    private GameProfile getGameProfile(String userId, String moduleId) {
+        Query q = em.createQuery("SELECT p FROM GameProfile p WHERE p.userId = '" + userId + "' AND p.moduleId = '" + moduleId + "'");
+        return (GameProfile) q.getSingleResult();
     }
 
     private Boolean quizIsActive(Long quizId) {

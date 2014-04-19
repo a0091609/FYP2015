@@ -21,6 +21,7 @@ public class GameProfile implements Serializable {
     private String moduleId;
     private Integer expPoint;
     private Integer expLevel;
+    private Integer streak;
 
     @OneToMany(mappedBy = "profile")
     private List<QuizItem> items;
@@ -70,6 +71,14 @@ public class GameProfile implements Serializable {
 
     public void setExpLevel(Integer expLevel) {
         this.expLevel = expLevel;
+    }
+
+    public Integer getStreak() {
+        return streak;
+    }
+
+    public void setStreak(Integer streak) {
+        this.streak = streak;
     }
 
     public List<QuizItem> getItems() {

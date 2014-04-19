@@ -40,7 +40,7 @@
                                     <i class="icon-angle-right"></i>
                                 </li>
                                 <li>
-                                    <a href="#">Dashboard</a>
+                                    <a href="/Student/dashboard.jsp">Dashboard</a>
                                     <i class="icon-angle-right"></i>
                                 </li>
                                 <li>
