@@ -72,9 +72,9 @@
             </a>
         </li>
         <li id="link-store">
-            <a href="#">
+            <a href="shop.jsp">
                 <i class="icon-shopping-cart"></i> 
-                <span class="title">Items Store</span>
+                <span class="title">Item Shop</span>
             </a>
         </li>
 
