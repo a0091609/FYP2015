@@ -118,9 +118,9 @@ var FormWizard = function() {
             });
 
             $('#form_wizard_1').find('.button-previous').hide();
-            $('#form_wizard_1 .button-finish').click(function() {
-                alert('Finished! Hope you enjoy it :)');
-            }).hide();
+//            $('#form_wizard_1 .button-finish').click(function() {
+//                alert('Finished! Hope you enjoy it :)');
+//            }).hide();
         }
 
     };

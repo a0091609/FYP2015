@@ -2,12 +2,14 @@ package session;
 
 import entity.GameProfile;
 import entity.Instructor;
+import entity.Leaderboard;
 import entity.Module;
-import entity.QuizItem;
 import entity.Student;
+import helper.LeaderboardDetails;
 import helper.ModuleDetails;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,6 +20,9 @@ public class ModuleBean implements ModuleBeanLocal {
 
     @PersistenceContext
     private EntityManager em;
+
+    @EJB
+    private QuizBeanLocal quizBean;
 
     public Boolean createModule(String moduleId, String moduleCode, String moduleName, String moduleCreator) {
         try {
@@ -47,34 +52,33 @@ public class ModuleBean implements ModuleBeanLocal {
     public Boolean saveStudentModule(String moduleId, String moduleCode, String moduleName, String moduleCreator, String userId) {
         try {
             if (!isModule(moduleId)) {
-
                 createModule(moduleId, moduleCode, moduleName, moduleCreator);
-
-                Student student = em.find(Student.class, userId);
-                Module module = em.find(Module.class, moduleId);
-
-                GameProfile gameProfile = new GameProfile();
-                gameProfile.setStudent(student);
-                gameProfile.setModule(module);
-                gameProfile.setUserId(student.getUserId());
-                gameProfile.setModuleId(moduleId);
-                gameProfile.setExpPoint(0);
-                gameProfile.setExpLevel(0);
-
-                //CY Link
-                module.getStudentList().add(gameProfile);
-                student.getModuleList().add(gameProfile);
-                //Phil Link
-                student.getModules().add(module);
-                module.getStudents().add(student);
-
-                em.persist(module);
-                em.persist(gameProfile);
-                em.persist(student);
-                em.flush();
-
-                System.out.println("Module initiated: " + module.getModuleId());
             }
+            Student student = em.find(Student.class, userId);
+            Module module = em.find(Module.class, moduleId);
+
+            GameProfile gameProfile = new GameProfile();
+            gameProfile.setStudent(student);
+            gameProfile.setModule(module);
+            gameProfile.setUserId(student.getUserId());
+            gameProfile.setModuleId(moduleId);
+            gameProfile.setExpPoint(0);
+            gameProfile.setExpLevel("novice");
+            gameProfile.setStreak(0);
+
+            //CY Link
+            module.getStudentList().add(gameProfile);
+            student.getModuleList().add(gameProfile);
+            //Phil Link
+            student.getModules().add(module);
+            module.getStudents().add(student);
+
+            em.persist(module);
+            em.persist(gameProfile);
+            em.persist(student);
+            em.flush();
+
+            System.out.println("Module initiated: " + module.getModuleId());
 
             return true;
         } catch (Exception e) {
@@ -121,6 +125,8 @@ public class ModuleBean implements ModuleBeanLocal {
 
         return modules;
     }
+
+    
 
     //Helper method: retrieves the module based on moduleId
     public Module getModule(String moduleId) throws Exception {

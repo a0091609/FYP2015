@@ -19,6 +19,11 @@ public class QuizDetails implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeCreated;
 
+    public QuizDetails(Long quizId, String name) {
+        this.quizId = quizId;
+        this.name = name;
+    }
+    
     public QuizDetails(String name, String descr, String difficultyLvl, String dateOpen, String dateClose, Date timeCreated) {
         this.name = name;
         this.descr = descr;

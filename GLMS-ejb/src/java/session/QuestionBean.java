@@ -14,8 +14,8 @@ public class QuestionBean implements QuestionBeanLocal {
 
     @PersistenceContext
     private EntityManager em;
-    
-    public Boolean saveMultiChoice(String quizId, String questName, String questText,
+
+    public Boolean saveMultiChoice(String quizId, String questName, String questText, String hint,
             String option1, String option2, String option3, String option4, Integer answer) {
 
         QuestionMultiChoice quest = new QuestionMultiChoice();
@@ -24,6 +24,7 @@ public class QuestionBean implements QuestionBeanLocal {
             quest.setQuiz(em.find(Quiz.class, Long.parseLong(quizId)));
             quest.setName(questName);
             quest.setQuestionText(questText);
+            quest.setAnswerHint(hint);
             quest.setTimeCreated(getCurrentTimestamp());
 
             em.persist(quest);

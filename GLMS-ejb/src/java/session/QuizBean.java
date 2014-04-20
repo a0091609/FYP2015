@@ -1,17 +1,22 @@
 package session;
 
 import entity.GameProfile;
+import entity.Leaderboard;
 import entity.Module;
 import entity.Question;
 import entity.QuestionAnswer;
 import entity.Quiz;
 import entity.QuizItem;
 import entity.QuizSession;
+import entity.SessionQuestion;
 import entity.Student;
 import helper.AnswerResultsDetails;
+import helper.GameProfileDetails;
+import helper.LeaderboardDetails;
 import helper.QuestionDetails;
 import helper.QuizDetails;
 import helper.QuizItemDetails;
+import helper.QuizResults;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -91,26 +96,35 @@ public class QuizBean implements QuizBeanLocal {
 
         for (Quiz quiz : quizList) {
             Boolean next = false;
-            String status = "";
+            String status = "", sql = "";
             Boolean active = false;
             QuizSession session = null;
             Quiz prereq = quiz.getPrereq();
 
             if (prereq != null) {
-                String sql = "SELECT s FROM QuizSession s WHERE s.userId = '" + userId + "' AND s.quizId = " + prereq.getQuizId();
+                sql = "SELECT s FROM QuizSession s WHERE s.userId = '" + userId + "' AND s.quizId = " + prereq.getQuizId();
                 q = em.createQuery(sql);
                 if (!q.getResultList().isEmpty()) {
                     session = (QuizSession) q.getSingleResult();
                     if (session.getStatus().equals("complete")) {
                         next = true;
                     } else {
-                        status = "Complete " + prereq.getName() + " to unlock.";
+                        status = "Complete <b>" + prereq.getName() + "</b> to unlock.";
                     }
                 } else {
-                    status = "Complete " + prereq.getName() + " to unlock.";
+                    status = "Complete <b>" + prereq.getName() + "</b> to unlock.";
                 }
             } else {
                 next = true;
+            }
+            sql = "SELECT s FROM QuizSession s WHERE s.userId = '" + userId + "' AND s.quizId = " + quiz.getQuizId();
+            q = em.createQuery(sql);
+            if (!q.getResultList().isEmpty()) {
+                session = (QuizSession) q.getSingleResult();
+                if (session.getStatus().equals("complete")) {
+                    next = false;
+                    status = "Completed on " + formatDateToString(session.getTimeCompleted(), "dd-MM-yyyy h:mm a");
+                }
             }
 
             Date dateToday = new Date();
@@ -121,6 +135,7 @@ public class QuizBean implements QuizBeanLocal {
                 status = (dateToday.before(dateOpen)) ? "Open in " + dateDifference(dateToday, dateOpen) + " more days" : "";
                 active = (dateOpen.before(dateToday) && dateToday.before(dateClose)) ? true : false;
             }
+
             QuizDetails quizDetails = new QuizDetails(quiz.getQuizId(), quiz.getName(), quiz.getDescr(),
                     quiz.getDifficultyLvl(), formatDateToString(dateOpen, "dd-MM-yyyy"), formatDateToString(dateClose, "dd-MM-yyyy"),
                     active, status);
@@ -140,10 +155,8 @@ public class QuizBean implements QuizBeanLocal {
     }
 
     public Boolean createQuizSession(String userId, Long quizId) {
-        Student student = em.find(Student.class, userId);
-        Quiz quiz = em.find(Quiz.class, quizId);
-
         Query q = em.createQuery("SELECT s FROM QuizSession s WHERE s.userId = '" + userId + "' AND s.quizId = " + quizId);
+        // New QuizSession
         if (q.getResultList().isEmpty()) {
             QuizSession session = new QuizSession();
             session.setUserId(userId);
@@ -190,21 +203,25 @@ public class QuizBean implements QuizBeanLocal {
         return questions;
     }
 
-    public List<QuizItemDetails> getProfileQuizItems(String userId, String moduleId) {
+    public Integer getQuizItemQty(String userId, String moduleId, String itemName) {
         Query q = em.createQuery("SELECT p FROM GameProfile p WHERE p.userId = '" + userId + "' AND p.moduleId = '" + moduleId + "'");
         GameProfile p = (GameProfile) q.getSingleResult();
-        List<QuizItemDetails> items = new ArrayList<QuizItemDetails>();
-        for(QuizItem i : p.getItems()){
-            QuizItemDetails item = new QuizItemDetails(i.getName(), i.getQty());
-            items.add(item);
-        }
-        return items;
+
+        q = em.createQuery("SELECT i FROM QuizItem i WHERE i.profile.profileId = " + p.getProfileId() + " AND i.name = '" + itemName + "'");
+        QuizItem item = (QuizItem) q.getSingleResult();
+
+        return item.getQty();
     }
 
-    public AnswerResultsDetails checkAnswer(Long questionId, String answer) {
+    public Integer getStreakCount(String userId, String moduleId) {
+        GameProfile profile = getGameProfile(userId, moduleId);
+        return profile.getStreak();
+    }
+
+    public AnswerResultsDetails checkAnswer(String userId, String moduleId, Long quizId, Long questionId, String answer) {
         Boolean isCorrect = false;
-        String status = "Wrong!";
-        String correctAns = "", msg2 = "";
+        String correctAns = "";
+        Integer pts = 0, streak = 0;
 
         String strQuery = "SELECT a FROM QuestionAnswer a "
                 + "WHERE a.question.questionId = '" + questionId + "'";
@@ -217,19 +234,187 @@ public class QuizBean implements QuizBeanLocal {
                 correctAns = a.getAnswer();
                 if (a.getAnswer().equals(answer)) {
                     isCorrect = true;
-                    status = "Correct!";
+                    Quiz quiz = em.find(Quiz.class, quizId);
+                    if (quiz.getDifficultyLvl().equals("beginner")) {
+                        pts = 2;
+                    } else if (quiz.getDifficultyLvl().equals("intermediate")) {
+                        pts = 4;
+                    } else if (quiz.getDifficultyLvl().equals("advanced")) {
+                        pts = 6;
+                    }
+                    streak = increaseStreakCount(userId, moduleId, true);
+                    updateExpPoints(userId, moduleId, pts);
+                    updateQuizSession(userId, quizId, questionId, true);
+                } else {
+                    streak = increaseStreakCount(userId, moduleId, false);
+                    updateQuizSession(userId, quizId, questionId, false);
                 }
             }
         }
 
-        AnswerResultsDetails content = new AnswerResultsDetails(isCorrect, status, correctAns, msg2);
+        AnswerResultsDetails content = new AnswerResultsDetails(isCorrect, correctAns, pts, streak);
         return content;
+    }
+
+    private void updateQuizSession(String userId, Long quizId, Long questionId, Boolean isCorrect) {
+        Query q = em.createQuery("SELECT s FROM SessionQuestion s WHERE s.userId = '" + userId + "' AND s.quizId = " + quizId);
+        SessionQuestion s = new SessionQuestion();
+
+        if (isCorrect) {
+            s.setUserId(userId);
+            s.setQuizId(quizId);
+            s.setQuestionId(questionId);
+            s.setIsCorrect(true);
+            em.persist(s);
+        } else {
+            s.setUserId(userId);
+            s.setQuizId(quizId);
+            s.setQuestionId(questionId);
+            s.setIsCorrect(false);
+            em.persist(s);
+        }
+    }
+
+    public List<QuizResults> getQuizResults(String userId, Long quizId) {
+        Query q = em.createQuery("SELECT s FROM SessionQuestion s WHERE s.userId = '" + userId + "' AND s.quizId = " + quizId);
+        List<SessionQuestion> list = q.getResultList();
+        List<QuizResults> results = new ArrayList<QuizResults>();
+
+        for (SessionQuestion s : list) {
+            Long questionId = s.getQuestionId();
+            Question question = em.find(Question.class, questionId);
+            String text = question.getQuestionText();
+            q = em.createQuery("SELECT a FROM QuestionAnswer a WHERE a.question.questionId = '" + questionId + "' AND a.correctAnswer = TRUE");
+            QuestionAnswer ans = (QuestionAnswer) q.getSingleResult();
+            String corrAns = ans.getAnswer();
+
+            QuizResults r = new QuizResults(text, corrAns, s.isIsCorrect());
+            results.add(r);
+        }
+        return results;
+    }
+
+    public void finishQuiz(String userId, String moduleId, String quizId) {
+        Query q = em.createQuery("SELECT s FROM QuizSession s WHERE s.userId = '" + userId + "' AND s.quizId = " + quizId);
+        QuizSession s = (QuizSession) q.getSingleResult();
+
+        Date date = new Date();
+        s.setTimeCompleted(date);
+        s.setStatus("complete");
+        em.persist(s);
+
+        Quiz quiz = em.find(Quiz.class, Long.valueOf(quizId));
+        String difficulty = quiz.getDifficultyLvl();
+        Boolean levelUp = false;
+
+        if (difficulty.equals("beginner")) {
+            updateExpPoints(userId, moduleId, 5);
+
+        } else if (difficulty.equals("intermediate")) {
+            updateExpPoints(userId, moduleId, 8);
+        } else {
+            updateExpPoints(userId, moduleId, 12);
+        }
+    }
+
+    public List<LeaderboardDetails> getLeaderboard(String moduleId) {
+        Query q = em.createQuery("SELECT l FROM Leaderboard l WHERE l.moduleId = '" + moduleId + "' ORDER BY l.points DESC");
+        List<Leaderboard> list = q.getResultList();
+        List<LeaderboardDetails> dataList = new ArrayList<LeaderboardDetails>();
+
+        for (Leaderboard l : list) {
+            String userId = l.getUserId();
+            Student s = em.find(Student.class, userId);
+            GameProfile p = getGameProfile(s.getUserId(), moduleId);
+
+            LeaderboardDetails d = new LeaderboardDetails(userId, p.getExpLevel(), p.getExpPoint());
+            dataList.add(d);
+        }
+
+        return dataList;
+    }
+
+    public QuizDetails getUnlockedQuiz(Long quizId) {
+        Quiz q = em.find(Quiz.class, quizId);
+        QuizDetails q2 = new QuizDetails(q.getQuizId(), q.getName());
+
+        return q2;
+    }
+
+    public QuizItemDetails getNewItem(String userId, String moduleId) {
+        //Min + (int)(Math.random() * ((Max - Min) + 1))
+        Integer randNum = 3 + (int) (Math.random() * 3);
+
+        GameProfile profile = getGameProfile(userId, moduleId);
+        String name = "";
+        QuizItemDetails item = new QuizItemDetails();
+
+        if (randNum == 3) {
+            name = "Retry";
+            item.setName(name);
+            item.setDescr("Use this item in Quiz Page to retry a completed Quiz.");
+        } else if (randNum == 2) {
+            name = "Fifty-Fifty";
+            item.setName(name);
+            item.setDescr("Use this item during Quiz to randomly eliminate two of the incorrect answer choices.");
+        } else {
+            name = "Get Help";
+            item.setName("GetHelp");
+            item.setDescr("Use this item during Quiz to get some hints.");
+        }
+
+        for (QuizItem i : profile.getItems()) {
+            if (i.getName().equals(name)) {
+                int qty = i.getQty();
+                i.setQty(qty + 1);
+                em.persist(i);
+            }
+        }
+
+        return item;
+    }
+
+    public Boolean enoughItem(String userId, String moduleId, String itemName) {
+        GameProfile profile = getGameProfile(userId, moduleId);
+
+        for (QuizItem i : profile.getItems()) {
+            if (i.getName().equals(itemName) && i.getQty() > 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public String useHints(String userId, String moduleId, Long questionId) {
+        Question q = em.find(Question.class, questionId);
+        GameProfile profile = getGameProfile(userId, moduleId);
+        String hint = "";
+
+        try {
+            for (QuizItem i : profile.getItems()) {
+
+                if (i.getName().equals("GetHelp")) {
+                    int qty = i.getQty();
+                    if (qty > 0) {
+                        i.setQty(qty - 1);
+                        hint = q.getAnswerHint();
+                    } else {
+                        hint = "false";
+                    }
+                }
+            }
+
+            return hint;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return hint;
+        }
     }
 
     public Boolean createQuizItems(String userId, String moduleId, String name, Integer qty) {
         try {
-            Query q = em.createQuery("SELECT p FROM GameProfile p WHERE p.userId = '" + userId + "' AND p.moduleId = '" + moduleId + "'");
-            GameProfile profile = (GameProfile) q.getSingleResult();
+            GameProfile profile = getGameProfile(userId, moduleId);
 
             QuizItem item = new QuizItem();
             item.setName(name);
@@ -246,13 +431,45 @@ public class QuizBean implements QuizBeanLocal {
         }
     }
 
+    public GameProfile getGameProfile(String userId, String moduleId) {
+        Query q = em.createQuery("SELECT p FROM GameProfile p WHERE p.userId = '" + userId + "' AND p.moduleId = '" + moduleId + "'");
+        return (GameProfile) q.getSingleResult();
+    }
+
+    public GameProfileDetails getProfileDetails(String userId, String moduleId) {
+        Query q = em.createQuery("SELECT p FROM GameProfile p WHERE p.userId = '" + userId + "' AND p.moduleId = '" + moduleId + "'");
+        GameProfile p = (GameProfile) q.getSingleResult();
+        GameProfileDetails profile = new GameProfileDetails(p.getUserId(), p.getModuleId(), p.getExpPoint(), p.getExpLevel(), p.getStreak());
+
+        return profile;
+    }
+
+    public Integer ptsToNextLvl(String userId, String moduleId) {
+        GameProfile p = getGameProfile(userId, moduleId);
+        Integer pts = p.getExpPoint();
+
+        if (pts < 50) {
+            return 50 - pts;
+        } else if (pts < 100) {
+            return 100 - pts;
+        } else if (pts < 150) {
+            return 150 - pts;
+        } else if (pts < 250) {
+            return 250 - pts;
+        } else {
+            return 0;
+
+        }
+    }
+
     private Boolean quizIsActive(Long quizId) {
         Quiz quiz = em.find(Quiz.class, quizId);
         Date dateToday = new Date();
         Date dateOpen = quiz.getDateOpen();
         Date dateClose = quiz.getDateClose();
 
-        return (dateOpen.before(dateToday) && dateToday.before(dateClose)) ? true : false;
+        return (dateOpen.before(dateToday)
+                && dateToday.before(dateClose)) ? true : false;
     }
 
     private Integer dateDifference(Date d1, Date d2) {
@@ -267,6 +484,56 @@ public class QuizBean implements QuizBeanLocal {
             return new SimpleDateFormat(dateFormat).format(date);
         } else {
             return "";
+        }
+    }
+
+    private Integer increaseStreakCount(String userId, String moduleId, Boolean increase) {
+        GameProfile profile = getGameProfile(userId, moduleId);
+        int count = profile.getStreak();
+        if (increase) {
+            count += 1;
+            profile.setStreak(count);
+        } else {
+            count = 0;
+            profile.setStreak(0);
+        }
+        return count;
+    }
+
+    private Boolean updateExpPoints(String userId, String moduleId, Integer pts) {
+        try {
+            GameProfile profile = getGameProfile(userId, moduleId);
+            String level1 = profile.getExpLevel(), level2 = "";
+
+            int p1 = profile.getExpPoint();
+            int p2 = p1 + pts;
+            profile.setExpPoint(p2);
+            level2 = getLevelStatus(p2);
+            profile.setExpLevel(level2);
+            em.persist(profile);
+
+            if (!level1.equals(level2)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private String getLevelStatus(Integer pts) {
+        if (pts < 50) {
+            return "novice";
+        } else if (pts < 100) {
+            return "apprentice";
+        } else if (pts < 150) {
+            return "entusiast";
+        } else if (pts < 250) {
+            return "expert";
+        } else {
+            return "guru";
         }
     }
 }

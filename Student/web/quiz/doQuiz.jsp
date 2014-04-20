@@ -1,4 +1,4 @@
-<%@page import="java.util.ArrayList, helper.QuestionDetails, helper.QuizItemDetails" %>
+<%@page import="java.util.ArrayList, helper.QuestionDetails" %>
 
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
@@ -12,6 +12,13 @@
         <%@include file="/WEB-INF/jspf/stylesheets.jspf" %>
         <link rel="stylesheet" type="text/css" href="/Student/assets/plugins/select2/select2_metro.css" />
         <link rel="stylesheet" type="text/css" href="/Student/assets/plugins/chosen-bootstrap/chosen/chosen.css" />
+
+        <style>
+            .nohover:hover{
+                border-color: #555555 !important;
+                cursor: default;
+            }
+        </style>
     </head>
     <!-- END HEAD -->
     <!-- BEGIN BODY -->
@@ -40,7 +47,7 @@
                                     <i class="icon-angle-right"></i>
                                 </li>
                                 <li>
-                                    <a href="#">Dashboard</a>
+                                    <a href="/Student/dashboard.jsp">Dashboard</a>
                                     <i class="icon-angle-right"></i>
                                 </li>
                                 <li>
@@ -58,37 +65,19 @@
 
                     <!-- BEGIN PAGE CONTENT-->
                     <div class="row-fluid">
-                        <!--Streak Count-->
-                        <div class="span4 responsive">
-                            <div class="dashboard-stat red">
-                                <div class="visual">
-                                    <i class="icon-fire"></i>
-                                </div>
-                                <div class="details">
-                                    <div class="number">
-                                        0
-                                    </div>
-                                    <div class="desc">                           
-                                        Streak Count
-                                    </div>
-                                </div>          
-                            </div>
-                        </div>
-                        <!--End of Streak Count-->
-                    </div>
-
-                    <div class="row-fluid">
                         <div class="span12">
                             <%
                                 ArrayList quests = (ArrayList) request.getAttribute("questions");
                                 int questNum = quests.size(), j;
-                                
-//                                ArrayList items = (ArrayList) request.getAttribute("items");
+
                             %>
                             <div class="portlet box blue" id="form_wizard_1">
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <span class="step-title">Question 1 of <%=questNum%></span>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="btn red tooltips" data-placement="bottom" data-original-title="Correct Streak"><i class="icon-fire"></i> <span id="streakCount"><%=request.getAttribute("streak")%></span></div>
                                     </div>
                                 </div>
                                 <div class="portlet-body form">
@@ -114,30 +103,22 @@
                                             <div class="bar"></div>
                                         </div>
                                         <div class="tab-content">
-                                            <!--                                            <div class="alert alert-error hide">
-                                                                                            <button class="close" data-dismiss="alert"></button>
-                                                                                            Error
-                                                                                        </div>
-                                                                                        <div class="alert alert-success hide">
-                                                                                            <button class="close" data-dismiss="alert"></button>
-                                                                                            Success
-                                                                                        </div>-->
                                             <!--loop start-->
-
                                             <%
                                                 j = 1;
                                                 for (Object o : quests) {
                                                     QuestionDetails quest = (QuestionDetails) o;
                                             %>
                                             <div class="tab-pane <%=(j == 1) ? "active" : ""%>" id="tab<%=j%>">
-                                                <div class="row-fluid margin-bottom-25">
+                                                <div class="row-fluid margin-bottom-5">
                                                     <div class="span12" style="font-size:18px;">
                                                         <!--Question Text-->
                                                         <%=quest.getQuestionText()%>
                                                     </div>
+                                                </div>
+                                                <div class="row-fluid margin-bottom-10">
                                                     <div class="span12" id="hint<%=j%>">
                                                         <!--Question Hint-->
-                                                        <%=(quest.getAnswerHint() == null) ? "" : quest.getAnswerHint()%>
                                                     </div>
                                                 </div>
 
@@ -182,37 +163,51 @@
                                                                 </div>
                                                             </div>
                                                             <div class="span4">
+
                                                                 <!--Fun Quiz Items-->
-                                                                <a href="#" class="span6 responsive more">
-                                                                    <div class="dashboard-stat yellow">
-                                                                        <div class="visual">
+                                                                <div class="tiles">
+                                                                    <%
+                                                                        String ahelpClass = "tile bg-yellow hint";
+                                                                        String afiftyClass = "tile bg-yellow hint";
+                                                                        String itemHelp = request.getAttribute("itemHelp").toString();
+                                                                        String itemFifty = request.getAttribute("itemFifty").toString();
+                                                                        if (itemHelp.equals("0")) {
+                                                                            ahelpClass = "tile bg-grey hint nohover";
+                                                                        }
+                                                                        if (itemFifty.equals("0")) {
+                                                                            afiftyClass = "tile bg-grey hint nohover";
+                                                                        }
+                                                                    %>
+                                                                    <a href="#" id="<%=quest.getQuestionId() + " " + j%>" class="<%=ahelpClass%>">
+                                                                        <div class="tile-body">
                                                                             <i class="icon-info-sign"></i>
                                                                         </div>
-                                                                        <div class="details">
-                                                                            <div class="number">
-                                                                                <%--<%=%>--%>
-                                                                            </div>
-                                                                            <div class="desc">                           
+                                                                        <div class="tile-object">
+                                                                            <div class="name">
                                                                                 Get Help
                                                                             </div>
+                                                                            <div class="number" id="itemHelp">                           
+                                                                                <%=request.getAttribute("itemHelp")%>
+                                                                            </div>
                                                                         </div>          
-                                                                    </div>
-                                                                </a>
-                                                                <a href="#" class="span6 responsive more">
-                                                                    <div class="dashboard-stat yellow">
-                                                                        <div class="visual">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="tiles">
+                                                                    <a href="#" id="<%=quest.getQuestionId() + " " + j%> " class="<%=afiftyClass%>">
+                                                                        <div class="tile-body">
                                                                             <i class="icon-random"></i>
                                                                         </div>
-                                                                        <div class="details">
-                                                                            <div class="number">
-                                                                                <%--<%=%>--%>
-                                                                            </div>
-                                                                            <div class="desc">                           
+                                                                        <div class="tile-object">
+                                                                            <div class="name">                           
                                                                                 Fifty-Fifty
                                                                             </div>
+                                                                            <div class="number" id="itemFifty">
+                                                                                <%=request.getAttribute("itemFifty")%>
+                                                                            </div>
+
                                                                         </div>          
-                                                                    </div>
-                                                                </a>
+                                                                    </a>
+                                                                </div>
                                                                 <!--End of Fun Quiz Items-->
                                                             </div>
                                                         </div>
@@ -238,7 +233,7 @@
                                             <a href="javascript:;" class="btn blue button-next">
                                                 Next <i class="m-icon-swapright m-icon-white"></i>
                                             </a>
-                                            <a href="javascript:;" class="btn green button-finish" style="display:none;">
+                                            <a href="/Student/QuizServlet?action=finishQuiz" class="btn green button-finish" style="display:none;">
                                                 Finish <i class="m-icon-swapright m-icon-white"></i>
                                             </a>
                                         </div>
@@ -286,36 +281,75 @@
 
                         posting.done(function(data) {
                             var isCorrect = data.isCorrect;
-                            var status = data.status;
                             var correctAns = data.correctAns;
-                            var msg = data.msg;
+                            var pts = data.pts;
 
-                            var color = '', display = '';
+                            var status = '', color = '', display = '';
                             if (isCorrect) {
+                                status = '<h2>Correct! =)</h2>';
                                 color = '#1d943b';
-                                display = '<h4>X' + ' points for you!</h4><br>'
+                                display = '<h4>' + pts + ' points for you!</h4><br>'
                             }
                             else {
+                                status = '<h2>Wrong!</h2><h3>You lost your Correct Streak =(</h3>';
                                 color = '#bb2413';
                                 display = '<h4>"' + correctAns + '"</h4> was correct.<br>';
                             }
 
-                            display += 'You\'re in ' + 'X' + ' position.';
                             var content = '';
                             content += '<div class="span12 text-center margin-bottom-25" style="color: #FFFFFF; background-color: ' + color + '">\
-                                     <h2>' + status + '</h2><br>\
+                                     ' + status + '<br>\
                                      <p>' + display + '<p>';
                             content += '<div>';
 
                             var id = 'results' + form.attr('name');
                             $('#' + id).empty().append(content);
+                            $('#streakCount').html(data.streak);
                         });
                     });
                 });
 
-                function getHint() {
+                $('a.hint').click(function() {
+                    var values = this.id.split(" ");
+                    var qId = values[0];
+                    var qId2 = values[1];
 
-                }
+                    //disable
+                    $(this).removeClass('bg-yellow').addClass('bg-grey nohover');
+
+                    //TODO: need to check if enough items
+                    var getHintsUrl = "/Student/QuizServlet?action=useHints&qId=" + qId;
+                    $.get(getHintsUrl, function(data) {
+                        if (data === '') {
+                            return false;
+                        } else
+                        {
+                            var content = '<div class="alert alert-success"><i class="icon-info-sign"></i> ' + data + '</div>';
+                            $('#hint' + qId2).html(content);
+
+                            // get new item qty
+                            var getItemQtyUrl = "/Student/QuizServlet?action=getItemQty&itemName=GetHelp";
+                            $.get(getItemQtyUrl, function(data) {
+                                $('#itemHelp').html(data);
+                            });
+
+                            return false;
+                        }
+                    });
+
+
+                });
+
+                $('.fifty').click(function() {
+                    var values = this.id.split(" ");
+                    var qId = values[0];
+                    var qId2 = values[1];
+
+                    //TODO: need to check if enough items
+                    var useFiftyUrl = "/Student/QuizServlet?action=useFifty&qId=" + qId;
+
+                    return false;
+                });
             });
         </script>
         <!-- END JAVASCRIPTS -->

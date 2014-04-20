@@ -19,8 +19,7 @@ import session.QuestionBeanLocal;
  * @author Chih Yong
  */
 @WebServlet(name = "QuestionServlet", urlPatterns = {"/QuestionServlet", "/QuestionServlet?*"})
-public class QuestionServlet extends HttpServlet
-{
+public class QuestionServlet extends HttpServlet {
 
     @EJB
     QuestionBeanLocal questionBean;
@@ -35,24 +34,23 @@ public class QuestionServlet extends HttpServlet
                 String quizId = request.getSession().getAttribute("quizId").toString();
                 String questName = request.getParameter("questName");
                 String questText = request.getParameter("questText");
+                String answerHint = request.getParameter("answerHint");
                 String option1 = request.getParameter("option1");
                 String option2 = request.getParameter("option2");
                 String option3 = request.getParameter("option3");
                 String option4 = request.getParameter("option4");
                 Integer answer = Integer.parseInt(request.getParameter("answer"));
-                
-                Boolean succeed = questionBean.saveMultiChoice(quizId, questName, questText, option1, option2, option3, option4, answer);
+
+                Boolean succeed = questionBean.saveMultiChoice(quizId, questName, questText, answerHint, option1, option2, option3, option4, answer);
 
                 // Continue to quiz settings or add new question
                 if (request.getParameter("next").equals("Next: Quiz settings")) {
                     response.sendRedirect("quiz/quizInfo.jsp");
-                }
-                else {
+                } else {
                     response.sendRedirect("quiz/newMultiChoice.jsp");
                 }
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

@@ -20,7 +20,8 @@ public class GameProfile implements Serializable {
     private String userId;
     private String moduleId;
     private Integer expPoint;
-    private Integer expLevel;
+    private String expLevel;
+    private Integer streak;
 
     @OneToMany(mappedBy = "profile")
     private List<QuizItem> items;
@@ -64,12 +65,20 @@ public class GameProfile implements Serializable {
         this.expPoint = expPoint;
     }
 
-    public Integer getExpLevel() {
+    public String getExpLevel() {
         return expLevel;
     }
 
-    public void setExpLevel(Integer expLevel) {
+    public void setExpLevel(String expLevel) {
         this.expLevel = expLevel;
+    }
+
+    public Integer getStreak() {
+        return streak;
+    }
+
+    public void setStreak(Integer streak) {
+        this.streak = streak;
     }
 
     public List<QuizItem> getItems() {
