@@ -1,6 +1,8 @@
 package session;
 
 import entity.Avatar;
+import entity.GameProfile;
+import entity.Leaderboard;
 import entity.Module;
 import entity.Quest;
 import entity.Skill;
@@ -17,6 +19,8 @@ import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.LocalBean;
 import javax.ejb.Startup;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Singleton
 @LocalBean
@@ -34,12 +38,16 @@ public class StartupBean {
     @EJB
     private QuestionBeanLocal questBean;
 
+    @PersistenceContext
+    private EntityManager em;
+
     @PostConstruct
     private void init() {
         try {
             createInstructors();
             createStudents();
             createModules();
+            createGameProfile();
             createAvatar();
             createQuests();
             createQuizzes();
@@ -65,6 +73,15 @@ public class StartupBean {
                 "male", "School of Computing", "Information Systems (Hons)", "", 2010);
         acctBean.createStudent("gstwchihyong", "Wong Chih Yong", "wchihyong@gmail.com",
                 "male", "School of Computing", "Information Systems (Hons)", "", 2010);
+        acctBean.createStudent("micheal", "Micheal Chang", "chihyong@nus.edu.sg",
+                "male", "School of Computing", "Information Systems (Hons)", "", 2010);
+        acctBean.createStudent("kelvin", "Kelvin Lee", "chihyong@nus.edu.sg",
+                "male", "School of Computing", "Information Systems (Hons)", "", 2010);
+        acctBean.createStudent("adam", "Adam Tan", "chihyong@nus.edu.sg",
+                "male", "School of Computing", "Information Systems (Hons)", "", 2010);
+        acctBean.createStudent("vincent", "Vincent Liew", "chihyong@nus.edu.sg",
+                "male", "School of Computing", "Information Systems (Hons)", "", 2010);
+
         acctBean.createStudent("Philson", "PHILSON NAH", "philson@nus.edu.sg",
                 "male", "School of Computing", "Information Systems (Hons)", "", 2010);
         System.out.println("Students [a0075128, gstwchihyong, Philson] created.");
@@ -75,6 +92,14 @@ public class StartupBean {
         //String moduleId, String moduleCode, String moduleName, String moduleCreator, String userId        
         moduleBean.saveStudentModule("a7f180e1-5361-4426-a6fa-5d90404ef2b1",
                 "IS1112", "E-BUSINESS ESSENTIALS", "gstwchihyong", "gstwchihyong");
+        moduleBean.saveStudentModule("a7f180e1-5361-4426-a6fa-5d90404ef2b1",
+                "IS1112", "E-BUSINESS ESSENTIALS", "gstwchihyong", "micheal");
+        moduleBean.saveStudentModule("a7f180e1-5361-4426-a6fa-5d90404ef2b1",
+                "IS1112", "E-BUSINESS ESSENTIALS", "gstwchihyong", "kelvin");
+        moduleBean.saveStudentModule("a7f180e1-5361-4426-a6fa-5d90404ef2b1",
+                "IS1112", "E-BUSINESS ESSENTIALS", "gstwchihyong", "adam");
+        moduleBean.saveStudentModule("a7f180e1-5361-4426-a6fa-5d90404ef2b1",
+                "IS1112", "E-BUSINESS ESSENTIALS", "gstwchihyong", "vincent");
 
         //Create Modules for PHILSON
         //IS1112
@@ -90,6 +115,71 @@ public class StartupBean {
         moduleBean.saveStudentModule("IS3260",
                 "IS3260", "GAMIFICATION", "Philson", "Philson");
         System.out.println("Modules [IS1112, IS1112, IS4240, IS4224, IS3260] created.");
+    }
+
+    private void createGameProfile() {
+        Date date = new Date();
+
+        // update Game Profiles created in saveStudentModule method
+        GameProfile profile1 = quizbean.getGameProfile("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
+        Leaderboard l1 = new Leaderboard();
+        profile1.setExpPoint(45);
+        profile1.setExpLevel("novice");
+        profile1.setStreak(3);
+        em.persist(profile1);
+        l1.setUserId("gstwchihyong");
+        l1.setModuleId("a7f180e1-5361-4426-a6fa-5d90404ef2b1");
+        l1.setPoints(45);
+        l1.setTimeCreated(date);
+        em.persist(l1);
+
+        GameProfile profile2 = quizbean.getGameProfile("micheal", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
+        Leaderboard l2 = new Leaderboard();
+        profile2.setExpPoint(60);
+        profile2.setExpLevel("novice");
+        profile2.setStreak(3);
+        em.persist(profile2);
+        l2.setUserId("micheal");
+        l2.setModuleId("a7f180e1-5361-4426-a6fa-5d90404ef2b1");
+        l2.setPoints(60);
+        l2.setTimeCreated(date);
+        em.persist(l2);
+
+        GameProfile profile3 = quizbean.getGameProfile("kelvin", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
+        Leaderboard l3 = new Leaderboard();
+        profile3.setExpPoint(30);
+        profile3.setExpLevel("novice");
+        profile3.setStreak(3);
+        em.persist(profile3);
+        l3.setUserId("kelvin");
+        l3.setModuleId("a7f180e1-5361-4426-a6fa-5d90404ef2b1");
+        l3.setPoints(30);
+        l3.setTimeCreated(date);
+        em.persist(l3);
+
+        GameProfile profile4 = quizbean.getGameProfile("adam", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
+        Leaderboard l4 = new Leaderboard();
+        profile4.setExpPoint(28);
+        profile4.setExpLevel("novice");
+        profile4.setStreak(3);
+        em.persist(profile4);
+        l4.setUserId("adam");
+        l4.setModuleId("a7f180e1-5361-4426-a6fa-5d90404ef2b1");
+        l4.setPoints(28);
+        l4.setTimeCreated(date);
+        em.persist(l4);
+
+        GameProfile profile5 = quizbean.getGameProfile("vincent", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
+        Leaderboard l5 = new Leaderboard();
+        profile5.setExpPoint(40);
+        profile5.setExpLevel("novice");
+        profile5.setStreak(3);
+        em.persist(profile5);
+        l5.setUserId("vincent");
+        l5.setModuleId("a7f180e1-5361-4426-a6fa-5d90404ef2b1");
+        l5.setPoints(40);
+        l5.setTimeCreated(date);
+        em.persist(l5);
     }
 
     private void createQuests() throws Exception {
@@ -147,8 +237,8 @@ public class StartupBean {
         Long quiz2 = quizbean.saveNewQuiz("Pre-class Quiz Week 2", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
 
         //Long quizId, String descr, String difficultyLvl, Date dateOpen, Date dateClose
-        quizbean.saveQuizInfo(quiz1, "Pre-class Quiz Week 1", "Beginner", convertToDateObj("16/04/2014"), convertToDateObj("23/04/2014"), null);
-        quizbean.saveQuizInfo(quiz2, "Pre-class Quiz Week 2", "Beginner", convertToDateObj("23/04/2014"), convertToDateObj("30/04/2014"), null);
+        quizbean.saveQuizInfo(quiz1, "Pre-class Quiz Week 1", "beginner", convertToDateObj("16/04/2014"), convertToDateObj("23/04/2014"), null);
+        quizbean.saveQuizInfo(quiz2, "Pre-class Quiz Week 2", "beginner", convertToDateObj("23/04/2014"), convertToDateObj("30/04/2014"), null);
 
         /*String quizId, String questName, String questText,
          String option1, String option2, String option3, String option4, Integer answer*/
@@ -161,7 +251,7 @@ public class StartupBean {
         createQuestion(quiz2.toString(), "Third Question", "Which is correct?", "", "Incorrect", "Incorrect", "Correct", "Incorrect", 2);
 
         Long quiz3 = quizbean.saveNewQuiz("Week 1 Quiz Exercise", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
-        quizbean.saveQuizInfo(quiz3, "Week 1 Quiz Exercise", "Intermediate", convertToDateObj("16/04/2014"), convertToDateObj("23/04/2014"), quiz1);
+        quizbean.saveQuizInfo(quiz3, "Week 1 Quiz Exercise", "intermediate", convertToDateObj("16/04/2014"), convertToDateObj("23/04/2014"), quiz1);
         createQuestion(quiz3.toString(), "First Question", "Which is correct?", "", "Correct", "Incorrect", "Incorrect", "Incorrect", 0);
         createQuestion(quiz3.toString(), "Second Question", "Which is correct?", "", "Incorrect", "Correct", "Incorrect", "Incorrect", 1);
         createQuestion(quiz3.toString(), "Third Question", "Which is correct?", "", "Incorrect", "Incorrect", "Correct", "Incorrect", 2);
@@ -180,7 +270,7 @@ public class StartupBean {
 
     private void createQuizItems() {
         //String userId, String moduleId, String name, Integer qty
-        quizbean.createQuizItems("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1", "GetHelp", 10);
+        quizbean.createQuizItems("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1", "GetHelp", 20);
         quizbean.createQuizItems("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1", "Fifty-Fifty", 10);
         quizbean.createQuizItems("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1", "Retry", 10);
     }

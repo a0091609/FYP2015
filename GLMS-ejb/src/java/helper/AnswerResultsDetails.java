@@ -7,13 +7,21 @@ public class AnswerResultsDetails implements Serializable {
     private Boolean isCorrect;
     private String status;
     private String correctAns;
-    private String msg;
+    private Integer pts;
+    private Integer streak;
 
-    public AnswerResultsDetails(Boolean isCorrect, String status, String correctAns, String msg) {
+    public AnswerResultsDetails(Boolean isCorrect, String correctAns, Integer pts, Integer streak) {
+        this.isCorrect = isCorrect;
+        this.correctAns = correctAns;
+        this.pts = pts;
+        this.streak = streak;
+    }
+
+    public AnswerResultsDetails(Boolean isCorrect, String status, String correctAns, Integer pts) {
         this.isCorrect = isCorrect;
         this.status = status;
         this.correctAns = correctAns;
-        this.msg = msg;
+        this.pts = pts;
     }
 
     public Boolean isIsCorrect() {
@@ -40,12 +48,20 @@ public class AnswerResultsDetails implements Serializable {
         this.correctAns = correctAns;
     }
 
-    public String getMsg() {
-        return msg;
+    public Integer getPts() {
+        return pts;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setPts(Integer pts) {
+        this.pts = pts;
+    }
+
+    public Integer getStreak() {
+        return streak;
+    }
+
+    public void setStreak(Integer streak) {
+        this.streak = streak;
     }
 
 }

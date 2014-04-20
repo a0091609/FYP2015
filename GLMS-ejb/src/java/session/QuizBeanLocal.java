@@ -1,6 +1,12 @@
 package session;
 
+import entity.GameProfile;
 import helper.AnswerResultsDetails;
+import helper.GameProfileDetails;
+import helper.LeaderboardDetails;
+import helper.QuizDetails;
+import helper.QuizItemDetails;
+import helper.QuizResults;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
@@ -24,11 +30,30 @@ public interface QuizBeanLocal {
 
     public Integer getQuizItemQty(String userId, String moduleId, String itemName);
 
-    public AnswerResultsDetails checkAnswer(String userId, String moduleId, Long questionId, String answer);
+    public Integer getStreakCount(String userId, String moduleId);
+
+    public AnswerResultsDetails checkAnswer(String userId, String moduleId, Long quizId, Long questionId, String answer);
+
+    public void finishQuiz(String userId, String moduleId, String quizId);
+
+    public List<QuizResults> getQuizResults(String userId, Long quizId);
+
+    public List<LeaderboardDetails> getLeaderboard(String moduleId);
+    
+    public QuizDetails getUnlockedQuiz(Long quizId);
+    
+    public QuizItemDetails getNewItem(String userId, String module);
+
+    public GameProfile getGameProfile(String userId, String moduleId);
+
+    public GameProfileDetails getProfileDetails(String userId, String moduleId);
+
+    public Integer ptsToNextLvl(String userId, String moduleId);
 
     public Boolean enoughItem(String userId, String moduleId, String itemName);
 
     public String useHints(String userId, String moduleId, Long questionId);
 
     public Boolean createQuizItems(String userId, String moduleId, String name, Integer qty);
+
 }

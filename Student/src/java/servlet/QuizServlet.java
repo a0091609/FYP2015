@@ -1,6 +1,7 @@
 package servlet;
 
 import com.google.gson.Gson;
+import entity.GameProfile;
 import helper.QuestionDetails;
 import helper.QuizDetails;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import session.ModuleBeanLocal;
 import session.QuestionBeanLocal;
 import session.QuizBeanLocal;
 
@@ -23,6 +25,8 @@ public class QuizServlet extends HttpServlet {
     private QuizBeanLocal quizBean;
     @EJB
     private QuestionBeanLocal qBean;
+    @EJB
+    private ModuleBeanLocal mBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -62,10 +66,13 @@ public class QuizServlet extends HttpServlet {
                     request.getSession().setAttribute("quizId", quizId);
                     //create quiz session
                     quizBean.createQuizSession(userId, Long.valueOf(quizId));
+                    
+                    GameProfile p = quizBean.getGameProfile(userId, moduleId);
+                    request.getSession().setAttribute("initialLvl", p.getExpLevel());
 
                     List<QuestionDetails> questions = quizBean.getQuizQuestions(Long.valueOf(quizId));
-//                    List<QuizItemDetails> items = quizBean.getProfileQuizItems(userId, moduleId);
                     request.setAttribute("questions", questions);
+                    request.setAttribute("streak", quizBean.getStreakCount(userId, moduleId));
                     request.setAttribute("itemHelp", quizBean.getQuizItemQty(userId, moduleId, "GetHelp"));
                     request.setAttribute("itemFifty", quizBean.getQuizItemQty(userId, moduleId, "Fifty-Fifty"));
                     request.setAttribute("itemRetry", quizBean.getQuizItemQty(userId, moduleId, "Retry"));
@@ -77,13 +84,14 @@ public class QuizServlet extends HttpServlet {
             } else if (action.equals("checkAnswer")) {
                 String userId = request.getSession().getAttribute("userId").toString();
                 String moduleId = request.getSession().getAttribute("moduleId").toString();
+                String quizId = request.getSession().getAttribute("quizId").toString();
                 String questId = request.getParameter("questId").toString();
                 String answer = request.getParameter("option").toString();
 
                 response.setContentType("application/json;charset=utf-8");
                 Gson gson = new Gson();
                 PrintWriter pw = response.getWriter();
-                pw.print(gson.toJson(quizBean.checkAnswer(userId, moduleId, Long.valueOf(questId), answer)));
+                pw.print(gson.toJson(quizBean.checkAnswer(userId, moduleId, Long.valueOf(quizId), Long.valueOf(questId), answer)));
                 pw.close();
             } else if (action.equals("useHints")) {
                 String qId = request.getParameter("qId").toString();
@@ -111,6 +119,22 @@ public class QuizServlet extends HttpServlet {
                 PrintWriter pw = response.getWriter();
                 pw.print(gson.toJson(quizBean.getQuizItemQty(userId, moduleId, itemName)));
                 pw.close();
+            } else if (action.equals("finishQuiz")) {
+                String userId = request.getSession().getAttribute("userId").toString();
+                String moduleId = request.getSession().getAttribute("moduleId").toString();
+                String quizId = request.getSession().getAttribute("quizId").toString();
+                String initialLvl = request.getSession().getAttribute("initialLvl").toString();
+
+                quizBean.finishQuiz(userId, moduleId, quizId);
+                request.setAttribute("results", quizBean.getQuizResults(userId, Long.valueOf(quizId)));
+                request.setAttribute("profile", quizBean.getProfileDetails(userId, moduleId));
+                request.setAttribute("initialLvl", initialLvl);
+                request.setAttribute("ptsToNext", quizBean.ptsToNextLvl(userId, moduleId));
+                //request.setAttribute("leaderboard", quizBean.getLeaderboard(moduleId));
+                request.setAttribute("unlockedQuiz", quizBean.getUnlockedQuiz(Long.valueOf(quizId)));
+                request.setAttribute("newItem", quizBean.getNewItem(userId, moduleId));
+
+                request.getRequestDispatcher("quiz/results.jsp").forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();

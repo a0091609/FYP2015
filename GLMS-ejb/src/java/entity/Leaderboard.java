@@ -16,7 +16,7 @@ public class Leaderboard implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long leaderboardId;
-    private Long profileId;
+    private String userId;
     private String moduleId;
     private Integer points;
     @Temporal(TemporalType.TIMESTAMP)
@@ -30,12 +30,12 @@ public class Leaderboard implements Serializable {
         this.leaderboardId = leaderboardId;
     }
 
-    public Long getProfileId() {
-        return profileId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setProfileId(Long profileId) {
-        this.profileId = profileId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getModuleId() {

@@ -12,7 +12,6 @@
         <%@include file="/WEB-INF/jspf/stylesheets.jspf" %>
         <link rel="stylesheet" type="text/css" href="assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.css"/>
         <link href="assets/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css"/>
-
         <link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2_metro.css" />
         <link rel="stylesheet" href="assets/plugins/data-tables/DT_bootstrap.css" />
     </head>

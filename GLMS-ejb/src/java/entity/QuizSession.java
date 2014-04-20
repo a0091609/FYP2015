@@ -23,6 +23,7 @@ public class QuizSession implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeCompleted;
     private String status;      //complete or incomplete
+    private String studentFeedback;
 
     @ManyToOne
     @PrimaryKeyJoinColumn(name = "USERID", referencedColumnName = "USERID")
@@ -69,6 +70,14 @@ public class QuizSession implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getStudentFeedback() {
+        return studentFeedback;
+    }
+
+    public void setStudentFeedback(String studentFeedback) {
+        this.studentFeedback = studentFeedback;
     }
 
     public Student getStudent() {

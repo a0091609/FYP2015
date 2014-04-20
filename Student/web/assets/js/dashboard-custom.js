@@ -15,7 +15,7 @@ function dashboardInit(token) {
             createLoginSession(userId, token).done(function(data) {
                 setTimeout(function() {
                     displayModules();
-                }, 3000);
+                }, 1500);
             });
         });
     });

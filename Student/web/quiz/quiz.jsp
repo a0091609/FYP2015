@@ -102,28 +102,6 @@
                                                     %>
                                                 </tbody>
                                             </table>
-                                            <div id="newQuiz-form" class="modal hide fade" tabindex="-1" data-width="760">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                    <h3>New Quiz</h3>
-                                                </div>
-                                                <form action="QuizServlet?action=saveNewQuiz" method="post" id="quizForm">
-                                                    <div class="modal-body">
-                                                        <div class="scroller" style="height:200px" data-always-visible="1" data-rail-visible1="1">
-                                                            <div class="row-fluid">
-                                                                <div class="span12 text-center">
-                                                                    <h4>Let's give the quiz a name:</h4>
-                                                                    <input type="text" name="quizName" required>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" data-dismiss="modal" class="btn">Close</button>
-                                                        <input type="submit" value="Go" class="btn blue">
-                                                    </div>
-                                                </form>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

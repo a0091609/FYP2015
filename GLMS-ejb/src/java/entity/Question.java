@@ -18,8 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Question implements Serializable
-{
+public class Question implements Serializable {
     /* Fields to be added: category */
 
     private static final long serialVersionUID = 1L;
