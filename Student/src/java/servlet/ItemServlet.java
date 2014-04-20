@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package servlet;
 
 import entity.Avatar;
@@ -10,6 +11,7 @@ import entity.Module;
 import entity.Quest;
 import entity.Skill;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -26,13 +28,12 @@ import session.QuestBeanLocal;
  *
  * @author Philson
  */
-@WebServlet(name = "Quests", urlPatterns =
+@WebServlet(name = "ItemServlet", urlPatterns =
 {
-    "/Quests", "/Quests?*"
+    "/Items", "/Items?*"
 })
-public class QuestServlet extends HttpServlet
+public class ItemServlet extends HttpServlet
 {
-
     //Global Variables
     private HttpServletRequest request;
     private HttpServletResponse response;
@@ -46,12 +47,9 @@ public class QuestServlet extends HttpServlet
     ModuleBeanLocal moduleBean;
 
     //Functionalities needed:        
-    //  1. Retrieve all Quests for a module             [DONE!]
-    //  2. Retrieve all Quests submitted by Avatar      [DONE!]
-    //  3. Retrieve all Keys owned by Avatar            [DONE!]
-    //  4. Retrieve all details for partcular Quest     [DONE!]
-    //  5. Submit a quest and update rewards            [DONE!]
-    //  6. Notify user of their accomplishment          [DONE!]
+    //  1. Retrieve all Items for a module             [Not Done]
+    //  2. Retrieve all the CurrentBalance of Avatar   [Not Done]
+    //  3. Purchase a Key for Avatar                   [Not Done]
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
