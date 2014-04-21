@@ -6,15 +6,17 @@ public class LeaderboardDetails implements Serializable {
 
     private String userId;
     private String name;
+    private String imgUrl;
     private String lvl;
     private Integer position;
     private Integer pts;
     private Integer ptsAway;
     private String userInFront;
 
-    public LeaderboardDetails(String userId, String name, String lvl, Integer pts) {
+    public LeaderboardDetails(String userId, String name, String imgUrl, String lvl, Integer pts) {
         this.userId = userId;
         this.name = name;
+        this.imgUrl = imgUrl;
         this.lvl = lvl;
         this.pts = pts;
     }
@@ -39,6 +41,14 @@ public class LeaderboardDetails implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public String getLvl() {

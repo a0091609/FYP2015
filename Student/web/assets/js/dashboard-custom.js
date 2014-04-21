@@ -122,15 +122,18 @@ function displayModules() {
             // End of portlet-title
 
             // Start of portlet-body
-            moduleList += '<div class="portlet-body">';
+            moduleList += '<div class="portlet-body">\
+                            <ul class="feeds">';
 
 //            if (!m.activated) {
 //            }
 //            else {
 //                moduleList += '<a href="/Student/QuizServlet?action=viewAllQuiz&moduleId=' + m.moduleId + '&moduleName=' + m.moduleName + '">Quiz</a>';
 //            }
-            moduleList += '<i class="icon-edit"></i> <a href="/Student/QuizServlet?action=viewAllQuiz&moduleId=' + m.moduleId + '&moduleName=' + m.moduleName + '">Quiz</a>';
-            moduleList += '</div>\
+            moduleList += '<li><i class="icon-user"></i> <a href="/Student/ProfileServlet?action=viewGameProfile&moduleId=' + m.moduleId + '">Game Profile</a></li>';
+            moduleList += '<li><i class="icon-edit"></i> <a href="/Student/QuizServlet?action=viewAllQuiz&moduleId=' + m.moduleId + '&moduleName=' + m.moduleName + '">Quiz</a></li>';
+            moduleList += '</ul>\
+                            </div>\
                            </div>';
             // End of portlet-body
         }

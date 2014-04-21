@@ -431,7 +431,7 @@ public class QuizBean implements QuizBeanLocal {
             Student s = em.find(Student.class, userId);
             GameProfile p = getGameProfile(s.getUserId(), moduleId);
 
-            LeaderboardDetails d = new LeaderboardDetails(userId, s.getName(), p.getExpLevel(), p.getExpPoint());
+            LeaderboardDetails d = new LeaderboardDetails(userId, s.getName(), s.getImgUrl(), p.getExpLevel(), p.getExpPoint());
             dataList.add(d);
         }
 

@@ -29,7 +29,7 @@
                         <div class="span12">
                             <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                             <h3 class="page-title">
-                                Student Feedback
+                                Quiz Summary
                             </h3>
                             <ul class="breadcrumb">
                                 <li>
