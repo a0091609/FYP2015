@@ -70,20 +70,20 @@ public class StartupBean {
         /* String userId, String name, String email, String gender,
          String faculty, String firstMajor, String secondMajor, Integer matriculationYear*/
         acctBean.createStudent("a0075128", "WONG CHIH YONG", "chihyong@nus.edu.sg",
-                "male", "School of Computing", "Information Systems (Hons)", "", 2010);
+                "male", "School of Computing", "Information Systems (Hons)", "", 2010, "");
         acctBean.createStudent("gstwchihyong", "Wong Chih Yong", "wchihyong@gmail.com",
-                "male", "School of Computing", "Information Systems (Hons)", "", 2010);
+                "male", "School of Computing", "Information Systems (Hons)", "", 2010, "/Student/assets/img/gstwchihyong.jpg");
         acctBean.createStudent("micheal", "Micheal Chang", "chihyong@nus.edu.sg",
-                "male", "School of Computing", "Information Systems (Hons)", "", 2010);
+                "male", "School of Computing", "Information Systems (Hons)", "", 2010, "/Student/assets/img/avatar.png");
         acctBean.createStudent("kelvin", "Kelvin Lee", "chihyong@nus.edu.sg",
-                "male", "School of Computing", "Information Systems (Hons)", "", 2010);
+                "male", "School of Computing", "Information Systems (Hons)", "", 2010, "/Student/assets/img/avatar.png");
         acctBean.createStudent("adam", "Adam Tan", "chihyong@nus.edu.sg",
-                "male", "School of Computing", "Information Systems (Hons)", "", 2010);
+                "male", "School of Computing", "Information Systems (Hons)", "", 2010, "/Student/assets/img/avatar.png");
         acctBean.createStudent("vincent", "Vincent Liew", "chihyong@nus.edu.sg",
-                "male", "School of Computing", "Information Systems (Hons)", "", 2010);
+                "male", "School of Computing", "Information Systems (Hons)", "", 2010, "/Student/assets/img/avatar.png");
 
         acctBean.createStudent("Philson", "PHILSON NAH", "philson@nus.edu.sg",
-                "male", "School of Computing", "Information Systems (Hons)", "", 2010);
+                "male", "School of Computing", "Information Systems (Hons)", "", 2010, "/Student/assets/img/avatar.png");
         System.out.println("Students [a0075128, gstwchihyong, Philson] created.");
     }
 
@@ -125,7 +125,7 @@ public class StartupBean {
         Leaderboard l1 = new Leaderboard();
         profile1.setExpPoint(45);
         profile1.setExpLevel("novice");
-        profile1.setStreak(3);
+        profile1.setStreak(2);
         em.persist(profile1);
         l1.setUserId("gstwchihyong");
         l1.setModuleId("a7f180e1-5361-4426-a6fa-5d90404ef2b1");
@@ -237,14 +237,15 @@ public class StartupBean {
         Long quiz2 = quizbean.saveNewQuiz("Pre-class Quiz Week 2", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
 
         //Long quizId, String descr, String difficultyLvl, Date dateOpen, Date dateClose
-        quizbean.saveQuizInfo(quiz1, "Pre-class Quiz Week 1", "beginner", convertToDateObj("16/04/2014"), convertToDateObj("23/04/2014"), null);
-        quizbean.saveQuizInfo(quiz2, "Pre-class Quiz Week 2", "beginner", convertToDateObj("23/04/2014"), convertToDateObj("30/04/2014"), null);
+        quizbean.saveQuizInfo(quiz1, "Pre-class Quiz Week 1", "beginner", convertToDateObj("18/04/2014"), convertToDateObj("25/04/2014"), null);
+        quizbean.saveQuizInfo(quiz2, "Pre-class Quiz Week 2", "beginner", convertToDateObj("25/04/2014"), convertToDateObj("02/05/2014"), null);
 
         /*String quizId, String questName, String questText,
          String option1, String option2, String option3, String option4, Integer answer*/
-        createQuestion(quiz1.toString(), "First Question", "Which is correct?", "Refer to textbook p.12", "Correct", "Incorrect", "Incorrect", "Incorrect", 0);
-        createQuestion(quiz1.toString(), "Second Question", "Which is correct?", "Refer to Reading \"What is Gamification? paragraph 2\"", "Incorrect", "Correct", "Incorrect", "Incorrect", 1);
-        createQuestion(quiz1.toString(), "Third Question", "Which is correct?", "Refer to Reading \"What is Gamifying Pedagogies?\"", "Incorrect", "Incorrect", "Correct", "Incorrect", 2);
+        createQuestion(quiz1.toString(), "Definition of Gamification", "Who defined Gamification as \"<i>using  game-based  mechanics,  aesthetics  and  game "
+                + "thinking  to  engage  people,  motivate  action,  promote  learning,  and  solve  problems</i>\"?", "Refer to \"What is Gamification? paragraph 2\"", "Karl Kapp", "Mark Zuckerberg", "Bill Gates", "Sebastian Deterding", 0);
+        createQuestion(quiz1.toString(), "Pedagogies", "Which is one of the pedagogies we have adopted?", "Refer to Reading \"Gamifying Pedagogies paragraph 3\"", "Confrontational Pedagogy", "Just-in-Time Teaching", "Traditional Pedagogy", "None of the above", 1);
+        createQuestion(quiz1.toString(), "Just-in-Time Teaching", "Which one is not an issue in Just-in-Time Teaching?", "Refer to Reading \"Just-in-Time Teaching paragraph 5\"", "Students skip over pre-class assignment.", "Students have negative impressions on the need.", "Students are happy with the assignment.", "Students simply overlook the assignment.", 2);
 
         createQuestion(quiz2.toString(), "First Question", "Which is correct?", "", "Correct", "Incorrect", "Incorrect", "Incorrect", 0);
         createQuestion(quiz2.toString(), "Second Question", "Which is correct?", "", "Incorrect", "Correct", "Incorrect", "Incorrect", 1);
@@ -255,6 +256,17 @@ public class StartupBean {
         createQuestion(quiz3.toString(), "First Question", "Which is correct?", "", "Correct", "Incorrect", "Incorrect", "Incorrect", 0);
         createQuestion(quiz3.toString(), "Second Question", "Which is correct?", "", "Incorrect", "Correct", "Incorrect", "Incorrect", 1);
         createQuestion(quiz3.toString(), "Third Question", "Which is correct?", "", "Incorrect", "Incorrect", "Correct", "Incorrect", 2);
+
+        // Create QuizSession with student feedbacks for "Pre-class Quiz Week 1".
+        quizbean.createQuizSession("micheal", quiz1);
+        quizbean.createQuizSession("kelvin", quiz1);
+        quizbean.createQuizSession("adam", quiz1);
+        quizbean.createQuizSession("vincent", quiz1);
+
+        quizbean.saveStudentFeedback("micheal", quiz1, "I found it particularly hard for question 3.");
+        quizbean.saveStudentFeedback("kelvin", quiz1, "I really had a hard time understanding concepts of Gamification.");
+        quizbean.saveStudentFeedback("adam", quiz1, "The topics on Gamification techniques are too complex. Please explain more during the class.");
+        quizbean.saveStudentFeedback("vincent", quiz1, "Please provide more case studies on Gamification in education.");
 
         System.out.println("Quizzes created.");
     }
@@ -270,9 +282,9 @@ public class StartupBean {
 
     private void createQuizItems() {
         //String userId, String moduleId, String name, Integer qty
-        quizbean.createQuizItems("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1", "GetHelp", 20);
-        quizbean.createQuizItems("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1", "Fifty-Fifty", 10);
-        quizbean.createQuizItems("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1", "Retry", 10);
+        quizbean.createQuizItems("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1", "GetHelp", 3);
+        quizbean.createQuizItems("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1", "Fifty-Fifty", 2);
+        quizbean.createQuizItems("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1", "Retry", 2);
     }
 
     private Date convertToDateObj(String date) {

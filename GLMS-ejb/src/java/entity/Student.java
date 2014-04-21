@@ -21,6 +21,7 @@ public class Student implements Serializable {
     private String firstMajor;
     private String secondMajor;
     private Integer matriculationYear;
+    private String imgUrl;
     @OneToMany(mappedBy = "student")
     private List<GameProfile> moduleList;
     @OneToMany(mappedBy = "student")
@@ -105,6 +106,14 @@ public class Student implements Serializable {
 
     public void setMatriculationYear(Integer matriculationYear) {
         this.matriculationYear = matriculationYear;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public List<GameProfile> getModuleList() {

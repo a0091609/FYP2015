@@ -7,11 +7,18 @@ public class QuizResults implements Serializable {
     private String questionText;
     private String answer;
     private Boolean isCorrect;
+    private String wrongAns;    //To store wrong answer provided by student
 
-    public QuizResults(String questionText, String answer, Boolean isCorrect) {
+    public QuizResults(String questionText, String answer, Boolean isCorrect, String wrongAns) {
         this.questionText = questionText;
         this.answer = answer;
         this.isCorrect = isCorrect;
+        this.wrongAns = wrongAns;
+    }
+
+    public QuizResults(String questionText, String answer) {
+        this.questionText = questionText;
+        this.answer = answer;
     }
 
     public String getQuestionText() {
@@ -36,6 +43,14 @@ public class QuizResults implements Serializable {
 
     public void setIsCorrect(Boolean isCorrect) {
         this.isCorrect = isCorrect;
+    }
+
+    public String getWrongAns() {
+        return wrongAns;
+    }
+
+    public void setWrongAns(String wrongAns) {
+        this.wrongAns = wrongAns;
     }
 
 }

@@ -17,6 +17,7 @@ public class SessionQuestion implements Serializable {
     private Long quizId;
     private Long questionId;
     private Boolean isCorrect;
+    private String wrongAns;    //To store wrong answer provided by student
 
     public Long getId() {
         return id;
@@ -56,6 +57,14 @@ public class SessionQuestion implements Serializable {
 
     public void setIsCorrect(Boolean isCorrect) {
         this.isCorrect = isCorrect;
+    }
+
+    public String getWrongAns() {
+        return wrongAns;
+    }
+
+    public void setWrongAns(String wrongAns) {
+        this.wrongAns = wrongAns;
     }
 
     @Override

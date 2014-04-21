@@ -17,6 +17,7 @@ import helper.QuestionDetails;
 import helper.QuizDetails;
 import helper.QuizItemDetails;
 import helper.QuizResults;
+import helper.StudentFeedback;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,7 +42,7 @@ public class QuizBean implements QuizBeanLocal {
         ArrayList<QuizDetails> quizzes = new ArrayList<QuizDetails>();
 
         for (Quiz quiz : quizList) {
-            QuizDetails quizDetails = new QuizDetails(quiz.getName(), quiz.getDescr(),
+            QuizDetails quizDetails = new QuizDetails(quiz.getQuizId(), quiz.getName(), quiz.getDescr(),
                     quiz.getDifficultyLvl(), formatDateToString(quiz.getDateOpen(), "dd-MM-yyyy"),
                     formatDateToString(quiz.getDateClose(), "dd-MM-yyyy"), quiz.getTimeCreated());
             quizzes.add(quizDetails);
@@ -263,10 +264,10 @@ public class QuizBean implements QuizBeanLocal {
                     }
                     streak = increaseStreakCount(userId, moduleId, true);
                     updateExpPoints(userId, moduleId, pts);
-                    updateQuizSession(userId, quizId, questionId, true);
+                    updateQuizSession(userId, quizId, questionId, true, "");
                 } else {
                     streak = increaseStreakCount(userId, moduleId, false);
-                    updateQuizSession(userId, quizId, questionId, false);
+                    updateQuizSession(userId, quizId, questionId, false, answer);
                 }
             }
         }
@@ -275,7 +276,7 @@ public class QuizBean implements QuizBeanLocal {
         return content;
     }
 
-    private void updateQuizSession(String userId, Long quizId, Long questionId, Boolean isCorrect) {
+    private void updateQuizSession(String userId, Long quizId, Long questionId, Boolean isCorrect, String wrongAns) {
         Query q = em.createQuery("SELECT s FROM SessionQuestion s WHERE s.userId = '" + userId + "' AND s.quizId = " + quizId);
         SessionQuestion s = new SessionQuestion();
 
@@ -290,6 +291,7 @@ public class QuizBean implements QuizBeanLocal {
             s.setQuizId(quizId);
             s.setQuestionId(questionId);
             s.setIsCorrect(false);
+            s.setWrongAns(wrongAns);
             em.persist(s);
         }
     }
@@ -306,8 +308,9 @@ public class QuizBean implements QuizBeanLocal {
             q = em.createQuery("SELECT a FROM QuestionAnswer a WHERE a.question.questionId = '" + questionId + "' AND a.correctAnswer = TRUE");
             QuestionAnswer ans = (QuestionAnswer) q.getSingleResult();
             String corrAns = ans.getAnswer();
+            String wrongAns = (s.getWrongAns() != null) ? s.getWrongAns() : "";
 
-            QuizResults r = new QuizResults(text, corrAns, s.isIsCorrect());
+            QuizResults r = new QuizResults(text, corrAns, s.isIsCorrect(), wrongAns);
             results.add(r);
         }
         return results;
@@ -379,7 +382,7 @@ public class QuizBean implements QuizBeanLocal {
         return item;
     }
 
-    public Integer getSreakBonus(String userId, String moduleId) {
+    public Integer getStreakBonus(String userId, String moduleId) {
         GameProfile p = getGameProfile(userId, moduleId);
         int streak = p.getStreak();
         int bonus = 0;
@@ -531,13 +534,13 @@ public class QuizBean implements QuizBeanLocal {
 
     public Boolean saveStudentFeedback(String userId, Long quizId, String feedback) {
         Query q = em.createQuery("SELECT s FROM QuizSession s WHERE s.userId = '" + userId + "' AND s.quizId = " + quizId);
-        QuizSession s = (QuizSession)q.getSingleResult();
-        
+        QuizSession s = (QuizSession) q.getSingleResult();
+
         s.setStudentFeedback(feedback);
         Date date = new Date();
         s.setTimeCompleted(date);
         em.persist(s);
-        
+
         return true;
     }
 
@@ -552,6 +555,51 @@ public class QuizBean implements QuizBeanLocal {
         GameProfileDetails profile = new GameProfileDetails(p.getUserId(), p.getModuleId(), p.getExpPoint(), p.getExpLevel(), p.getStreak());
 
         return profile;
+    }
+
+    public List<StudentFeedback> getStudentsFeedback(Long quizId) {
+        Query q = em.createQuery("SELECT s FROM QuizSession s WHERE s.quizId= " + quizId + " ORDER BY s.timeCompleted ASC");
+        List<QuizSession> sList = q.getResultList();
+        ArrayList<StudentFeedback> feedbacks = new ArrayList<>();
+
+        for (QuizSession s : sList) {
+            if (s.getStudentFeedback() != null && !s.getStudentFeedback().isEmpty()) {
+                Student student = em.find(Student.class, s.getUserId());
+                String imgUrl = student.getImgUrl();
+                StudentFeedback feedback = new StudentFeedback(s.getUserId(), student.getName(), imgUrl, formatDateToString(s.getTimeCompleted(), "dd-MM-yyyy h:mm a"), s.getStudentFeedback());
+                feedbacks.add(feedback);
+            }
+        }
+        return feedbacks;
+    }
+
+    public List<QuizResults> getQuizQuestionSummary(Long quizId) {
+        Query q = em.createQuery("SELECT q FROM Question q WHERE q.quiz.quizId = " + quizId);
+        List<Question> qList = q.getResultList();
+        ArrayList<QuizResults> rList = new ArrayList<>();
+
+        for (Question quest : qList) {
+            Long qId = quest.getQuestionId();
+            QuizResults r = new QuizResults(quest.getQuestionText(), getQuestionCorrAns(qId));
+            rList.add(r);
+        }
+        return rList;
+    }
+
+    // Current implementation provides only one correct answer per question
+    private String getQuestionCorrAns(Long questionId) {
+        Query q = em.createQuery("SELECT a FROM QuestionAnswer a WHERE a.question.questionId = " + questionId);
+        List<QuestionAnswer> aList = q.getResultList();
+        String ans = "";
+
+        for (QuestionAnswer a : aList) {
+            if (a.isCorrectAnswer() != null && a.isCorrectAnswer()) {
+                ans = a.getAnswer();
+                break;
+            }
+        }
+
+        return ans;
     }
 
     public Integer ptsToNextLvl(String userId, String moduleId) {
