@@ -33,5 +33,7 @@ public interface QuestBeanLocal
     public void createQuest(Module m, Skill s, Quest q);
 
     public void submitQuest(Long questID, String userId, String moduleId) throws Exception;
+
+    public void increaseGold(String userId, String moduleId, Integer goldReward) throws Exception;
     
 }

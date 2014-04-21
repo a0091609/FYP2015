@@ -1,3 +1,4 @@
+<%@page import="entity.Key"%>
 <%@page import="entity.Skill"%>
 <%@page import="entity.Quest"%>
 <%@page import="java.util.ArrayList"%>
@@ -20,7 +21,7 @@
     <!-- BEGIN BODY -->
     <body class="page-header-fixed page-sidebar-fixed">
         <%-- Import for the header bar --%>
-        <%@include file="/WEB-INF/jspf/headerBar.jspf" %> 
+        <%@include file="/WEB-INF/jspf/headerBar2.jspf" %> 
         <!-- BEGIN CONTAINER -->
         <div class="page-container">
             <%-- Import for the side bar --%>
@@ -66,7 +67,7 @@
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class="icon-dollar"></i>
-                                        <span class="hidden-480">Current Balance: 999</span>
+                                        <span class="hidden-480">Current Balance: <%=session.getAttribute("gold")%></span>
                                     </div>
                                 </div>
                                 <div class="portlet-body form">
@@ -204,12 +205,56 @@
                                                     Powerful items used to unlock higher difficulty quests.
                                                 </p>
 
+                                                <%
+                                                    ArrayList allItems = (ArrayList) request.getAttribute("allItems");
+
+                                                    //Print all the quests
+                                                    for (Object o : allItems)
+                                                    {
+                                                        if (o instanceof Key)
+                                                        {
+                                                            Key k = (Key) o;
+                                                            String name = k.getName();
+                                                            String description = k.getDescription();
+                                                            Integer cost = k.getCost();
+                                                            String URL = "Shop?action=buyItem&itemId=" + k.getId();
+                                                %>
+
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/key2.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Item Name</h4>
-                                                            <p>Item description</p>
+                                                            <h4><%=name%></h4>
+                                                            <p><%=description%></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="span5">
+                                                        <div class="portfolio-info">
+                                                            Item Type
+                                                            <span>Quest Key</span>
+                                                        </div>
+                                                        <div class="portfolio-info">
+                                                            Cost
+                                                            <span><%=cost%> Gold</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="span2 portfolio-btn">
+                                                        <a href="<%=URL%>" class="btn bigicn-only"><span>Buy Now</span></a>                        
+                                                    </div>
+                                                </div>
+
+                                                <%  //Done printing
+                                                        }
+                                                    }
+                                                %>
+
+
+                                                <div class="row-fluid portfolio-block">
+                                                    <div class="span5 portfolio-text">
+                                                        <img src="assets/img/key2.png" style="width:80px">
+                                                        <div class="portfolio-text-info">
+                                                            <h4>Advanced Database Key</h4>
+                                                            <p>Unlocks 3 star database quest.</p>
                                                         </div>
                                                     </div>
                                                     <div class="span5">
@@ -360,6 +405,57 @@
                         </div>
                     </div>
                     <!-- END PAGE CONTENT-->  
+
+
+
+
+                    <%
+                        //This part is for showing the submission msg
+                        Boolean bought = (Boolean) request.getAttribute("bought");
+                        if (bought != null)
+                        {
+                            Integer cost = (Integer) request.getAttribute("cost");
+                            String name = (String) request.getAttribute("name");
+                            String img = (String) request.getAttribute("img");
+                    %>
+                    <!-- MODAL WINDOW -->
+                    <div id="responsive" class="modal hide fade" tabindex="-1" data-width="760">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h3>Item Purchase</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <center><h1>Awesome!</h1></center>
+                                </div>
+                                <br><br>
+                            </div><div class="row-fluid"><br></div>
+                            <div class="row-fluid">
+                                <div class="span4">
+                                    <img src="<%=img%>" style="width:100%">
+                                </div>
+                                <div class="span1">&nbsp;</div>
+                                <div class="span7">
+                                    <h4>Purchase Complete</h4>
+                                    <p>You have just obtained: </p>
+                                    <p><b>Item: </b> <%=name%></p>
+                                    <p><b>Cost: </b> <%=cost%> gold</p>
+                                    <p>Like a boss!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn">Close</button>
+                        </div>
+                    </div>
+                    <%
+                        }
+                    %>
+
+
+
+
                 </div>
                 <!-- END PAGE CONTAINER-->    
             </div>
@@ -384,6 +480,7 @@
                 //$('#footable').footable();
                 TableManaged.init();
                 setActivePage("link-store");
+                $('#responsive').modal('show');
             });
         </script>
         <!-- END JAVASCRIPTS -->

@@ -3,6 +3,7 @@
  */
 package session;
 
+import entity.Avatar;
 import entity.Booster;
 import entity.Item;
 import entity.Key;
@@ -11,6 +12,7 @@ import entity.Pet;
 import entity.Quest;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -33,6 +35,9 @@ public class ItemBean implements ItemBeanLocal
 
     @PersistenceContext
     private EntityManager em;
+
+    @EJB
+    QuestBeanLocal questBean;
 
     //Retrieve all the Items for a particular module
     public List<Item> getAllItems(String moduleId) throws Exception
@@ -130,12 +135,36 @@ public class ItemBean implements ItemBeanLocal
         em.flush();
     }
 
+    //This method creates a new Key Item for a particular Quest in a Module
+    public void createKey2(Module mod, Quest q, Key k) throws Exception
+    {
+        em.persist(q);
+        em.persist(k);
+        em.persist(mod);
+        em.flush();
+    }
+
     //This method is used to set an item as DELETED
     public void deleteItem(Long itemId) throws Exception
     {
         Item item = getItem(itemId);
         item.setStatus("DELETED");
         em.persist(item);
+        em.flush();
+    }
+
+    public void buyItem(String userId, String moduleId, Long itemId) throws Exception
+    {
+        Avatar student = questBean.getAvatar(userId, moduleId);
+        Item item = getItem(itemId);
+        Integer gold = student.getCurrentBalance() - item.getCost();
+
+        //Deduct the monies
+        student.setCurrentBalance(gold);
+        //Give him the item
+        student.getInventory().add(item);
+        //Persist
+        em.persist(student);
         em.flush();
     }
 

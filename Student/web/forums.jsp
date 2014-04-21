@@ -15,7 +15,7 @@
     <!-- BEGIN BODY -->
     <body class="page-header-fixed page-sidebar-fixed">
         <%-- Import for the header bar --%>
-        <%@include file="/WEB-INF/jspf/headerBar.jspf" %> 
+        <%@include file="/WEB-INF/jspf/headerBar2.jspf" %> 
         <!-- BEGIN CONTAINER -->
         <div class="page-container">
             <%-- Import for the side bar --%>
@@ -70,22 +70,38 @@
                                         <th>Topics</th>
                                         <th>Bounty</th>
                                         <th>Date Posted</th>
-                                        <th>Views</th>
                                         <th>Status</th>
                                         <th>&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="gradeX">
-                                        <td data-title="Asker"><center><img class="smallTableImg"><br>Philson Nah</center></td>
-                                        <td data-title="Title">Basic questions on SQL</td>
+                                        <td data-title="Asker"><center><img src="assets/img/cyAvatar.png" style="width:40px"><br>Chih Yong</center></td>
+                                        <td data-title="Title">A Question on SQL Joins</td>
                                         <td data-title="Topics">Databases</td>
-                                        <td data-title="Bounty">30-04-2014</td>
-                                        <td data-title="Date Posted">30-04-2014</td>
-                                        <td data-title="Views">30</td>
-                                        <td data-title="Status">30-04-2014</td>
+                                        <td data-title="Bounty">50 gold</td>
+                                        <td data-title="Date Posted">22-04-2014</td>
+                                        <td data-title="Status">Open</td>
+                                        <td data-title="Actions"><center><a href="viewPost.jsp" class="btn green"><i class="icon-eye-open"></i> View</a></center></td>
+                                    </tr>
+                                    <tr class="gradeX">
+                                        <td data-title="Asker"><center><img src="assets/img/PhilAvatar.png" style="width:40px"><br>Philson</center></td>
+                                        <td data-title="Title">Need help with PHP Statements</td>
+                                        <td data-title="Topics">PHP</td>
+                                        <td data-title="Bounty">10 gold</td>
+                                        <td data-title="Date Posted">21-04-2014</td>
+                                        <td data-title="Status">Answered</td>
                                         <td data-title="Actions"><center><a href="#" class="btn green"><i class="icon-eye-open"></i> View</a></center></td>
-                                </tr>
+                                    </tr>
+                                    <tr class="gradeX">
+                                        <td data-title="Asker"><center><img src="assets/img/PhilAvatar.png" style="width:40px"><br>Philson</center></td>
+                                        <td data-title="Title">A Question about HTML5</td>
+                                        <td data-title="Topics">HTML</td>
+                                        <td data-title="Bounty">10 gold</td>
+                                        <td data-title="Date Posted">21-04-2014</td>
+                                        <td data-title="Status">Answered</td>
+                                        <td data-title="Actions"><center><a href="#" class="btn green"><i class="icon-eye-open"></i> View</a></center></td>
+                                    </tr>
                                 </tbody>
                             </table>
 

@@ -21,7 +21,7 @@
     <!-- BEGIN BODY -->
     <body class="page-header-fixed page-sidebar-fixed">
         <%-- Import for the header bar --%>
-        <%@include file="/WEB-INF/jspf/headerBar.jspf" %> 
+        <%@include file="/WEB-INF/jspf/headerBar2.jspf" %> 
         <!-- BEGIN CONTAINER -->
         <div class="page-container">
             <%-- Import for the side bar --%>
@@ -123,11 +123,11 @@
                                                         </div>
                                                     </div>
                                                     <div class="span5">
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Skill Gain
                                                             <span><%=skill%> +<%=sp%></span>
                                                         </div>
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Gold Reward
                                                             <span>Gold +<%=goldReward%></span>
                                                         </div>
@@ -196,11 +196,11 @@
                                                         </div>
                                                     </div>
                                                     <div class="span5">
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Skill Gain
                                                             <span><%=skill%> +<%=sp%></span>
                                                         </div>
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Gold Reward
                                                             <span>Gold +<%=goldReward%></span>
                                                         </div>
@@ -360,11 +360,11 @@
                                                         </div>
                                                     </div>
                                                     <div class="span5">
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Skill Gain
                                                             <span><%=skill%> +<%=sp%></span>
                                                         </div>
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Gold Reward
                                                             <span>Gold +<%=goldReward%></span>
                                                         </div>

@@ -78,7 +78,7 @@
             </a>
         </li>
         <li id="link-store">
-            <a href="Items">
+            <a href="Shop">
                 <i class="icon-shopping-cart"></i> 
                 <span class="title">Item Shop</span>
             </a>

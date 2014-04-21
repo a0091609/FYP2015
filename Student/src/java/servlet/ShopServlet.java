@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import entity.Avatar;
 import entity.Item;
 import java.io.IOException;
 import java.util.List;
@@ -16,16 +17,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import session.ItemBeanLocal;
+import session.QuestBeanLocal;
 
 /**
  *
  * @author Philson
  */
-@WebServlet(name = "ItemServlet", urlPatterns =
+@WebServlet(name = "ShopServlet", urlPatterns =
 {
-    "/Items", "/Items?*"
+    "/Shop", "/Shop?*"
 })
-public class ItemServlet extends HttpServlet
+public class ShopServlet extends HttpServlet
 {
 
     //Global Variables
@@ -36,7 +38,8 @@ public class ItemServlet extends HttpServlet
     //EJB References
     @EJB
     ItemBeanLocal itemBean;
-
+    @EJB
+    QuestBeanLocal questBean;
 
     //Functionalities needed:        
     //  1. Retrieve all Items for a module             [Not Done]
@@ -75,9 +78,11 @@ public class ItemServlet extends HttpServlet
                 System.out.println("Request: " + request);
                 displayAllItems(moduleId, userId);
             }
-            else if (action.equals("openQuest"))
+            else if (action.equals("buyItem"))
             {
-                //do nothing
+                Long itemId = Long.parseLong(request.getParameter("itemId"));
+                buyItem(itemId, userId, moduleId);
+                displayAllItems(moduleId, userId);
             }
         }
         catch (Exception ex)
@@ -105,6 +110,21 @@ public class ItemServlet extends HttpServlet
 
         //Direct them to the display page!
         request.getRequestDispatcher("shop.jsp").forward(request, response);
+    }
+
+    //Purchase an Item 
+    private void buyItem(Long itemId, String userId, String moduleId) throws Exception
+    {
+        itemBean.buyItem(userId, moduleId, itemId);
+        Item i = itemBean.getItem(itemId);
+        Avatar student = questBean.getAvatar(userId, moduleId);
+        session.setAttribute("gold", student.getCurrentBalance());
+
+        //Need to send a msg for feedback
+        request.setAttribute("cost", i.getCost());
+        request.setAttribute("name", i.getName());
+        request.setAttribute("img", i.getImgURL());
+        request.setAttribute("bought", true);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
