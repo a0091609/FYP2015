@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import session.ModuleBeanLocal;
-import session.QuestionBeanLocal;
 import session.QuizBeanLocal;
 
 @WebServlet(name = "QuizServlet", urlPatterns = {"/QuizServlet", "/QuizServlet?*"})
@@ -134,7 +132,7 @@ public class QuizServlet extends HttpServlet {
 
                 // the following sequence ensures latest EXP points and levels are retrieved
                 quizBean.finishQuiz(userId, moduleId, quizId);
-                request.setAttribute("streakBonus", quizBean.getSreakBonus(userId, moduleId));
+                request.setAttribute("streakBonus", quizBean.getStreakBonus(userId, moduleId));
                 request.setAttribute("results", quizBean.getQuizResults(userId, Long.valueOf(quizId)));
                 request.setAttribute("initialLvl", initialLvl);
                 request.setAttribute("profile", quizBean.getProfileDetails(userId, moduleId));

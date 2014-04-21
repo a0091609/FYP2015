@@ -42,12 +42,13 @@ public class ProfileServlet extends HttpServlet {
                 String firstMajor = request.getParameter("FirstMajor");
                 String secondMajor = request.getParameter("SecondMajor");
                 String matricYr = request.getParameter("MatriculationYear");
+                String imgUrl = "";
 
                 Integer matriculationYear = isInteger(matricYr) ? Integer.valueOf(matricYr) : 0;
 
                 response.setContentType("application/json;charset=utf-8");
                 JsonObject json = new JsonObject();
-                json.addProperty("response", accountBean.createStudent(userId, name, email, gender, faculty, firstMajor, secondMajor, matriculationYear));
+                json.addProperty("response", accountBean.createStudent(userId, name, email, gender, faculty, firstMajor, secondMajor, matriculationYear, imgUrl));
 
                 PrintWriter pw = response.getWriter();
                 pw.print(json);

@@ -24,7 +24,8 @@ public class QuizDetails implements Serializable {
         this.name = name;
     }
     
-    public QuizDetails(String name, String descr, String difficultyLvl, String dateOpen, String dateClose, Date timeCreated) {
+    public QuizDetails(Long quizId, String name, String descr, String difficultyLvl, String dateOpen, String dateClose, Date timeCreated) {
+        this.quizId = quizId;
         this.name = name;
         this.descr = descr;
         this.difficultyLvl = difficultyLvl;

@@ -22,7 +22,7 @@ public class AccountBean implements AccountBeanLocal {
 
     /* Methods for Student */
     public Boolean createStudent(String userId, String name, String email, String gender,
-            String faculty, String firstMajor, String secondMajor, Integer matriculationYear) {
+            String faculty, String firstMajor, String secondMajor, Integer matriculationYear, String imgUrl) {
 
         try {
             // Non-student userId is allowed to login
@@ -38,6 +38,7 @@ public class AccountBean implements AccountBeanLocal {
                 student.setFirstMajor(firstMajor);
                 student.setSecondMajor(secondMajor);
                 student.setMatriculationYear(matriculationYear);
+                student.setImgUrl(imgUrl);
 
                 em.persist(student);
                 em.flush();

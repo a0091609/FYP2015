@@ -56,7 +56,7 @@
                     <div class="row-fluid">
                         <div class="span12">
                             <ul class="unstyled profile-nav span2">
-                                <li><img src="assets/img/ChihYong.jpg" alt="" /></li>
+                                <li><img src="assets/img/gstwchihyong.jpg" alt="" /></li>
                             </ul>
                             <div class="span10">
                                 <div class="row-fluid">
@@ -88,7 +88,7 @@
                                                         <i class="icon-user"></i>
                                                     </div>
                                                     <div class="details">
-                                                        <div class="number" style="text-transform: capitalize; font-size:20px;">
+                                                        <div class="number" style="text-transform: capitalize; font-size:17px; font-weight:bold;">
                                                             <%=p.getExpLevel()%>
                                                         </div>
                                                         <div class="desc">                           

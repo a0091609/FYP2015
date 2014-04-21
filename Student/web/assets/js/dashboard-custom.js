@@ -61,7 +61,6 @@ function createLoginSession(userId, token) {
     return jQuery.getJSON(usernameUrl, function(data) {
         var username = data;
         $('.username').html(username);
-        $('.headerPhoto').attr("src","assets/img/ChihYong.jpg");
         $.ajax({
             type: 'post',
             url: '/Student/AuthServlet?action=createLoginSession',

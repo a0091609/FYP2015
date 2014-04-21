@@ -7,6 +7,7 @@ import helper.LeaderboardDetails;
 import helper.QuizDetails;
 import helper.QuizItemDetails;
 import helper.QuizResults;
+import helper.StudentFeedback;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
@@ -44,17 +45,21 @@ public interface QuizBeanLocal {
 
     public QuizItemDetails getNewItem(String userId, String module);
 
-    public Integer getSreakBonus(String userId, String moduleId);
+    public Integer getStreakBonus(String userId, String moduleId);
 
     public LeaderboardDetails getLeaderboardPos(String userId, String moduleId);
 
     public List<LeaderboardDetails> getLeaderboard(String moduleId);
-    
+
     public Boolean saveStudentFeedback(String userId, Long quizId, String feedback);
 
     public GameProfile getGameProfile(String userId, String moduleId);
 
     public GameProfileDetails getProfileDetails(String userId, String moduleId);
+
+    public List<StudentFeedback> getStudentsFeedback(Long quizId);
+    
+    public List<QuizResults> getQuizQuestionSummary(Long quizId);
 
     public Integer ptsToNextLvl(String userId, String moduleId);
 

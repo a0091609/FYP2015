@@ -56,7 +56,7 @@
 
                     <!-- BEGIN PAGE CONTENT-->
                     <div class="row-fluid">
-                        <div class="span6">
+                        <div class="span7">
                             <div class="row-fluid">
                                 <table class="table table-striped table-bordered table-advance table-hover">
                                     <thead>
@@ -80,11 +80,11 @@
                                                     } else {
                                                         out.print("important");
                                                     }
-                                                     %>"></div>&nbsp;
-                                                <%=result.getQuestionText()%>
+                                                     %>"></div>
+                                                     <div style="padding-left:5px;"><%=result.getQuestionText()%></div>
                                             </td>
                                             <td><%=result.getAnswer()%></td>
-                                            <td><a class="tooltips glyphicons no-js
+                                            <td><span class="tooltips glyphicons no-js icn-only
                                                    <%
                                                        if (result.isIsCorrect()) {
                                                            out.print("ok_2");
@@ -98,8 +98,9 @@
                                                            out.print("You were wrong.");
                                                        }
                                                    %>"
-
-                                                   style="display:block;"><i></i></a></td>
+                                                   >
+                                                    <i></i> <%=result.getWrongAns()%>
+                                                </span></td>
                                         </tr>
                                         <%
                                             }
@@ -330,10 +331,10 @@
                         </div>
 
 
-                        <div class="span6">
-                            <form action="/Student/QuizServlet?action=sendFeedback" class="horizontal-form">
+                        <div class="span5">
+                            <form action="/Student/QuizServlet?action=sendFeedback" method="post" class="horizontal-form">
                                 <h3 class="form-section"><i class="icon-pencil"></i> Feedback Form</h3>
-                                Please write down your concerns so that the instructor can respond to the issues during the class.
+                                What did you find most confusing or difficult about the material? If nothing was confusing, explain what you found most useful.
 
                                 <div class="control-group margin-top-20">
                                     <label class="control-label" >Message</label>

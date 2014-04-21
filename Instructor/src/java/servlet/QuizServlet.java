@@ -18,8 +18,7 @@ import javax.servlet.http.HttpSession;
 import session.QuizBeanLocal;
 
 @WebServlet(name = "QuizServlet", urlPatterns = {"/QuizServlet", "/QuizServlet?*"})
-public class QuizServlet extends HttpServlet
-{
+public class QuizServlet extends HttpServlet {
 
     @EJB
     QuizBeanLocal quizBean;
@@ -43,8 +42,7 @@ public class QuizServlet extends HttpServlet
 
                     request.getSession().setAttribute("moduleId", moduleId);
                     request.getSession().setAttribute("moduleName", moduleName);
-                }
-                else {
+                } else {
                     moduleId = request.getSession().getAttribute("moduleId").toString();
                 }
 
@@ -52,12 +50,10 @@ public class QuizServlet extends HttpServlet
                 request.setAttribute("quizzes", quizzes);
 
                 request.getRequestDispatcher("/quiz/allQuizzes.jsp").forward(request, response);
-            }
-            else if (action.equals("createQuiz")) {
+            } else if (action.equals("createQuiz")) {
                 RequestDispatcher rd = request.getRequestDispatcher("/quiz/newQuiz.jsp");
                 rd.forward(request, response);
-            }
-            else if (action.equals("saveNewQuiz")) {
+            } else if (action.equals("saveNewQuiz")) {
                 String quizName = request.getParameter("quizName");
                 String moduleId = request.getSession().getAttribute("moduleId").toString();
 
@@ -67,12 +63,11 @@ public class QuizServlet extends HttpServlet
                 request.getSession(false).setAttribute("quizName", quizName);
 
                 response.sendRedirect("quiz/newMultiChoice.jsp");
-            }
-            else if (action.equals("saveQuizInfo")) {
+            } else if (action.equals("saveQuizInfo")) {
                 String quizId = request.getSession().getAttribute("quizId").toString();
                 String descr = request.getParameter("descr");
                 String difficultyLvl = request.getParameter("difficulty");
-                
+
                 String dateRange = request.getParameter("datesOpen");
                 String dateOpen = dateRange.substring(0, 10);
                 String dateClose = dateRange.substring(14);
@@ -84,9 +79,16 @@ public class QuizServlet extends HttpServlet
                 request.getSession().removeAttribute("quizName");
 
                 response.sendRedirect("/Instructor/QuizServlet?action=viewAllQuiz");
+            } else if (action.equals("viewQuizSummary")) {
+                String quizId = request.getParameter("quizId");
+                // need to modify
+                request.setAttribute("questionList", quizBean.getQuizQuestionSummary(Long.valueOf(quizId)));
+
+                request.setAttribute("feedbacks", quizBean.getStudentsFeedback(Long.valueOf(quizId)));
+
+                request.getRequestDispatcher("/quiz/quizSummary.jsp").forward(request, response);
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -97,8 +99,7 @@ public class QuizServlet extends HttpServlet
         try {
             dateObj = df.parse(date);
             return dateObj;
-        }
-        catch (ParseException e) {
+        } catch (ParseException e) {
             e.printStackTrace();
             return null;
         }

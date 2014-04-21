@@ -107,7 +107,7 @@
                                                             <td data-title="Date Open"><%=quiz.getDateOpen()%></td>
                                                             <td data-title="Date Close"><%=quiz.getDateClose()%></td>
                                                             <td data-title="Time Created"><%=timeCreated%></td>
-                                                            <td data-title="Status">&nbsp;</td>
+                                                            <td><a class="btn mini blue" href="/Instructor/QuizServlet?action=viewQuizSummary&quizId=<%=quiz.getQuizId()%>">View Summary</a></td>
                                                         </tr>
                                                         <%
                                                             }
