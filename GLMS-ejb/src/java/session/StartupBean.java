@@ -47,6 +47,7 @@ public class StartupBean {
     @PostConstruct
     private void init() {
         try {
+
 //            createInstructors();
 //            createStudents();
             //createModules();
@@ -76,7 +77,7 @@ public class StartupBean {
         acctBean.createStudent("a0075128", "WONG CHIH YONG", "chihyong@nus.edu.sg",
                 "male", "School of Computing", "Information Systems (Hons)", "", 2010, "");
         acctBean.createStudent("gstwchihyong", "Wong Chih Yong", "wchihyong@gmail.com",
-                "male", "School of Computing", "Information Systems (Hons)", "", 2010, "/Student/assets/img/gstwchihyong.jpg");
+                "male", "School of Computing", "Information Systems (Hons)", "", 2010, "/Student/assets/img/gstwchihyong.png");
         acctBean.createStudent("micheal", "Micheal Chang", "chihyong@nus.edu.sg",
                 "male", "School of Computing", "Information Systems (Hons)", "", 2010, "/Student/assets/img/avatar.png");
         acctBean.createStudent("kelvin", "Kelvin Lee", "chihyong@nus.edu.sg",
