@@ -130,7 +130,11 @@
                                                             for (Quest q : quests)
                                                             {
                                                                 String qName = q.getName();
-                                                                String description = q.getDescription().substring(0, 110) + "...";
+
+                                                                String description = q.getDescription();
+                                                                int maxLength = (description.length() < 110) ? description.length() : 110;
+                                                                description = description.substring(0, maxLength) + "...";
+
                                                                 Integer goldReward = q.getGoldReward();
                                                                 String skill = q.getSkillReward().getName();
                                                                 Integer sp = q.getSkillReward().getSkillPoints();
@@ -145,7 +149,7 @@
                                                         </tr>
                                                         <%
                                                             } //Done Printing
-                                                        %>
+%>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -216,6 +220,52 @@
 
                     <!-- END PAGE CONTENT-->
 
+                    <!--Modal for Forums-->
+                    <%
+                        //This part is for showing the submission msg
+                        Boolean forums = (Boolean) session.getAttribute("forums");
+                        if (forums != null)
+                        {
+                            session.setAttribute("forums", null);
+                    %>
+                    <!-- MODAL WINDOW -->
+                    <div id="responsive" class="modal hide fade" tabindex="-1" data-width="760">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h3>Answer Accepted</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <center><h1>You're the Expert!</h1></center>
+                                </div>
+                                <br><br>
+                            </div><div class="row-fluid"><br></div>
+                            <div class="row-fluid">
+                                <div class="span4">
+                                    <img src="assets/img/expert.gif" style="width:100%">
+                                </div>
+                                <div class="span8">
+                                    <h4>Congrats</h4>
+                                    <p>
+                                        Wong Chih Yong has just accepted you answer for "A Question on SQL Joins".
+                                        You have received the following rewards: 
+                                    </p>
+                                    <p><b>Gold Bounty: </b> 50 gold</p>
+                                    <p>Good Job!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn">Close</button>
+                        </div>
+                    </div>
+                    <%
+                        }
+                    %>
+
+
+
 
                 </div>
                 <!-- END PAGE CONTAINER-->    
@@ -238,6 +288,7 @@
             {
                 App.init(); // initlayout and core plugins
                 TableManaged.init();
+                $('#responsive').modal('show');
 
             <%
                 List<String> skillTypes = new ArrayList();

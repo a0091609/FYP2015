@@ -128,7 +128,7 @@ Blog & News Item Page
 ***/
 /*--Media Object--*/
 .blog-page .media img {
-    height: 54px;
+    /* height: 54px; */
     position: relative;
     top: 3px;
     width: 54px;
@@ -147,7 +147,8 @@ Blog & News Item Page
 }
 
 .blog-page h4.media-heading span a {
-    color: #78cff8;
+    color: #00ABFC;
+    font-weight: bold;
 }
 
 /*Post Comment*/

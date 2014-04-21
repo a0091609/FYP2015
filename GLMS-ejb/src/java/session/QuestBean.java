@@ -103,6 +103,19 @@ public class QuestBean implements QuestBeanLocal
         em.persist(student);
         em.flush();
     }
+    
+    public void increaseGold(String userId, String moduleId, Integer goldReward) throws Exception
+    {
+        Avatar student = getAvatar(userId, moduleId);
+
+        //Add the gold rewards both lifetime and current
+        student.setCurrentBalance(student.getCurrentBalance() + goldReward);
+        student.setLifetimeEarnings(student.getLifetimeEarnings() + goldReward);
+
+        //Persist everything
+        em.persist(student);
+        em.flush();
+    }
 
     public Avatar getAvatar(String userId, String moduleId) throws Exception
     {

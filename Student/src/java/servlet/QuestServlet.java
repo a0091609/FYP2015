@@ -96,6 +96,10 @@ public class QuestServlet extends HttpServlet
                 submitQuest(questId, moduleId, userId);
                 displayAllQuests(moduleId, userId);
             }
+            else if (action.equals("markAccepted"))
+            {
+                markAccepted(moduleId, userId);
+            }
         }
         catch (Exception ex)
         {
@@ -108,6 +112,17 @@ public class QuestServlet extends HttpServlet
     }
 
 //Private methods, for convenience
+    //Displays all the quests for a module
+    private void markAccepted(String moduleId, String userId) throws Exception
+    {
+        questBean.increaseGold(userId, moduleId, 50);
+
+        //Rmember to send feedback message
+        session.setAttribute("forums", true);
+        //Direct them to the display page!
+        request.getRequestDispatcher("forums3.jsp").forward(request, response);
+    }
+
     //Submits a Quest
     private void submitQuest(Long questId, String moduleId, String userId) throws Exception
     {
