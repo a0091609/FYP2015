@@ -135,9 +135,9 @@ public class QuestServlet extends HttpServlet
         Skill skillReward = quest.getSkillReward();
 
         //Set the notification 
-        request.setAttribute("gold", goldReward);
-        request.setAttribute("skill", skillReward);
-        request.setAttribute("submission", true);
+        session.setAttribute("goldReward", goldReward);
+        session.setAttribute("skill", skillReward);
+        session.setAttribute("submission", true);
     }
 
     //Displays all the quests for a module
