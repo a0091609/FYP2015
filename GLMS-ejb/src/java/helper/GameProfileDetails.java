@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class GameProfileDetails implements Serializable {
 
     private String userId;
+    private String username;
     private String moduleId;
     private Integer expPoint;
     private String expLevel;
@@ -18,12 +19,27 @@ public class GameProfileDetails implements Serializable {
         this.streak = streak;
     }
 
+    public GameProfileDetails(String userId, String username, String expLevel, Integer streak) {
+        this.userId = userId;
+        this.username = username;
+        this.expLevel = expLevel;
+        this.streak = streak;
+    }
+
     public String getUserId() {
         return userId;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getModuleId() {

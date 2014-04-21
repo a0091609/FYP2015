@@ -114,7 +114,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="span4">
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span8">
                                         <div class="portlet sale-summary">
                                             <div class="portlet-title">
                                                 <div class="caption"><i class="icon-trophy"></i> Leaderboard</div>
@@ -127,12 +129,24 @@
                                                         for (Object o : leaderboard) {
                                                             LeaderboardDetails d = (LeaderboardDetails) o;
                                                             String lUserId = d.getUserId();
+                                                            String lvl = d.getLvl(), lvlLabel = "";
+                                                            if (lvl.equals("novice")) {
+                                                                lvlLabel = "label label-success";
+                                                            } else if (lvl.equals("apprentice")) {
+                                                                lvlLabel = "label label-info";
+                                                            } else if (lvl.equals("enthusiast")) {
+                                                                lvlLabel = "label label-warning";
+                                                            } else if (lvl.equals("expert")) {
+                                                                lvlLabel = "label label-important";
+                                                            } else if (lvl.equals("guru")) {
+                                                                lvlLabel = "label label-inverse";
+                                                            }
                                                     %>
                                                     <li <%if (userId.equals(lUserId)) {
                                                             out.print("style='font-weight:bold;'");
                                                         }%>>
-                                                        <span class="sale-info"><%=d.getName()%></span> 
-                                                        &nbsp; &nbsp;(<span style="font-size:14px; text-transform: capitalize;"><%=d.getLvl()%></span>)
+                                                        <span class="sale-info" style="margin-right:20px;"><img alt="" src="<%=d.getImgUrl()%>" style="height:20px; width: 20px; margin-right:20px;"/><%=d.getName()%></span> 
+                                                        <span class="<%=lvlLabel%>" style="font-size:14px; text-transform: capitalize;"><%=lvl%></span>
                                                         <span class="sale-num"><%=d.getPts()%></span>
                                                     </li>
                                                     <%

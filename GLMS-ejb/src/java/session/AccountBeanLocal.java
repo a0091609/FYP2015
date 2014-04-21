@@ -29,6 +29,8 @@ public interface AccountBeanLocal {
     public GameProfile getGameProfile(String userId, String moduleId);
 
     public GameProfileDetails getProfileDetails(String userId, String moduleId);
+
+    public List<GameProfileDetails> getCoursemateProfiles(String moduleId, String userId);
     /* End of methods for Instructor */
 
     public Student getStudent(String userId);

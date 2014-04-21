@@ -78,7 +78,7 @@ public class AccountBean implements AccountBeanLocal {
             Student s = em.find(Student.class, userId);
             GameProfile p = getGameProfile(s.getUserId(), moduleId);
 
-            LeaderboardDetails d = new LeaderboardDetails(userId, s.getName(), p.getExpLevel(), p.getExpPoint());
+            LeaderboardDetails d = new LeaderboardDetails(userId, s.getName(), s.getImgUrl(), p.getExpLevel(), p.getExpPoint());
             dataList.add(d);
         }
 
@@ -97,7 +97,24 @@ public class AccountBean implements AccountBeanLocal {
 
         return profile;
     }
-    
+
+    public List<GameProfileDetails> getCoursemateProfiles(String moduleId, String userId) {
+        Query q = em.createQuery("SELECT p FROM GameProfile p WHERE p.moduleId = '" + moduleId + "'");
+        List<GameProfile> pList = q.getResultList();
+        List<GameProfileDetails> dList = new ArrayList<>();
+
+        for (GameProfile p : pList) {
+            String pUserId = p.getUserId();
+            if (!pUserId.equals(userId)) {
+                Student s = em.find(Student.class, pUserId);
+                GameProfileDetails d = new GameProfileDetails(pUserId, s.getName(), p.getExpLevel(), p.getStreak());
+                dList.add(d);
+            }
+        }
+
+        return dList;
+    }
+
     public Student getStudent(String userId) {
         Student student = em.find(Student.class, userId);
         return student;
