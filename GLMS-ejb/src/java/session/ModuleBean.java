@@ -2,10 +2,8 @@ package session;
 
 import entity.GameProfile;
 import entity.Instructor;
-import entity.Leaderboard;
 import entity.Module;
 import entity.Student;
-import helper.LeaderboardDetails;
 import helper.ModuleDetails;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +30,7 @@ public class ModuleBean implements ModuleBeanLocal {
                 module.setModuleId(moduleId);
                 module.setModuleCode(moduleCode);
                 module.setModuleName(moduleName);
-                module.setActivated(false);     // set false for modules without gamification features
+                module.setActivated(true);     // set false for modules without gamification features
 
                 Instructor instructor = em.find(Instructor.class, moduleCreator);
                 module.setCreator(instructor);
@@ -125,8 +123,6 @@ public class ModuleBean implements ModuleBeanLocal {
 
         return modules;
     }
-
-    
 
     //Helper method: retrieves the module based on moduleId
     public Module getModule(String moduleId) throws Exception {

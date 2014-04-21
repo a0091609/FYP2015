@@ -89,10 +89,21 @@
                                                                 QuizDetails quiz = (QuizDetails) o;
                                                                 String diffLvl = (quiz.getDifficultyLvl() == null) ? "" : quiz.getDifficultyLvl();
                                                                 String timeCreated = (quiz.getTimeCreated() == null) ? "" : quiz.getTimeCreated().toString();
+                                                                String stars = "", tips = "";
+                                                                if (diffLvl.equals("beginner")) {
+                                                                    tips = "Beginner";
+                                                                    stars = "<i class='icon-star' style='font-size: 20px;'></i>";
+                                                                } else if (diffLvl.equals("intermediate")) {
+                                                                    tips = "Intermediate";
+                                                                    stars = "<i class='icon-star' style='font-size: 20px;'></i> <i class='icon-star' style='font-size: 20px;'></i>";
+                                                                } else {
+                                                                    tips = "Advanced";
+                                                                    stars = "<i class='icon-star' style='font-size: 20px;'></i> <i class='icon-star' style='font-size: 20px;'></i> <i class='icon-star' style='font-size: 20px;'></i>";
+                                                                }
                                                         %>
                                                         <tr class="odd gradeX">
                                                             <td data-title="Quiz"><%=quiz.getName()%></td>
-                                                            <td data-title="Difficulty"><%=diffLvl%></td>
+                                                            <td style="text-align: center;"><div class="tooltips" data-placement="top" data-original-title="<%=tips%>"><%=stars%></div></td>
                                                             <td data-title="Date Open"><%=quiz.getDateOpen()%></td>
                                                             <td data-title="Date Close"><%=quiz.getDateClose()%></td>
                                                             <td data-title="Time Created"><%=timeCreated%></td>

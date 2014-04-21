@@ -132,14 +132,14 @@
                                                                 <div class="row-fluid">
                                                                     <div class="span6 margin-bottom-15" style="background-color: #d9edf7;">
                                                                         <!--Answer A-->
-                                                                        <label class="radio">
+                                                                        <label class="radio" id="ans<%=j%>0">
                                                                             <input type="radio" name="option" id="option" value="<%=quest.getOptions().get(0)%>" required>
                                                                             <%=quest.getOptions().get(0)%>
                                                                         </label>
                                                                     </div>
                                                                     <div class="span6 margin-bottom-15" style="background-color: #d9edf7;">
                                                                         <!--Answer B-->
-                                                                        <label class="radio">
+                                                                        <label class="radio"  id="ans<%=j%>1">
                                                                             <input type="radio" name="option" id="option" value="<%=quest.getOptions().get(1)%>">
                                                                             <%=quest.getOptions().get(1)%>
                                                                         </label>
@@ -148,14 +148,14 @@
                                                                 <div class="row-fluid">
                                                                     <div class="span6 margin-bottom-15" style="background-color: #d9edf7;">
                                                                         <!--Answer C-->
-                                                                        <label class="radio">
+                                                                        <label class="radio"  id="ans<%=j%>2">
                                                                             <input type="radio" name="option" id="option" value="<%=quest.getOptions().get(2)%>">
                                                                             <%=quest.getOptions().get(2)%>
                                                                         </label>
                                                                     </div>
                                                                     <div class="span6 margin-bottom-15" style="background-color: #d9edf7;">
                                                                         <!--Answer D-->
-                                                                        <label class="radio">
+                                                                        <label class="radio" id="ans<%=j%>3">
                                                                             <input type="radio" name="option" id="option" value="<%=quest.getOptions().get(3)%>">
                                                                             <%=quest.getOptions().get(3)%>
                                                                         </label>
@@ -168,14 +168,14 @@
                                                                 <div class="tiles">
                                                                     <%
                                                                         String ahelpClass = "tile bg-yellow hint";
-                                                                        String afiftyClass = "tile bg-yellow hint";
+                                                                        String afiftyClass = "tile bg-yellow fifty";
                                                                         String itemHelp = request.getAttribute("itemHelp").toString();
                                                                         String itemFifty = request.getAttribute("itemFifty").toString();
                                                                         if (itemHelp.equals("0")) {
                                                                             ahelpClass = "tile bg-grey hint nohover";
                                                                         }
                                                                         if (itemFifty.equals("0")) {
-                                                                            afiftyClass = "tile bg-grey hint nohover";
+                                                                            afiftyClass = "tile bg-grey fifty nohover";
                                                                         }
                                                                     %>
                                                                     <a href="#" id="<%=quest.getQuestionId() + " " + j%>" class="<%=ahelpClass%>">
@@ -224,7 +224,6 @@
                                             %>
                                             <!--loop end-->
                                         </div>
-
 
                                         <div class="form-actions clearfix">
                                             <a href="javascript:;" class="btn button-previous">
@@ -311,13 +310,12 @@
 
                 $('a.hint').click(function() {
                     var values = this.id.split(" ");
-                    var qId = values[0];
+                    var qId = values[0]; //questionId 
                     var qId2 = values[1];
 
                     //disable
                     $(this).removeClass('bg-yellow').addClass('bg-grey nohover');
 
-                    //TODO: need to check if enough items
                     var getHintsUrl = "/Student/QuizServlet?action=useHints&qId=" + qId;
                     $.get(getHintsUrl, function(data) {
                         if (data === '') {
@@ -340,15 +338,44 @@
 
                 });
 
-                $('.fifty').click(function() {
+                $('a.fifty').click(function() {
                     var values = this.id.split(" ");
-                    var qId = values[0];
+                    var qId = values[0]; // questionId
                     var qId2 = values[1];
 
-                    //TODO: need to check if enough items
-                    var useFiftyUrl = "/Student/QuizServlet?action=useFifty&qId=" + qId;
+                    console.log(qId);
 
-                    return false;
+                    //disable
+                    $(this).removeClass('bg-yellow').addClass('bg-grey nohover');
+
+                    var useFiftyUrl = "/Student/QuizServlet?action=useFifty&qId=" + qId;
+                    $.get(useFiftyUrl, function(data) {
+                        if (data === '') {
+                            return false;
+                        } else {
+                            var corrAns = data;
+
+                            for (var i = 0, j = 0; i < 4, j < 2; i++) {
+                                var ansId = qId2 + '' + i;
+                                var option = $('#ans' + ansId + ' input').val();
+                                if (option !== corrAns) {
+                                    $('#ans' + ansId).hide();
+                                    j++;
+                                }
+
+                                if (j === 2)
+                                    break;
+                            }
+
+                            // get new item qty
+                            var getItemQtyUrl = "/Student/QuizServlet?action=getItemQty&itemName=Fifty-Fifty";
+                            $.get(getItemQtyUrl, function(data) {
+                                $('#itemFifty').html(data);
+                            });
+
+                            return false;
+                        }
+                    });
                 });
             });
         </script>

@@ -144,6 +144,25 @@ public class QuizBean implements QuizBeanLocal {
         return quizzes;
     }
 
+    public List<QuizDetails> getCompletedQuiz(String userId, String moduleId) {
+        Query q = em.createQuery("SELECT s FROM QuizSession s WHERE s.userId = '" + userId + "' AND s.status = 'complete'");
+
+        if (!q.getResultList().isEmpty()) {
+            List<QuizSession> sList = q.getResultList();
+            ArrayList<QuizDetails> dList = new ArrayList<>();
+
+            for (QuizSession s : sList) {
+                Long quizId = s.getQuizId();
+                String quizName = em.find(Quiz.class, quizId).getName();
+                QuizDetails d = new QuizDetails(quizId, quizName);
+                dList.add(d);
+            }
+            return dList;
+        } else {
+            return null;
+        }
+    }
+
     public Boolean checkAuthToPlay(String userId, String moduleId, Long quizId) {
         //check if student is in this module & quiz is active
         Student student = em.find(Student.class, userId);
@@ -305,11 +324,9 @@ public class QuizBean implements QuizBeanLocal {
 
         Quiz quiz = em.find(Quiz.class, Long.valueOf(quizId));
         String difficulty = quiz.getDifficultyLvl();
-        Boolean levelUp = false;
 
         if (difficulty.equals("beginner")) {
             updateExpPoints(userId, moduleId, 5);
-
         } else if (difficulty.equals("intermediate")) {
             updateExpPoints(userId, moduleId, 8);
         } else {
@@ -317,28 +334,16 @@ public class QuizBean implements QuizBeanLocal {
         }
     }
 
-    public List<LeaderboardDetails> getLeaderboard(String moduleId) {
-        Query q = em.createQuery("SELECT l FROM Leaderboard l WHERE l.moduleId = '" + moduleId + "' ORDER BY l.points DESC");
-        List<Leaderboard> list = q.getResultList();
-        List<LeaderboardDetails> dataList = new ArrayList<LeaderboardDetails>();
-
-        for (Leaderboard l : list) {
-            String userId = l.getUserId();
-            Student s = em.find(Student.class, userId);
-            GameProfile p = getGameProfile(s.getUserId(), moduleId);
-
-            LeaderboardDetails d = new LeaderboardDetails(userId, p.getExpLevel(), p.getExpPoint());
-            dataList.add(d);
-        }
-
-        return dataList;
-    }
-
     public QuizDetails getUnlockedQuiz(Long quizId) {
-        Quiz q = em.find(Quiz.class, quizId);
-        QuizDetails q2 = new QuizDetails(q.getQuizId(), q.getName());
+        Query q = em.createQuery("SELECT q FROM Quiz q WHERE q.prereq.quizId = " + quizId);
+        if (!q.getResultList().isEmpty()) {
+            Quiz quiz = (Quiz) q.getSingleResult();
+            QuizDetails q2 = new QuizDetails(quiz.getQuizId(), quiz.getName());
 
-        return q2;
+            return q2;
+        } else {
+            return null;
+        }
     }
 
     public QuizItemDetails getNewItem(String userId, String moduleId) {
@@ -374,6 +379,62 @@ public class QuizBean implements QuizBeanLocal {
         return item;
     }
 
+    public Integer getSreakBonus(String userId, String moduleId) {
+        GameProfile p = getGameProfile(userId, moduleId);
+        int streak = p.getStreak();
+        int bonus = 0;
+
+        if (streak > 0) {
+            bonus = streak * 2;
+            int currPts = p.getExpPoint();
+            p.setExpPoint(currPts + bonus);
+            em.persist(p);
+
+            updateExpPoints(userId, moduleId, bonus);
+        }
+
+        return bonus;
+    }
+
+    public LeaderboardDetails getLeaderboardPos(String userId, String moduleId) {
+        String userIdInFront = "", userNameInFront = "";
+        Integer ptsAway = 0, position = 0;
+
+        Query q = em.createQuery("SELECT l FROM Leaderboard l WHERE l.moduleId = '" + moduleId + "' ORDER BY l.points DESC");
+        List<Leaderboard> list = q.getResultList();
+
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getUserId().equals(userId)) {
+                position = i + 1;
+                if (i > 0) {
+                    userIdInFront = list.get(i - 1).getUserId();
+                    ptsAway = list.get(i - 1).getPoints() - list.get(i).getPoints();
+                    Student s = em.find(Student.class, userIdInFront);
+                    userNameInFront = s.getName();
+                }
+            }
+        }
+        LeaderboardDetails d = new LeaderboardDetails(position, ptsAway, userNameInFront);
+        return d;
+    }
+
+    public List<LeaderboardDetails> getLeaderboard(String moduleId) {
+        Query q = em.createQuery("SELECT l FROM Leaderboard l WHERE l.moduleId = '" + moduleId + "' ORDER BY l.points DESC");
+        List<Leaderboard> list = q.getResultList();
+        List<LeaderboardDetails> dataList = new ArrayList<LeaderboardDetails>();
+
+        for (Leaderboard l : list) {
+            String userId = l.getUserId();
+            Student s = em.find(Student.class, userId);
+            GameProfile p = getGameProfile(s.getUserId(), moduleId);
+
+            LeaderboardDetails d = new LeaderboardDetails(userId, s.getName(), p.getExpLevel(), p.getExpPoint());
+            dataList.add(d);
+        }
+
+        return dataList;
+    }
+
     public Boolean enoughItem(String userId, String moduleId, String itemName) {
         GameProfile profile = getGameProfile(userId, moduleId);
 
@@ -398,6 +459,7 @@ public class QuizBean implements QuizBeanLocal {
                     int qty = i.getQty();
                     if (qty > 0) {
                         i.setQty(qty - 1);
+                        em.persist(i);
                         hint = q.getAnswerHint();
                     } else {
                         hint = "false";
@@ -409,6 +471,42 @@ public class QuizBean implements QuizBeanLocal {
         } catch (Exception e) {
             e.printStackTrace();
             return hint;
+        }
+    }
+
+    public String useFifty(String userId, String moduleId, Long questionId) {
+        GameProfile profile = getGameProfile(userId, moduleId);
+
+        String correctAns = "";
+
+        try {
+            for (QuizItem i : profile.getItems()) {
+
+                if (i.getName().equals("Fifty-Fifty")) {
+                    int qty = i.getQty();
+                    if (qty > 0) {
+                        i.setQty(qty - 1);
+                        em.persist(i);
+
+                        String strQuery = "SELECT a FROM QuestionAnswer a "
+                                + "WHERE a.question.questionId = '" + questionId + "'";
+                        Query q = em.createQuery(strQuery);
+                        List<QuestionAnswer> answerList = q.getResultList();
+                        for (QuestionAnswer a : answerList) {
+                            if (a.isCorrectAnswer() != null && a.isCorrectAnswer()) {
+                                correctAns = a.getAnswer();
+                            }
+                        }
+                    } else {
+                        correctAns = "";
+                    }
+                }
+            }
+
+            return correctAns;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return correctAns;
         }
     }
 
@@ -429,6 +527,18 @@ public class QuizBean implements QuizBeanLocal {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public Boolean saveStudentFeedback(String userId, Long quizId, String feedback) {
+        Query q = em.createQuery("SELECT s FROM QuizSession s WHERE s.userId = '" + userId + "' AND s.quizId = " + quizId);
+        QuizSession s = (QuizSession)q.getSingleResult();
+        
+        s.setStudentFeedback(feedback);
+        Date date = new Date();
+        s.setTimeCompleted(date);
+        em.persist(s);
+        
+        return true;
     }
 
     public GameProfile getGameProfile(String userId, String moduleId) {
@@ -500,26 +610,35 @@ public class QuizBean implements QuizBeanLocal {
         return count;
     }
 
-    private Boolean updateExpPoints(String userId, String moduleId, Integer pts) {
+    private void updateExpPoints(String userId, String moduleId, Integer pts) {
         try {
             GameProfile profile = getGameProfile(userId, moduleId);
-            String level1 = profile.getExpLevel(), level2 = "";
-
             int p1 = profile.getExpPoint();
             int p2 = p1 + pts;
+
             profile.setExpPoint(p2);
-            level2 = getLevelStatus(p2);
-            profile.setExpLevel(level2);
+            profile.setExpLevel(getLevelStatus(p2));
             em.persist(profile);
 
-            if (!level1.equals(level2)) {
-                return true;
+            // Update Leaderboard
+            Query q = em.createQuery("SELECT l FROM Leaderboard l WHERE l.userId = '" + userId + "' AND l.moduleId = '" + moduleId + "'");
+            if (q.getResultList().isEmpty()) {
+                Leaderboard l = new Leaderboard();
+                l.setUserId(userId);
+                l.setModuleId(moduleId);
+                l.setPoints(p2);
+                Date date = new Date();
+                l.setTimeCreated(date);
+                em.persist(l);
             } else {
-                return false;
+                Leaderboard l = (Leaderboard) q.getSingleResult();
+                l.setPoints(p2);
+                Date date = new Date();
+                l.setTimeCreated(date);
+                em.persist(l);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
     }
 

@@ -17,27 +17,6 @@ var FormWizard = function() {
             var error = $('.alert-error', form);
             var success = $('.alert-success', form);
 
-            var displayConfirm = function() {
-                $('.display-value', form).each(function() {
-                    var input = $('[name="' + $(this).attr("data-display") + '"]', form);
-                    if (input.is(":text") || input.is("textarea")) {
-                        $(this).html(input.val());
-                    } else if (input.is("select")) {
-                        $(this).html(input.find('option:selected').text());
-                    } else if (input.is(":radio") && input.is(":checked")) {
-                        $(this).html(input.attr("data-title"));
-                    } else if ($(this).attr("data-display") == 'card_expiry') {
-                        $(this).html($('[name="card_expiry_mm"]', form).val() + '/' + $('[name="card_expiry_yyyy"]', form).val());
-                    } else if ($(this).attr("data-display") == 'payment') {
-                        var payment = [];
-                        $('[name="payment[]"]').each(function() {
-                            payment.push($(this).attr('data-title'));
-                        });
-                        $(this).html(payment.join("<br>"));
-                    }
-                });
-            }
-
             // default form wizard
             $('#form_wizard_1').bootstrapWizard({
                 'nextSelector': '.button-next',
@@ -69,11 +48,12 @@ var FormWizard = function() {
                     if (current >= total) {
                         $('#form_wizard_1').find('.button-next').hide();
                         $('#form_wizard_1').find('.button-finish').show();
-                        displayConfirm();
                     } else {
                         $('#form_wizard_1').find('.button-next').show();
                         $('#form_wizard_1').find('.button-finish').hide();
                     }
+                    console.log(index);
+
                     App.scrollTo($('.page-title'));
                 },
                 onPrevious: function(tab, navigation, index) {
@@ -105,6 +85,7 @@ var FormWizard = function() {
                         $('#form_wizard_1').find('.button-finish').hide();
                     }
 
+                    console.log(index);
                     App.scrollTo($('.page-title'));
                 },
                 onTabShow: function(tab, navigation, index) {

@@ -23,10 +23,6 @@ public class QuizServlet extends HttpServlet {
 
     @EJB
     private QuizBeanLocal quizBean;
-    @EJB
-    private QuestionBeanLocal qBean;
-    @EJB
-    private ModuleBeanLocal mBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -54,6 +50,10 @@ public class QuizServlet extends HttpServlet {
                 List<QuizDetails> quizzes = quizBean.studentGetModuleQuiz(userId, moduleId);
                 request.setAttribute("quizzes", quizzes);
 
+                request.setAttribute("streak", quizBean.getStreakCount(userId, moduleId));
+                request.setAttribute("itemRetry", quizBean.getQuizItemQty(userId, moduleId, "Retry"));
+                request.setAttribute("completedQuiz", quizBean.getCompletedQuiz(userId, moduleId));
+
                 request.getRequestDispatcher("/quiz/quiz.jsp").forward(request, response);
             } else if (action.equals("playQuiz")) {
                 String quizId = request.getParameter("quizId");
@@ -66,7 +66,7 @@ public class QuizServlet extends HttpServlet {
                     request.getSession().setAttribute("quizId", quizId);
                     //create quiz session
                     quizBean.createQuizSession(userId, Long.valueOf(quizId));
-                    
+
                     GameProfile p = quizBean.getGameProfile(userId, moduleId);
                     request.getSession().setAttribute("initialLvl", p.getExpLevel());
 
@@ -75,7 +75,6 @@ public class QuizServlet extends HttpServlet {
                     request.setAttribute("streak", quizBean.getStreakCount(userId, moduleId));
                     request.setAttribute("itemHelp", quizBean.getQuizItemQty(userId, moduleId, "GetHelp"));
                     request.setAttribute("itemFifty", quizBean.getQuizItemQty(userId, moduleId, "Fifty-Fifty"));
-                    request.setAttribute("itemRetry", quizBean.getQuizItemQty(userId, moduleId, "Retry"));
 
                     request.getRequestDispatcher("/quiz/doQuiz.jsp").forward(request, response);
                 } else {
@@ -99,16 +98,24 @@ public class QuizServlet extends HttpServlet {
                 String moduleId = request.getSession().getAttribute("moduleId").toString();
 
                 // check if enough item
-                Boolean enoughItem = quizBean.enoughItem(userId, moduleId, "GetHelp");
-                if (enoughItem) {
-                    String hints = quizBean.useHints(userId, moduleId, Long.valueOf(qId));
+                String hints = quizBean.useHints(userId, moduleId, Long.valueOf(qId));
 
-                    response.setContentType("application/json;charset=utf-8");
-                    Gson gson = new Gson();
-                    PrintWriter pw = response.getWriter();
-                    pw.print(gson.toJson(hints));
-                    pw.close();
-                }
+                response.setContentType("application/json;charset=utf-8");
+                Gson gson = new Gson();
+                PrintWriter pw = response.getWriter();
+                pw.print(gson.toJson(hints));
+                pw.close();
+            } else if (action.equals("useFifty")) {
+                String questionId = request.getParameter("qId").toString();
+                String userId = request.getSession().getAttribute("userId").toString();
+                String moduleId = request.getSession().getAttribute("moduleId").toString();
+                String corrAns = quizBean.useFifty(userId, moduleId, Long.valueOf(questionId));
+
+                response.setContentType("application/json;charset=utf-8");
+                Gson gson = new Gson();
+                PrintWriter pw = response.getWriter();
+                pw.print(gson.toJson(corrAns));
+                pw.close();
             } else if (action.equals("getItemQty")) {
                 String userId = request.getSession().getAttribute("userId").toString();
                 String moduleId = request.getSession().getAttribute("moduleId").toString();
@@ -125,16 +132,27 @@ public class QuizServlet extends HttpServlet {
                 String quizId = request.getSession().getAttribute("quizId").toString();
                 String initialLvl = request.getSession().getAttribute("initialLvl").toString();
 
+                // the following sequence ensures latest EXP points and levels are retrieved
                 quizBean.finishQuiz(userId, moduleId, quizId);
+                request.setAttribute("streakBonus", quizBean.getSreakBonus(userId, moduleId));
                 request.setAttribute("results", quizBean.getQuizResults(userId, Long.valueOf(quizId)));
-                request.setAttribute("profile", quizBean.getProfileDetails(userId, moduleId));
                 request.setAttribute("initialLvl", initialLvl);
+                request.setAttribute("profile", quizBean.getProfileDetails(userId, moduleId));
                 request.setAttribute("ptsToNext", quizBean.ptsToNextLvl(userId, moduleId));
-                //request.setAttribute("leaderboard", quizBean.getLeaderboard(moduleId));
+                request.setAttribute("leaderboardPos", quizBean.getLeaderboardPos(userId, moduleId));
                 request.setAttribute("unlockedQuiz", quizBean.getUnlockedQuiz(Long.valueOf(quizId)));
                 request.setAttribute("newItem", quizBean.getNewItem(userId, moduleId));
 
                 request.getRequestDispatcher("quiz/results.jsp").forward(request, response);
+            } else if (action.equals("sendFeedback")) {
+                String userId = request.getSession().getAttribute("userId").toString();
+                String quizId = request.getSession().getAttribute("quizId").toString();
+                String feedback = request.getParameter("feedback");
+
+                quizBean.saveStudentFeedback(userId, Long.valueOf(quizId), feedback);
+                
+                request.getSession().removeAttribute("quizId");
+                response.sendRedirect("/Student/QuizServlet?action=viewAllQuiz");
             }
         } catch (Exception e) {
             e.printStackTrace();

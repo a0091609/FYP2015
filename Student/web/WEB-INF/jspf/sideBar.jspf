@@ -23,138 +23,24 @@
                 <span class="selected"></span>
             </a>
         </li>
-        
-        <li>
-            <a href="#">
-                <i class="icon-file-text"></i> 
-                <span class="title">Sample Link</span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="icon-file-text"></i> 
-                <span class="title">Sample Link</span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="icon-file-text"></i> 
-                <span class="title">Sample Link</span>
-            </a>
-        </li>
-
 
         <li>
-            <a href="javascript:;">
-                <i class="icon-bookmark-empty"></i> 
-                <span class="title">2 Level Menu</span>
-                <span class="arrow "></span>
+            <a href="#">
+                <i class="icon-book"></i> 
+                <span class="title">Modules</span>
             </a>
-            <ul class="sub-menu">
-                <li>
-                    <a href="#">
-                        Sublink
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        Sublink
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        Sublink
-                    </a>
-                </li>
-            </ul>
-        </li>
-        
-        <li>
-            <a class="active" href="javascript:;">
-                <i class="icon-sitemap"></i> 
-                <span class="title">3 Level Menu</span>
-                <span class="arrow "></span>
-            </a>
-            <ul class="sub-menu">
-                <li>
-                    <a href="javascript:;">
-                        Item 1
-                        <span class="arrow"></span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li><a href="#">Sample Link 1</a></li>
-                        <li><a href="#">Sample Link 2</a></li>
-                        <li><a href="#">Sample Link 3</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        Item 1
-                        <span class="arrow"></span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li><a href="#">Sample Link 1</a></li>
-                        <li><a href="#">Sample Link 1</a></li>
-                        <li><a href="#">Sample Link 1</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        Item 3
-                    </a>
-                </li>
-            </ul>
         </li>
         <li>
-            <a href="javascript:;">
-                <i class="icon-folder-open"></i> 
-                <span class="title">4 Level Menu</span>
-                <span class="arrow "></span>
+            <a href="#">
+                <i class="icon-trophy"></i> 
+                <span class="title">Leaderboards</span>
             </a>
-            <ul class="sub-menu">
-                <li>
-                    <a href="javascript:;">
-                        <i class="icon-cogs"></i> 
-                        Item 1
-                        <span class="arrow"></span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li>
-                            <a href="javascript:;">
-                                <i class="icon-user"></i>
-                                Sample Link 1
-                                <span class="arrow"></span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li><a href="#"><i class="icon-remove"></i> Sample Link 1</a></li>
-                                <li><a href="#"><i class="icon-pencil"></i> Sample Link 1</a></li>
-                                <li><a href="#"><i class="icon-edit"></i> Sample Link 1</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#"><i class="icon-user"></i>  Sample Link 1</a></li>
-                        <li><a href="#"><i class="icon-external-link"></i>  Sample Link 2</a></li>
-                        <li><a href="#"><i class="icon-bell"></i>  Sample Link 3</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <i class="icon-globe"></i> 
-                        Item 2
-                        <span class="arrow"></span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li><a href="#"><i class="icon-user"></i>  Sample Link 1</a></li>
-                        <li><a href="#"><i class="icon-external-link"></i>  Sample Link 1</a></li>
-                        <li><a href="#"><i class="icon-bell"></i>  Sample Link 1</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="icon-folder-open"></i>
-                        Item 3
-                    </a>
-                </li>
-            </ul>
+        </li>
+        <li>
+            <a href="#">
+                <i class="icon-edit"></i>
+                <span class="title">Quiz</span>
+            </a>
         </li>
     </ul>
     <!-- END SIDEBAR MENU -->

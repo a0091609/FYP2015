@@ -1,4 +1,4 @@
-<%@page import="java.util.ArrayList, helper.GameProfileDetails, helper.QuizResults, helper.QuizDetails, helper.QuizItemDetails" %>
+<%@page import="java.util.ArrayList, helper.GameProfileDetails, helper.QuizResults, helper.QuizDetails, helper.QuizItemDetails, helper.LeaderboardDetails" %>
 
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
@@ -62,8 +62,8 @@
                                     <thead>
                                         <tr>
                                             <th><i class="icon-question-sign"></i> Question</th>
-                                            <th><i class="icon-bookmark"></i> Answer</th>
-                                            <th></th>
+                                            <th><i class="icon-bookmark"></i> Correct Answer</th>
+                                            <th>Your Answer</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -112,8 +112,9 @@
                                     <%
                                         GameProfileDetails p = (GameProfileDetails) request.getAttribute("profile");
                                         QuizDetails q = (QuizDetails) request.getAttribute("unlockedQuiz");
+                                        String streakBonus = request.getAttribute("streakBonus").toString();
                                         String initialLvl = request.getAttribute("initialLvl").toString();
-
+                                        LeaderboardDetails l = (LeaderboardDetails) request.getAttribute("leaderboardPos");
                                     %>
                                     <div class="portlet box yellow">
                                         <div class="portlet-title">
@@ -122,11 +123,12 @@
 
                                         <div class="portlet-body">
                                             <ul class="feeds">
+                                                <!--New Item-->
                                                 <li>
                                                     <div class="col1">
                                                         <div class="cont">
                                                             <div class="cont-col1">
-                                                                <div class="label label-info">                        
+                                                                <div class="label label-important">                        
                                                                     <i class="icon-gift"></i>
                                                                 </div>
                                                             </div>
@@ -147,22 +149,81 @@
                                                         </div>
                                                     </div>
                                                 </li>
+                                                <!--End of New Item-->
+
+                                                <!--Unlocked Quiz-->
+                                                <%if (q != null) {%>
                                                 <li>
                                                     <div class="col1">
                                                         <div class="cont">
                                                             <div class="cont-col1">
-                                                                <div class="label label-info">
-                                                                    <%                                                                        if (!initialLvl.equals(p.getExpLevel())) {
-                                                                    %>
-                                                                    <i class="icon-thumbs-up"></i>
-                                                                    <%
-                                                                    } else {
-                                                                    %>
-                                                                    <i class="icon-heart"></i>
-                                                                    <%
-                                                                        }
-                                                                    %>
+                                                                <div class="label label-important">                        
+                                                                    <i class="icon-gift"></i>
                                                                 </div>
+                                                            </div>
+                                                            <div class="cont-col2">
+                                                                <div class="desc">
+                                                                    You have unlocked <b><%=q.getName()%></b>.
+                                                                    <span class="label label-warning label-mini">
+                                                                        Take action 
+                                                                        <i class="icon-share-alt"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col2">
+                                                        <div class="date">
+                                                            <a class="btn mini blue" href="/Student/QuizServlet?action=playQuiz&quizId=<%=q.getQuizId()%>"> Play</a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <%
+                                                    }
+                                                %>
+                                                <!--End of Unlocked Quiz-->
+
+                                                <!--Streak Bonus-->
+                                                <%if (Integer.valueOf(streakBonus) > 0) {%>
+                                                <li>
+                                                    <div class="col1">
+                                                        <div class="cont">
+                                                            <div class="cont-col1">
+                                                                <div class="label label-success">                        
+                                                                    <i class="icon-thumbs-up"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="cont-col2">
+                                                                <div class="desc">
+                                                                    You have earned <b><%=streakBonus%> Correct Streak Bonus!</b>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <%}%>
+                                                <!--End of Streak Bonus-->
+
+                                                <!--Current EXP Level-->
+                                                <li>
+                                                    <div class="col1">
+                                                        <div class="cont">
+                                                            <div class="cont-col1">
+                                                                <%if (!initialLvl.equals(p.getExpLevel())) {
+                                                                %>
+                                                                <div class="label label-success">
+                                                                    <i class="icon-thumbs-up"></i>
+                                                                </div>
+                                                                <%
+                                                                } else {
+                                                                %>
+                                                                <div class="label label-info">
+                                                                    <i class="icon-heart"></i>
+                                                                </div>
+                                                                <%
+                                                                    }
+                                                                %>
+
                                                             </div>
                                                             <div class="cont-col2">
                                                                 <div class="desc">
@@ -183,6 +244,9 @@
                                                         </div>
                                                     </div>
                                                 </li>
+                                                <!--End of Current EXP Level-->
+
+                                                <!--Current EXP Points-->
                                                 <li>
                                                     <div class="col1">
                                                         <div class="cont">
@@ -193,37 +257,36 @@
                                                             </div>
                                                             <div class="cont-col2">
                                                                 <div class="desc">
-                                                                    You have <%=p.getExpPoint()%> EXP now. <%=request.getAttribute("ptsToNext")%> to next level.
+                                                                    You have <b><%=p.getExpPoint()%> EXP</b> now. <b><%=request.getAttribute("ptsToNext")%> EXP</b> to next level.
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </li>
+                                                <!--End of Current EXP Points--> 
+
+                                                <!--Leaderboard Position-->
                                                 <li>
                                                     <div class="col1">
                                                         <div class="cont">
                                                             <div class="cont-col1">
-                                                                <div class="label label-info">                        
-                                                                    <i class="icon-gift"></i>
+                                                                <div class="label label-warning">                        
+                                                                    <i class="icon-bell-alt"></i>
                                                                 </div>
                                                             </div>
                                                             <div class="cont-col2">
                                                                 <div class="desc">
-                                                                    You have unlocked <%=q.getName()%>.
-                                                                    <span class="label label-warning label-mini">
-                                                                        Take action 
-                                                                        <i class="icon-share-alt"></i>
-                                                                    </span>
+                                                                    <%if (!(l.getPosition() > 1)) {%>
+                                                                    Congratulations! You are top of the Leaderboard.
+                                                                    <%} else {%>
+                                                                    You currently rank no. <b><%=l.getPosition()%></b> and is <b><%=l.getPtsAway()%> EXP</b> away from <b><%=l.getUserInFront()%></b>.
+                                                                    <%}%>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col2">
-                                                        <div class="date">
-                                                            <a class="btn mini blue" href="/Student/QuizServlet?action=playQuiz&quizId=<%=q.getQuizId()%>"> Play</a>
-                                                        </div>
-                                                    </div>
                                                 </li>
+                                                <!--End of Leaderboard Position-->
                                             </ul>
                                         </div>
                                     </div>
@@ -268,7 +331,7 @@
 
 
                         <div class="span6">
-                            <form action="/Student/QuizServlet?action=finishQuiz" class="horizontal-form">
+                            <form action="/Student/QuizServlet?action=sendFeedback" class="horizontal-form">
                                 <h3 class="form-section"><i class="icon-pencil"></i> Feedback Form</h3>
                                 Please write down your concerns so that the instructor can respond to the issues during the class.
 
