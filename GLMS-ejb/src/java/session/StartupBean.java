@@ -2,6 +2,7 @@ package session;
 
 import entity.Avatar;
 import entity.GameProfile;
+import entity.Key;
 import entity.Leaderboard;
 import entity.Module;
 import entity.Quest;
@@ -25,7 +26,8 @@ import javax.persistence.PersistenceContext;
 @Singleton
 @LocalBean
 @Startup
-public class StartupBean {
+public class StartupBean
+{
 
     @EJB
     private AccountBeanLocal acctBean;
@@ -37,27 +39,35 @@ public class StartupBean {
     private QuizBeanLocal quizbean;
     @EJB
     private QuestionBeanLocal questBean;
+    @EJB
+    private ItemBeanLocal itemBean;
 
     @PersistenceContext
     private EntityManager em;
 
     @PostConstruct
-    private void init() {
-        try {
-            createInstructors();
-            createStudents();
-            createModules();
-            createGameProfile();
-            createAvatar();
+    private void init()
+    {
+        try
+        {
+//            createInstructors();
+//            createStudents();
+            //createModules();
+            //createGameProfile();
+            //createAvatar();
             createQuests();
-            createQuizzes();
-            createQuizItems();
-        } catch (Exception e) {
+            createItems();
+            //createQuizzes();
+            //createQuizItems();
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
 
-    private void createInstructors() {
+    private void createInstructors()
+    {
         System.out.println("Creating instructors...");
         //String userId, String name, String email, String gender, String faculty
         acctBean.createInstructor("gstwchihyong", "Wong Chih Yong", "wchihyong@gmail.com", "male", "");
@@ -65,59 +75,62 @@ public class StartupBean {
         System.out.println("Instructors [gstwchihyong, Philson] created.");
     }
 
-    private void createStudents() {
+    private void createStudents()
+    {
         System.out.println("Creating students...");
         /* String userId, String name, String email, String gender,
          String faculty, String firstMajor, String secondMajor, Integer matriculationYear*/
         acctBean.createStudent("a0075128", "WONG CHIH YONG", "chihyong@nus.edu.sg",
-                "male", "School of Computing", "Information Systems (Hons)", "", 2010);
+                               "male", "School of Computing", "Information Systems (Hons)", "", 2010);
         acctBean.createStudent("gstwchihyong", "Wong Chih Yong", "wchihyong@gmail.com",
-                "male", "School of Computing", "Information Systems (Hons)", "", 2010);
+                               "male", "School of Computing", "Information Systems (Hons)", "", 2010);
         acctBean.createStudent("micheal", "Micheal Chang", "chihyong@nus.edu.sg",
-                "male", "School of Computing", "Information Systems (Hons)", "", 2010);
+                               "male", "School of Computing", "Information Systems (Hons)", "", 2010);
         acctBean.createStudent("kelvin", "Kelvin Lee", "chihyong@nus.edu.sg",
-                "male", "School of Computing", "Information Systems (Hons)", "", 2010);
+                               "male", "School of Computing", "Information Systems (Hons)", "", 2010);
         acctBean.createStudent("adam", "Adam Tan", "chihyong@nus.edu.sg",
-                "male", "School of Computing", "Information Systems (Hons)", "", 2010);
+                               "male", "School of Computing", "Information Systems (Hons)", "", 2010);
         acctBean.createStudent("vincent", "Vincent Liew", "chihyong@nus.edu.sg",
-                "male", "School of Computing", "Information Systems (Hons)", "", 2010);
+                               "male", "School of Computing", "Information Systems (Hons)", "", 2010);
 
         acctBean.createStudent("Philson", "PHILSON NAH", "philson@nus.edu.sg",
-                "male", "School of Computing", "Information Systems (Hons)", "", 2010);
+                               "male", "School of Computing", "Information Systems (Hons)", "", 2010);
         System.out.println("Students [a0075128, gstwchihyong, Philson] created.");
     }
 
-    private void createModules() {
+    private void createModules()
+    {
         System.out.println("Creating modules...");
         //String moduleId, String moduleCode, String moduleName, String moduleCreator, String userId        
         moduleBean.saveStudentModule("a7f180e1-5361-4426-a6fa-5d90404ef2b1",
-                "IS1112", "E-BUSINESS ESSENTIALS", "gstwchihyong", "gstwchihyong");
+                                     "IS1112", "E-BUSINESS ESSENTIALS", "gstwchihyong", "gstwchihyong");
         moduleBean.saveStudentModule("a7f180e1-5361-4426-a6fa-5d90404ef2b1",
-                "IS1112", "E-BUSINESS ESSENTIALS", "gstwchihyong", "micheal");
+                                     "IS1112", "E-BUSINESS ESSENTIALS", "gstwchihyong", "micheal");
         moduleBean.saveStudentModule("a7f180e1-5361-4426-a6fa-5d90404ef2b1",
-                "IS1112", "E-BUSINESS ESSENTIALS", "gstwchihyong", "kelvin");
+                                     "IS1112", "E-BUSINESS ESSENTIALS", "gstwchihyong", "kelvin");
         moduleBean.saveStudentModule("a7f180e1-5361-4426-a6fa-5d90404ef2b1",
-                "IS1112", "E-BUSINESS ESSENTIALS", "gstwchihyong", "adam");
+                                     "IS1112", "E-BUSINESS ESSENTIALS", "gstwchihyong", "adam");
         moduleBean.saveStudentModule("a7f180e1-5361-4426-a6fa-5d90404ef2b1",
-                "IS1112", "E-BUSINESS ESSENTIALS", "gstwchihyong", "vincent");
+                                     "IS1112", "E-BUSINESS ESSENTIALS", "gstwchihyong", "vincent");
 
         //Create Modules for PHILSON
         //IS1112
         moduleBean.saveStudentModule("IS1112",
-                "IS1112", "E-BUSINESS ESSENTIALS", "Philson", "Philson");
+                                     "IS1112", "E-BUSINESS ESSENTIALS", "Philson", "Philson");
         //IS4240
         moduleBean.saveStudentModule("IS4240",
-                "IS4240", "BUSINESS INTELLIGENCE SYSTEMS", "Philson", "Philson");
+                                     "IS4240", "BUSINESS INTELLIGENCE SYSTEMS", "Philson", "Philson");
         //IS4224
         moduleBean.saveStudentModule("IS4224",
-                "IS4224", "SERVICE SYSTEMS", "Philson", "Philson");
+                                     "IS4224", "SERVICE SYSTEMS", "Philson", "Philson");
         //IS3260
         moduleBean.saveStudentModule("IS3260",
-                "IS3260", "GAMIFICATION", "Philson", "Philson");
+                                     "IS3260", "GAMIFICATION", "Philson", "Philson");
         System.out.println("Modules [IS1112, IS1112, IS4240, IS4224, IS3260] created.");
     }
 
-    private void createGameProfile() {
+    private void createGameProfile()
+    {
         Date date = new Date();
 
         // update Game Profiles created in saveStudentModule method
@@ -182,10 +195,11 @@ public class StartupBean {
         em.persist(l5);
     }
 
-    private void createQuests() throws Exception {
+    private void createQuests() throws Exception
+    {
         Module eBiz = moduleBean.getModule("IS1112");
         Quest q1 = new Quest();
-        //Quest q2 = new Quest(); 
+        Quest q2 = new Quest();
 
         q1.setName("What's that sequel!?");
         q1.setDescription("The purpose of this assignment is getting practical experience of requirement analysis, database design, and implementing database system in MS SQL Server 2005. In this assignment, you are going to design a simple database system for Xiaoshan International Airport. You can find more detail in the following specification. Besides the database design, you also must to answer some questions.");
@@ -203,9 +217,47 @@ public class StartupBean {
         eBiz.getQuests().add(q1);
         //Call session bean to persist
         quest.createQuest(eBiz, db, q1);
+
+        //Create Key for module
+        String imgURL = "assets/img/key2.png";
+        Key key = new Key();
+
+        //Set all the item info
+        key.setName("Intermediate Database Key");
+        key.setDescription("Unlocks 2 star database quest.");
+        key.setCost(50);
+        key.setImgURL(imgURL);
+        key.setModule(eBiz);
+        key.setStatus("AVAILABLE");
+
+        //Create 2 Star quest
+        q2.setName("The sequel to What's That Sequel??");
+        q2.setDescription("More advanced Database questions. Involves application of knowledge.");
+        q2.setDifficulty(2);
+        q2.setFileURL("assets/quests/Assignment_1.pdf");
+        //Set closing date
+        q2.setClosingDate(cal.getTime());
+        //Set rewards and link up
+        q2.setGoldReward(100);
+        Skill db2 = new Skill("Databases", 10);
+        q2.setSkillReward(db2);
+        q2.setModule(eBiz);
+        q2.setKeyRequired(key);
+
+        //Update Module stats
+        eBiz.getQuests().add(q2);
+        eBiz.getItems().add(key);
+
+        //Update Key stats
+        key.setUnlock(q2);
+
+        //Call session bean to persist
+        quest.createQuest(eBiz, db2, q2);
+        itemBean.createKey2(eBiz, q2, key);
     }
 
-    private void createAvatar() throws Exception {
+    private void createAvatar() throws Exception
+    {
         Student phil = acctBean.getStudent("Philson");
         Module eBiz = moduleBean.getModule("IS1112");
         Avatar aang = new Avatar();
@@ -230,7 +282,13 @@ public class StartupBean {
         acctBean.createAvatar(phil, aang);
     }
 
-    private void createQuizzes() {
+    private void createItems()
+    {
+
+    }
+
+    private void createQuizzes()
+    {
         System.out.println("Creating quizzes...");
         //String quizName, String moduleId
         Long quiz1 = quizbean.saveNewQuiz("Pre-class Quiz Week 1", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
@@ -260,7 +318,8 @@ public class StartupBean {
     }
 
     private void createQuestion(String quizId, String questName, String questText, String hint,
-            String option1, String option2, String option3, String option4, Integer answer) {
+                                String option1, String option2, String option3, String option4, Integer answer)
+    {
         System.out.println("Creating questions...");
         /*String quizId, String questName, String questText,
          String option1, String option2, String option3, String option4, Integer answer*/
@@ -268,20 +327,25 @@ public class StartupBean {
         System.out.println("Questions created.");
     }
 
-    private void createQuizItems() {
+    private void createQuizItems()
+    {
         //String userId, String moduleId, String name, Integer qty
         quizbean.createQuizItems("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1", "GetHelp", 20);
         quizbean.createQuizItems("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1", "Fifty-Fifty", 10);
         quizbean.createQuizItems("gstwchihyong", "a7f180e1-5361-4426-a6fa-5d90404ef2b1", "Retry", 10);
     }
 
-    private Date convertToDateObj(String date) {
+    private Date convertToDateObj(String date)
+    {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         Date dateObj;
-        try {
+        try
+        {
             dateObj = df.parse(date);
             return dateObj;
-        } catch (ParseException e) {
+        }
+        catch (ParseException e)
+        {
             e.printStackTrace();
             return null;
         }

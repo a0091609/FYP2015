@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,7 +41,7 @@ public class Quest implements Serializable
     private Date releaseDate;
     @Temporal(TemporalType.TIMESTAMP)
     private Date closingDate;
-    @OneToOne
+    @OneToOne(cascade={CascadeType.PERSIST})
     private Key keyRequired;
     @OneToOne
     private Skill skillReward;

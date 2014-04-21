@@ -6,7 +6,11 @@
 
 package session;
 
+import entity.Avatar;
 import entity.Item;
+import entity.Key;
+import entity.Module;
+import entity.Quest;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +33,9 @@ public interface ItemBeanLocal
     public void createPet(String moduleId, String name, String description, int cost, int bonus) throws Exception;
 
     public List<Item> getAllItems(String moduleId) throws Exception;
+
+    public void createKey2(Module mod, Quest q, Key k) throws Exception;
+
+    public void buyItem(String userId, String moduleId, Long itemId) throws Exception;
     
 }
