@@ -16,19 +16,103 @@
             <!-- END RESPONSIVE QUICK SEARCH FORM -->
         </li>
         <!-- Need to put active for the CORRECT page!! -->
-        <li id="link-dashboard" class="start active">
+        <li class="start active">
             <a href="/Instructor/dashboard.jsp">
                 <i class="icon-home"></i> 
                 <span class="title">Dashboard</span>
+                <span class="selected"></span>
             </a>
         </li>
 
-        <li id="link-items">
-            <a href="./Items">
-                <i class="icon-shopping-cart"></i> 
-                <span class="title">Items</span>
+
+        <!-- System Functionalities -->
+        <li>
+            <a href="#">
+                <i class="icon-cogs"></i> 
+                <span class="title">Settings</span>
             </a>
         </li>
+        <li>
+            <a href="#">
+                <i class="icon-info-sign"></i> 
+                <span class="title">Module Info</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="icon-bullhorn"></i> 
+                <span class="title">Announcements</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="icon-dropbox"></i> 
+                <span class="title">Workbin</span>
+            </a>
+        </li>
+
+
+        <!-- Gamification Functionalities -->
+        <li>
+            <a href="#">
+                <i class="icon-trophy"></i> 
+                <span class="title">Leaderboard</span>
+            </a>
+        </li>
+        <li id="link-job">
+            <a href="jobClass.jsp">
+                <i class="icon-user"></i> 
+                <span class="title">Job Classes</span>
+            </a>
+        </li>
+        <li id="link-quests">
+            <a href="Quests">
+                <i class="icon-compass"></i> 
+                <span class="title">Quests</span>
+            </a>
+        </li>
+        <li id="link-forums">
+            <a href="#">
+                <i class="icon-comments-alt"></i> 
+                <span class="title">As an Expert</span>
+            </a>
+        </li>
+        <li id="link-store">
+            <a href="Shop">
+                <i class="icon-shopping-cart"></i> 
+                <span class="title">Item Shop</span>
+            </a>
+        </li>
+
+        <!-- Module Switcher to access other modules -->
+        <li>
+            <a href="javascript:;">
+                <i class="icon-book"></i> 
+                <span class="title">My Modules</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="Login">
+                        IS4240
+                    </a>
+                </li>
+                <li>
+                    <a href="Login">
+                        IS1112
+                    </a>
+                </li>
+                <li>
+                    <a href="Login">
+                        IS4224
+                    </a>
+                </li>
+                <li>
+                    <a href="Login">
+                        IS3260
+                    </a>
+                </li>
+            </ul>
     </ul>
     <!-- END SIDEBAR MENU -->
 </div>

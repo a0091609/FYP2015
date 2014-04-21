@@ -149,7 +149,7 @@
                                                         </tr>
                                                         <%
                                                             } //Done Printing
-%>
+                                                        %>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -267,6 +267,57 @@
 
 
 
+
+                    <%
+                        //This part is for showing the submission msg
+                        Boolean submission = (Boolean) session.getAttribute("submission");
+                        if (submission != null)
+                        {
+                            session.setAttribute("submission", null);
+                            Integer golds = (Integer) session.getAttribute("goldReward");
+                            Skill skill = (Skill) session.getAttribute("skill");
+                            String skillType = skill.getName();
+                            Integer sp = skill.getSkillPoints();
+                    %>
+                    <!-- MODAL WINDOW -->
+                    <div id="responsive2" class="modal hide fade" tabindex="-1" data-width="760">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h3>Quest Graded</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <center><h1>OUTSTANDING!</h1></center>
+                                </div>
+                                <br><br>
+                            </div><div class="row-fluid"><br></div>
+                            <div class="row-fluid">
+                                <div class="span4">
+                                    <img src="assets/img/winner.png" style="width:100%">
+                                </div>
+                                <div class="span8">
+                                    <h4>Your quest submission has been graded</h4>
+                                    <p><b>Instructor's Comments:</b><br>                                    
+                                        You got most of the answers right, 
+                                        but can still work on improving the code efficiency.
+                                    </p>
+                                    <p><b>Gold Reward: </b> +<%=golds%> Gold</p>
+                                    <p><b>Skill Gain: </b> +<%=sp%> <%=skillType%></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn">Close</button>
+                        </div>
+                    </div>
+                    <%
+                        }
+                    %>
+
+
+
+
                 </div>
                 <!-- END PAGE CONTAINER-->    
             </div>
@@ -289,6 +340,7 @@
                 App.init(); // initlayout and core plugins
                 TableManaged.init();
                 $('#responsive').modal('show');
+                $('#responsive2').modal('show');
 
             <%
                 List<String> skillTypes = new ArrayList();
