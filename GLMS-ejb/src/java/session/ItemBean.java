@@ -38,17 +38,19 @@ public class ItemBean implements ItemBeanLocal
     public List<Item> getAllItems(String moduleId) throws Exception
     {
         em.flush();
-
-        Query query = em.createQuery("SELECT i FROM Item i");
-        List<Item> allItems = new ArrayList(query.getResultList());
         List<Item> moduleItems = new ArrayList();
-
-        for (Item item : allItems)
+        Query query = em.createQuery("SELECT i FROM Item i");
+        if (!query.getResultList().isEmpty())
         {
-            if (item.getModule().getModuleId().equals(moduleId) && !item.getStatus().equalsIgnoreCase("DELETED"))
+            List<Item> allItems = new ArrayList(query.getResultList());
+
+            for (Item item : allItems)
             {
-                moduleItems.add(item);
-                System.out.println(item + "added to moduleItems list");
+                if (item.getModule().getModuleId().equals(moduleId) && !item.getStatus().equalsIgnoreCase("DELETED"))
+                {
+                    moduleItems.add(item);
+                    System.out.println(item + "added to moduleItems list");
+                }
             }
         }
         return moduleItems;
@@ -93,7 +95,7 @@ public class ItemBean implements ItemBeanLocal
         booster.setImgURL(imgURL);
         booster.setFileURL(fileURL);
         booster.setType(type);
-        booster.setStatus("AVAILABLE");        
+        booster.setStatus("AVAILABLE");
 
         //Add the Booster to appropriate Module and persist
         module.getItems().add(booster);
@@ -107,7 +109,7 @@ public class ItemBean implements ItemBeanLocal
     {
         Module module = getModule(moduleId);
         Quest quest = getQuest(questId);
-        String imgURL = "Need to upload the image";
+        String imgURL = "assets/img/key2.png";
         Key key = new Key();
 
         //Set all the item info
@@ -126,7 +128,7 @@ public class ItemBean implements ItemBeanLocal
         em.persist(quest);
         em.persist(module);
         em.flush();
-    }    
+    }
 
     //This method is used to set an item as DELETED
     public void deleteItem(Long itemId) throws Exception
@@ -135,13 +137,8 @@ public class ItemBean implements ItemBeanLocal
         item.setStatus("DELETED");
         em.persist(item);
         em.flush();
-    } 
-    
-    
-    
-    
-    
-    
+    }
+
     //Helper method: retrieves the module based on moduleId
     private Module getModule(String moduleId) throws Exception
     {
@@ -153,7 +150,7 @@ public class ItemBean implements ItemBeanLocal
         }
         return module;
     }
-    
+
     //Helper method: retrieves the quest based on questId
     private Quest getQuest(Long questId) throws Exception
     {
@@ -165,7 +162,7 @@ public class ItemBean implements ItemBeanLocal
         }
         return quest;
     }
-    
+
     //Helper method: retrieves the item based on itemId
     public Item getItem(Long itemId) throws Exception
     {

@@ -17,7 +17,7 @@
     <!-- BEGIN BODY -->
     <body class="page-header-fixed page-full-width">
         <%-- Import for the header bar --%>
-        <%@include file="WEB-INF/jspf/headerBar.jspf" %> 
+        <%@include file="WEB-INF/jspf/headerBar2.jspf" %> 
         <!-- BEGIN CONTAINER -->
         <div class="page-container">
 

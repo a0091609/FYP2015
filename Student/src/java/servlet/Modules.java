@@ -84,6 +84,7 @@ public class Modules extends HttpServlet
                 //Retrieve Quest Completed         [AVATAR]
                 Avatar student = questBean.getAvatar(userId, moduleId);
                 request.setAttribute("student", student);
+                session.setAttribute("gold", student.getCurrentBalance());
 
                 //Redirect to Module Dashboard
                 request.getRequestDispatcher("/moduleDashboard.jsp").forward(request, response);
