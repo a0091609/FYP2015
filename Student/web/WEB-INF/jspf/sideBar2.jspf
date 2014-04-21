@@ -72,7 +72,7 @@
             </a>
         </li>
         <li id="link-forums">
-            <a href="#">
+            <a href="forums.jsp">
                 <i class="icon-comments-alt"></i> 
                 <span class="title">As an Expert</span>
             </a>
