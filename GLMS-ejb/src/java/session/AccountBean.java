@@ -1,11 +1,18 @@
 package session;
 
 import entity.Avatar;
+import entity.GameProfile;
 import entity.Instructor;
+import entity.Leaderboard;
 import entity.Student;
+import helper.GameProfileDetails;
+import helper.LeaderboardDetails;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 @Stateless
 public class AccountBean implements AccountBeanLocal {
@@ -60,6 +67,36 @@ public class AccountBean implements AccountBeanLocal {
         }
     }
 
+    public List<LeaderboardDetails> getLeaderboard(String moduleId) {
+        Query q = em.createQuery("SELECT l FROM Leaderboard l WHERE l.moduleId = '" + moduleId + "' ORDER BY l.points DESC");
+        List<Leaderboard> list = q.getResultList();
+        List<LeaderboardDetails> dataList = new ArrayList<LeaderboardDetails>();
+
+        for (Leaderboard l : list) {
+            String userId = l.getUserId();
+            Student s = em.find(Student.class, userId);
+            GameProfile p = getGameProfile(s.getUserId(), moduleId);
+
+            LeaderboardDetails d = new LeaderboardDetails(userId, s.getName(), p.getExpLevel(), p.getExpPoint());
+            dataList.add(d);
+        }
+
+        return dataList;
+    }
+
+    public GameProfile getGameProfile(String userId, String moduleId) {
+        Query q = em.createQuery("SELECT p FROM GameProfile p WHERE p.userId = '" + userId + "' AND p.moduleId = '" + moduleId + "'");
+        return (GameProfile) q.getSingleResult();
+    }
+
+    public GameProfileDetails getProfileDetails(String userId, String moduleId) {
+        Query q = em.createQuery("SELECT p FROM GameProfile p WHERE p.userId = '" + userId + "' AND p.moduleId = '" + moduleId + "'");
+        GameProfile p = (GameProfile) q.getSingleResult();
+        GameProfileDetails profile = new GameProfileDetails(p.getUserId(), p.getModuleId(), p.getExpPoint(), p.getExpLevel(), p.getStreak());
+
+        return profile;
+    }
+    
     public Student getStudent(String userId) {
         Student student = em.find(Student.class, userId);
         return student;

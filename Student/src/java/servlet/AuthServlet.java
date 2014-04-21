@@ -9,10 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 @WebServlet(name = "AuthServlet", urlPatterns = {"/AuthServlet", "/AuthServlet?*"})
-public class AuthServlet extends HttpServlet
-{
+public class AuthServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -24,8 +22,7 @@ public class AuthServlet extends HttpServlet
 
                 request.getSession().setAttribute("token", token);
                 response.sendRedirect(request.getContextPath() + "/dashboard.jsp");
-            }
-            else {
+            } else {
                 String action = request.getParameter("action");
                 System.out.println("AuthServlet action: " + action);
 
@@ -44,14 +41,12 @@ public class AuthServlet extends HttpServlet
                     PrintWriter pw = response.getWriter();
                     pw.print(json);
                     pw.close();
-                }
-                else if(action.equals("logout")) {
+                } else if (action.equals("logout")) {
                     request.getSession().invalidate();
                     response.sendRedirect("dashboard.jsp");
                 }
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

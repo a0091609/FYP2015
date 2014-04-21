@@ -52,6 +52,13 @@ public class ProfileServlet extends HttpServlet {
                 PrintWriter pw = response.getWriter();
                 pw.print(json);
                 pw.close();
+            } else if (action.equals("viewGameProfile")) {
+                String userId = request.getSession().getAttribute("userId").toString();
+                String moduleId = request.getParameter("moduleId");
+
+                request.setAttribute("profile", accountBean.getProfileDetails(userId, moduleId));
+                request.setAttribute("leaderboard", accountBean.getLeaderboard(moduleId));
+                request.getRequestDispatcher("gameProfile.jsp").forward(request, response);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

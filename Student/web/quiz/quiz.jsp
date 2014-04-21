@@ -12,6 +12,14 @@
         <%@include file="/WEB-INF/jspf/stylesheets.jspf" %>
         <link rel="stylesheet" type="text/css" href="assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.css"/>
         <link href="assets/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css"/>
+        <link href="assets/plugins/glyphicons_halflings/css/halflings.css" rel="stylesheet" />
+
+        <style>
+            .nohover:hover{
+                border-color: transparent;
+                cursor: default;
+            }
+        </style>
     </head>
     <!-- END HEAD -->
     <!-- BEGIN BODY -->
@@ -59,7 +67,7 @@
                     <div class="row-fluid profile">
                         <div class="span12">
                             <div class="row-fluid">
-                                <div class="span12 responsive" data-tablet="span12 fix-offset" data-desktop="span12">
+                                <div class="span10 responsive" data-tablet="span12 fix-offset" data-desktop="span12">
                                     <div class="portlet box grey">
                                         <div class="portlet-title">
                                             <div class="caption">Quiz</div>
@@ -80,17 +88,30 @@
                                                         ArrayList quizzes = (ArrayList) request.getAttribute("quizzes");
                                                         for (Object o : quizzes) {
                                                             QuizDetails quiz = (QuizDetails) o;
+                                                            String lvl = quiz.getDifficultyLvl();
+                                                            String stars = "", tips = "";
+                                                            if (lvl.equals("beginner")) {
+                                                                tips = "Beginner";
+                                                                stars = "<i class='icon-star' style='font-size: 20px;'></i>";
+                                                            } else if (lvl.equals("intermediate")) {
+                                                                tips = "Intermediate";
+                                                                stars = "<i class='icon-star' style='font-size: 20px;'></i> <i class='icon-star' style='font-size: 20px;'></i>";
+                                                            } else {
+                                                                tips = "Advanced";
+                                                                stars = "<i class='icon-star' style='font-size: 20px;'></i> <i class='icon-star' style='font-size: 20px;'></i> <i class='icon-star' style='font-size: 20px;'></i>";
+                                                            }
+
                                                     %>
                                                     <tr class="odd gradeX">
                                                         <td><%=quiz.getName()%></td>
-                                                        <td><%=quiz.getDifficultyLvl()%></td>
+                                                        <td style="text-align: center;"><div class="tooltips" data-placement="top" data-original-title="<%=tips%>"><%=stars%></div></td>
                                                         <td><%=quiz.getDateOpen()%></td>
                                                         <td><%=quiz.getDateClose()%></td>
-                                                        <td class="text-center">
+                                                        <td>
                                                             <%
                                                                 if (quiz.isActive()) {
                                                                     out.print("<a href='/Student/QuizServlet?action=playQuiz&quizId="
-                                                                            + quiz.getQuizId() + "' class='btn purple'>Play <i class='m-icon-swapright m-icon-white'></i></a>");
+                                                                            + quiz.getQuizId() + "' class='btn mini purple'><i class='halflings-icon white play'></i> Play</a>");
                                                                 } else {
                                                                     out.print(quiz.getStatus());
                                                                 }
@@ -105,8 +126,67 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="span2">
+                                    <div class="tile bg-red tooltips nohover" data-placement="bottom" data-original-title="Your current Correct Streak.">
+                                        <div class="tile-body text-center" style="font-size: 80px; padding-top: 35px;">
+                                            <%=request.getAttribute("streak")%>
+                                        </div>
+                                        <div class="tile-object text-center" style="font-size: 15px;">
+                                            <i class="icon-fire"></i> Correct Streak
+                                        </div>
+                                    </div>
+                                    <div class="tile bg-yellow tooltips" data-placement="bottom" data-original-title="Retry a quiz.">
+                                        <a href="#redoQuiz" data-toggle="modal">
+                                            <div class="tile-body">
+                                                <i class="icon-random"></i>
+                                            </div>
+                                            <div class="tile-object">
+                                                <div class="name">                           
+                                                    Retry
+                                                </div>
+                                                <div class="number" id="itemFifty">
+                                                    <%=request.getAttribute("itemRetry")%>
+                                                </div>
+                                            </div>          
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div id="redoQuiz" class="modal hide fade" tabindex="-1" data-replace="true">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h3>Retry a Quiz</h3>
+                        </div>
+
+                        <form action="QuizServlet?action=" method="post" class="form-horizontal" id="quizForm">
+                            <div class="modal-body">
+                                <div class="control-group">
+                                    <label class="control-label" >Choose a Quiz</label>
+                                    <div class="controls">
+                                        <select  class="m-wrap span12" required>
+                                            <option value="" disabled></option>
+                                            <%
+                                                ArrayList completedQuiz = (ArrayList) request.getAttribute("completedQuiz");
+                                                if (completedQuiz != null) {
+                                                    for (Object o : completedQuiz) {
+                                                        QuizDetails d = (QuizDetails) o;
+                                                        out.print("<option value='" + d.getQuizId() + "'>" + d.getName() + "</option>");
+                                                    }
+                                                }
+                                            %>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" data-dismiss="modal" class="btn">Close</button>
+                                <input type="submit" value="Go" class="btn blue">
+                            </div>
+                        </form>
                     </div>
                     <!-- END PAGE CONTENT-->
 

@@ -130,7 +130,7 @@ function displayModules() {
 //            else {
 //                moduleList += '<a href="/Student/QuizServlet?action=viewAllQuiz&moduleId=' + m.moduleId + '&moduleName=' + m.moduleName + '">Quiz</a>';
 //            }
-            moduleList += '<a href="/Student/QuizServlet?action=viewAllQuiz&moduleId=' + m.moduleId + '&moduleName=' + m.moduleName + '">Quiz</a>';
+            moduleList += '<i class="icon-edit"></i> <a href="/Student/QuizServlet?action=viewAllQuiz&moduleId=' + m.moduleId + '&moduleName=' + m.moduleName + '">Quiz</a>';
             moduleList += '</div>\
                            </div>';
             // End of portlet-body
