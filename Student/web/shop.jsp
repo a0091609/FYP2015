@@ -65,8 +65,8 @@
                             <div class="portlet box blue tabbable">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="icon-reorder"></i>
-                                        <span class="hidden-480">Items</span>
+                                        <i class="icon-dollar"></i>
+                                        <span class="hidden-480">Current Balance: 999</span>
                                     </div>
                                 </div>
                                 <div class="portlet-body form">

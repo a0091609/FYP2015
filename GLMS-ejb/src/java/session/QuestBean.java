@@ -106,6 +106,7 @@ public class QuestBean implements QuestBeanLocal
 
     public Avatar getAvatar(String userId, String moduleId) throws Exception
     {
+        System.out.println("here is fine");
         Student student = em.find(Student.class, userId);
         Module module = moduleBean.getModule(moduleId);
         if (student == null)
@@ -122,6 +123,7 @@ public class QuestBean implements QuestBeanLocal
                 }
             }
         }
+        System.out.println("Avatar not found!");
         return null;
     }
 

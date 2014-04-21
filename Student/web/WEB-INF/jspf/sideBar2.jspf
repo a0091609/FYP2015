@@ -59,6 +59,12 @@
                 <span class="title">Leaderboard</span>
             </a>
         </li>
+        <li id="link-job">
+            <a href="jobClass.jsp">
+                <i class="icon-user"></i> 
+                <span class="title">Job Classes</span>
+            </a>
+        </li>
         <li id="link-quests">
             <a href="Quests">
                 <i class="icon-compass"></i> 
@@ -72,7 +78,7 @@
             </a>
         </li>
         <li id="link-store">
-            <a href="shop.jsp">
+            <a href="Items">
                 <i class="icon-shopping-cart"></i> 
                 <span class="title">Item Shop</span>
             </a>

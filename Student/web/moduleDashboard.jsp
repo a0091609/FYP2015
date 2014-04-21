@@ -97,7 +97,7 @@
                                                         I enjoy blogging, and researching about the latest web and mobile technologies. 
                                                     </p>
                                                     <ul class="unstyled">
-                                                        <li><i class="icon-user"></i> <b>Job Class:</b> Beginner</li>
+                                                        <li><a href="jobClass.jsp"><i class="icon-user"></i> <b>Job Class:</b> Beginner</a></li>
                                                         <li><i class="icon-usd"></i> <b>Gold Balance:</b> <%=gold%></li>
                                                         <li><i class="icon-signal"></i> <b>Lifetime Earnings:</b> <%=lifeEarnings%></li>
                                                     </ul>

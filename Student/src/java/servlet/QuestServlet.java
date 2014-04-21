@@ -50,8 +50,8 @@ public class QuestServlet extends HttpServlet
     //  2. Retrieve all Quests submitted by Avatar      [DONE!]
     //  3. Retrieve all Keys owned by Avatar            [DONE!]
     //  4. Retrieve all details for partcular Quest     [DONE!]
-    //  5. Submit a quest and update rewards            [NOT DONE]
-    //  6. Notify user of their accomplishment          [NOT DONE]
+    //  5. Submit a quest and update rewards            [DONE!]
+    //  6. Notify user of their accomplishment          [DONE!]
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {

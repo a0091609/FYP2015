@@ -1,11 +1,11 @@
 /*
- * This servlet handles the student profile
- * For the module dashboard
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package servlet;
 
-import entity.Avatar;
-import entity.Module;
+import entity.Item;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -15,39 +15,33 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import session.ModuleBeanLocal;
-import session.QuestBeanLocal;
+import session.ItemBeanLocal;
 
 /**
  *
  * @author Philson
  */
-@WebServlet(name = "Modules", urlPatterns =
+@WebServlet(name = "ItemServlet", urlPatterns =
 {
-    "/Modules", "/Modules?*"
+    "/Items", "/Items?*"
 })
-public class Modules extends HttpServlet
+public class ItemServlet extends HttpServlet
 {
 
     //Global Variables
-    HttpServletRequest request;
-    HttpServletResponse response;
-    HttpSession session;
-    private List data = null;
+    private HttpServletRequest request;
+    private HttpServletResponse response;
+    private HttpSession session;
 
     //EJB References
     @EJB
-    QuestBeanLocal questBean;
-    @EJB
-    ModuleBeanLocal moduleBean;
+    ItemBeanLocal itemBean;
+
 
     //Functionalities needed:        
-    //  1. Retrieve all module details      [DONE!]
-    //  2. Retrieve Student Skills          [NOT DONE]
-    //  3. Retrieve Gold Details            [NOT DONE]
-    //  4. Retrieve Job Classes             [NOT DONE]
-    //  5. Retrieve Quest Completed         [NOT DONE]
-    //  6. Redirect to Module Dashboard     [DONE!]
+    //  1. Retrieve all Items for a module             [Not Done]
+    //  2. Retrieve all the CurrentBalance of Avatar   [Not Done]
+    //  3. Purchase a Key for Avatar                   [Not Done]
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
@@ -56,9 +50,11 @@ public class Modules extends HttpServlet
         this.request = request;
         this.response = response;
         String userId = (String) session.getAttribute("userId");
-        String moduleId = request.getParameter("moduleId");
+        String moduleId = (String) session.getAttribute("moduleId");
         String action = request.getParameter("action");
-        System.out.println("ModuleDashboard action: " + action);
+        System.out.println("userId: " + userId);
+        System.out.println("moduleId: " + moduleId);
+        System.out.println("ItemServlet action: " + action);
 
         try
         {
@@ -67,52 +63,48 @@ public class Modules extends HttpServlet
             {
                 response.sendRedirect("login.jsp");
             }
-            //Default action brings them to the module selection page
-            else if (action == null || moduleId == null)
+            //Module ID not specified
+            else if (moduleId == null)
             {
                 response.sendRedirect("Login");
             }
-            //Show the module dashboard
-            else if (action.equals("moduleDashboard"))
+
+            //Default action brings them to the quest display page
+            else if (action == null || action.equals("viewAllItems"))
             {
-                //Retrieve all module details  
-                moduleDetails(moduleId);
-
-                //Retrieve Student Skills          [AVATAR]
-                //Retrieve Gold Details            [AVATAR]
-                //Retrieve Job Classes             [AVATAR]
-                //Retrieve Quest Completed         [AVATAR]
-                Avatar student = questBean.getAvatar(userId, moduleId);
-                request.setAttribute("student", student);
-                session.setAttribute("gold", student.getCurrentBalance());
-
-                //Redirect to Module Dashboard
-                request.getRequestDispatcher("/moduleDashboard.jsp").forward(request, response);
+                System.out.println("Request: " + request);
+                displayAllItems(moduleId, userId);
+            }
+            else if (action.equals("openQuest"))
+            {
+                //do nothing
             }
         }
         catch (Exception ex)
         {
+            System.out.println("ERROR");
             System.out.println(ex.getMessage());
         }
         finally
         {
-            System.out.println("ModuleDashboard: servlet action ended.");
+            System.out.println("ItemServlet: servlet action ended.");
         }
     }
 
 //Private methods, for convenience
-    //Retrieves and process all the module details
-    private void moduleDetails(String moduleId) throws Exception
+    //Displays all the quests for a module
+    private void displayAllItems(String moduleId, String userId) throws Exception
     {
-        //Need to set the moduleID or it will be lost
-        Module mod = moduleBean.getModule(moduleId);
-        request.setAttribute("module", mod);
-        session.setAttribute("moduleId", moduleId);
+        //1. Retrieve all Items for a module
+        //2. Retrieve currentBalance by Avatar
 
-        //Prevents browser from caching and not updating
-        response.setHeader("Cache-Control", "no-cache");
-        response.setHeader("Pragma", "no-cache");
-        response.setDateHeader("Expires", 0);
+        // Get all the Items
+        List<Item> allItems = itemBean.getAllItems(moduleId);
+        System.out.println("All Items: " + allItems);
+        request.setAttribute("allItems", allItems);
+
+        //Direct them to the display page!
+        request.getRequestDispatcher("shop.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
