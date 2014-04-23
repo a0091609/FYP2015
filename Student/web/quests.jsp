@@ -139,7 +139,96 @@
                                                 <%  //Done printing
                                                     }
                                                 %>
-                                                <div class="space5"></div>           
+
+                                                <div class="row-fluid portfolio-block">
+                                                    <div class="span5 portfolio-text">
+                                                        <img src="assets/img/1star.png" style="width:80px">
+                                                        <div class="portfolio-text-info">
+                                                            <h4>HTML Level 1</h4>
+                                                            <p>HTML Level 1 Quest</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="span5">
+                                                        <div class="portfolio-info span6">
+                                                            Skill Gain
+                                                            <span>HTML +5</span>
+                                                        </div>
+                                                        <div class="portfolio-info span6">
+                                                            Gold Reward
+                                                            <span>Gold +50</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="span2 portfolio-btn">
+                                                        <a href="#" class="btn bigicn-only"><span>View</span></a>                        
+                                                    </div>
+                                                </div>
+                                                <div class="row-fluid portfolio-block">
+                                                    <div class="span5 portfolio-text">
+                                                        <img src="assets/img/1star.png" style="width:80px">
+                                                        <div class="portfolio-text-info">
+                                                            <h4>PHP Level 1</h4>
+                                                            <p>PHP Level 1 Quest</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="span5">
+                                                        <div class="portfolio-info span6">
+                                                            Skill Gain
+                                                            <span>PHP +5</span>
+                                                        </div>
+                                                        <div class="portfolio-info span6">
+                                                            Gold Reward
+                                                            <span>Gold +50</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="span2 portfolio-btn">
+                                                        <a href="#" class="btn bigicn-only"><span>View</span></a>                        
+                                                    </div>
+                                                </div>
+                                                <div class="row-fluid portfolio-block">
+                                                    <div class="span5 portfolio-text">
+                                                        <img src="assets/img/1star.png" style="width:80px">
+                                                        <div class="portfolio-text-info">
+                                                            <h4>Marketing Level 1</h4>
+                                                            <p>Marketing Level 1 Quest</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="span5">
+                                                        <div class="portfolio-info span6">
+                                                            Skill Gain
+                                                            <span>Marketing +5</span>
+                                                        </div>
+                                                        <div class="portfolio-info span6">
+                                                            Gold Reward
+                                                            <span>Gold +50</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="span2 portfolio-btn">
+                                                        <a href="#" class="btn bigicn-only"><span>View</span></a>                        
+                                                    </div>
+                                                </div>
+                                                <div class="row-fluid portfolio-block">
+                                                    <div class="span5 portfolio-text">
+                                                        <img src="assets/img/1star.png" style="width:80px">
+                                                        <div class="portfolio-text-info">
+                                                            <h4>IT Security Level 1</h4>
+                                                            <p>IT Security Level 1 Quest</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="span5">
+                                                        <div class="portfolio-info span6">
+                                                            Skill Gain
+                                                            <span>Security +5</span>
+                                                        </div>
+                                                        <div class="portfolio-info span6">
+                                                            Gold Reward
+                                                            <span>Gold +50</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="span2 portfolio-btn">
+                                                        <a href="#" class="btn bigicn-only"><span>View</span></a>                        
+                                                    </div>
+                                                </div>
+                                                <div class="space5"></div>  
                                             </div>
 
 
@@ -219,16 +308,16 @@
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/2star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Quest Name</h4>
-                                                            <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
+                                                            <h4>HTML Level 2</h4>
+                                                            <p>HTML Level 2 Quest</p>
                                                         </div>
                                                     </div>
                                                     <div class="span5">
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Skill Gain
-                                                            <span>Database +3</span>
+                                                            <span>HTML +10</span>
                                                         </div>
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Gold Reward
                                                             <span>Gold +100</span>
                                                         </div>
@@ -241,16 +330,16 @@
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/2star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Quest Name</h4>
-                                                            <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
+                                                            <h4>PHP Level 2</h4>
+                                                            <p>PHP Level 2 Quest</p>
                                                         </div>
                                                     </div>
                                                     <div class="span5">
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Skill Gain
-                                                            <span>Database +3</span>
+                                                            <span>PHP +10</span>
                                                         </div>
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Gold Reward
                                                             <span>Gold +100</span>
                                                         </div>
@@ -263,16 +352,16 @@
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/2star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Quest Name</h4>
-                                                            <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
+                                                            <h4>Marketing Level 2</h4>
+                                                            <p>Marketing Level 2 Quest</p>
                                                         </div>
                                                     </div>
                                                     <div class="span5">
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Skill Gain
-                                                            <span>Database +3</span>
+                                                            <span>Marketing +10</span>
                                                         </div>
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Gold Reward
                                                             <span>Gold +100</span>
                                                         </div>
@@ -285,16 +374,16 @@
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/2star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Quest Name</h4>
-                                                            <p>Lorem ipsum dolor sit consectetuer adipiscing elit .</p>
+                                                            <h4>IT Security Level 2</h4>
+                                                            <p>IT Security Level 2 Quest</p>
                                                         </div>
                                                     </div>
                                                     <div class="span5">
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Skill Gain
-                                                            <span>Database +3</span>
+                                                            <span>Security +10</span>
                                                         </div>
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Gold Reward
                                                             <span>Gold +100</span>
                                                         </div>
@@ -379,23 +468,22 @@
 
 
 
-
                                                 <div class="row-fluid portfolio-block">
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/3star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Quest Name</h4>
-                                                            <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
+                                                            <h4>Database Level 3</h4>
+                                                            <p>Database Level 3 Quest</p>
                                                         </div>
                                                     </div>
                                                     <div class="span5">
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Skill Gain
-                                                            <span>Database +3</span>
+                                                            <span>Databases +15</span>
                                                         </div>
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Gold Reward
-                                                            <span>Gold +100</span>
+                                                            <span>Gold +150</span>
                                                         </div>
                                                     </div>
                                                     <div class="span2 portfolio-btn">
@@ -406,18 +494,18 @@
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/3star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Quest Name</h4>
-                                                            <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
+                                                            <h4>HTML Level 3</h4>
+                                                            <p>HTML Level 3 Quest</p>
                                                         </div>
                                                     </div>
                                                     <div class="span5">
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Skill Gain
-                                                            <span>Database +3</span>
+                                                            <span>HTML +15</span>
                                                         </div>
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Gold Reward
-                                                            <span>Gold +100</span>
+                                                            <span>Gold +150</span>
                                                         </div>
                                                     </div>
                                                     <div class="span2 portfolio-btn">
@@ -428,18 +516,18 @@
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/3star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Quest Name</h4>
-                                                            <p>Lorem ipsum dolor sit consectetuer adipiscing elit.</p>
+                                                            <h4>PHP Level 3</h4>
+                                                            <p>PHP Level 3 Quest</p>
                                                         </div>
                                                     </div>
                                                     <div class="span5">
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Skill Gain
-                                                            <span>Database +3</span>
+                                                            <span>PHP +15</span>
                                                         </div>
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Gold Reward
-                                                            <span>Gold +100</span>
+                                                            <span>Gold +150</span>
                                                         </div>
                                                     </div>
                                                     <div class="span2 portfolio-btn">
@@ -450,25 +538,47 @@
                                                     <div class="span5 portfolio-text">
                                                         <img src="assets/img/3star.png" style="width:80px">
                                                         <div class="portfolio-text-info">
-                                                            <h4>Quest Name</h4>
-                                                            <p>Lorem ipsum dolor sit consectetuer adipiscing elit .</p>
+                                                            <h4>Marketing Level 3</h4>
+                                                            <p>Marketing Level 3 Quest</p>
                                                         </div>
                                                     </div>
                                                     <div class="span5">
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Skill Gain
-                                                            <span>Database +3</span>
+                                                            <span>Marketing +15</span>
                                                         </div>
-                                                        <div class="portfolio-info">
+                                                        <div class="portfolio-info span6">
                                                             Gold Reward
-                                                            <span>Gold +100</span>
+                                                            <span>Gold +150</span>
                                                         </div>
                                                     </div>
                                                     <div class="span2 portfolio-btn">
                                                         <a href="#" class="btn bigicn-only red disabled"><span>Locked</span></a>                        
                                                     </div>
                                                 </div>
-                                                <div class="space5"></div>
+                                                <div class="row-fluid portfolio-block">
+                                                    <div class="span5 portfolio-text">
+                                                        <img src="assets/img/3star.png" style="width:80px">
+                                                        <div class="portfolio-text-info">
+                                                            <h4>IT Security Level 3</h4>
+                                                            <p>IT Security Level 3 Quest</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="span5">
+                                                        <div class="portfolio-info span6">
+                                                            Skill Gain
+                                                            <span>Security +15</span>
+                                                        </div>
+                                                        <div class="portfolio-info span6">
+                                                            Gold Reward
+                                                            <span>Gold +150</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="span2 portfolio-btn">
+                                                        <a href="#" class="btn bigicn-only red disabled"><span>Locked</span></a>                        
+                                                    </div>
+                                                </div>
+                                                <div class="space5"></div>                                               
                                             </div>
                                         </div>
                                     </div>
