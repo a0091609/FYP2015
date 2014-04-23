@@ -48,15 +48,15 @@ public class StartupBean {
     private void init() {
         try {
 
-//            createInstructors();
-//            createStudents();
-            //createModules();
-            //createGameProfile();
-            //createAvatar();
+            createInstructors();
+            createStudents();
+            createModules();
+            createGameProfile();
+            createAvatar();
             createQuests();
             createItems();
-            //createQuizzes();
-            //createQuizItems();
+            createQuizzes();
+            createQuizItems();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -253,17 +253,17 @@ public class StartupBean {
 
         aang.setAvatarName("AzureKn1ght");
         aang.setAvatarBio("Bio text here.");
-        aang.setCurrentBalance(100);
-        aang.setLifetimeEarnings(2567);
+        aang.setCurrentBalance(0);
+        aang.setLifetimeEarnings(0);
         aang.setStudent(phil);
         aang.setModule(eBiz);
 
         List<Skill> skills = new ArrayList();
         skills.add(new Skill("Databases", 5));
         skills.add(new Skill("Marketing", 5));
-        skills.add(new Skill("Security", 5));
+        skills.add(new Skill("Security", 0));
         skills.add(new Skill("HTML", 5));
-        skills.add(new Skill("PHP", 5));
+        skills.add(new Skill("PHP", 10));
 
         aang.setSkills(skills);
         phil.getAvatars().add(aang);
