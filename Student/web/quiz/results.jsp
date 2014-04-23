@@ -81,24 +81,24 @@
                                                         out.print("important");
                                                     }
                                                      %>"></div>
-                                                     <div style="padding-left:5px;"><%=result.getQuestionText()%></div>
+                                                <div style="padding-left:5px;"><%=result.getQuestionText()%></div>
                                             </td>
                                             <td><%=result.getAnswer()%></td>
                                             <td><span class="tooltips glyphicons no-js icn-only
-                                                   <%
-                                                       if (result.isIsCorrect()) {
-                                                           out.print("ok_2");
-                                                       } else {
-                                                           out.print("remove_2");
-                                                       }
-                                                   %>" data-placement="right" data-original-title="<%
-                                                       if (result.isIsCorrect()) {
-                                                           out.print("You were correct.");
-                                                       } else {
-                                                           out.print("You were wrong.");
-                                                       }
-                                                   %>"
-                                                   >
+                                                      <%
+                                                          if (result.isIsCorrect()) {
+                                                              out.print("ok_2");
+                                                          } else {
+                                                              out.print("remove_2");
+                                                          }
+                                                      %>" data-placement="right" data-original-title="<%
+                                                          if (result.isIsCorrect()) {
+                                                              out.print("You were correct.");
+                                                          } else {
+                                                              out.print("You were wrong.");
+                                                          }
+                                                      %>"
+                                                      >
                                                     <i></i> <%=result.getWrongAns()%>
                                                 </span></td>
                                         </tr>
@@ -309,7 +309,13 @@
                                     <div class="span4">
                                         <div class="tile bg-yellow">
                                             <div class="tile-body">
-                                                <i class="icon-random"></i>
+                                                <%
+                                                    String icon = "icon-info-sign";
+                                                    if(name.equals("GetHelp")){icon="icon-info-sign";}
+                                                    else if(name.equals("Fifty-Fifty")){icon="icon-random";}
+                                                    else if(name.equals("Retry")){icon="icon-refresh";}
+                                                %>
+                                                <i class="<%=icon%>"></i>
                                             </div>
                                             <div class="tile-object">
                                                 <div class="name">

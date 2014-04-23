@@ -47,16 +47,15 @@ public class StartupBean {
     @PostConstruct
     private void init() {
         try {
-
-//            createInstructors();
-//            createStudents();
-            //createModules();
-            //createGameProfile();
-            //createAvatar();
+            createInstructors();
+            createStudents();
+            createModules();
+            createGameProfile();
+            createAvatar();
             createQuests();
             createItems();
-            //createQuizzes();
-            //createQuizItems();
+            createQuizzes();
+            createQuizItems();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,7 +76,7 @@ public class StartupBean {
         acctBean.createStudent("a0075128", "WONG CHIH YONG", "chihyong@nus.edu.sg",
                 "male", "School of Computing", "Information Systems (Hons)", "", 2010, "");
         acctBean.createStudent("gstwchihyong", "Wong Chih Yong", "wchihyong@gmail.com",
-                "male", "School of Computing", "Information Systems (Hons)", "", 2010, "/Student/assets/img/gstwchihyong.png");
+                "male", "School of Computing", "Information Systems (Hons)", "", 2010, "/Student/assets/img/gstwchihyong.jpg");
         acctBean.createStudent("micheal", "Micheal Chang", "chihyong@nus.edu.sg",
                 "male", "School of Computing", "Information Systems (Hons)", "", 2010, "/Student/assets/img/avatar.png");
         acctBean.createStudent("kelvin", "Kelvin Lee", "chihyong@nus.edu.sg",
@@ -140,7 +139,7 @@ public class StartupBean {
         GameProfile profile2 = quizbean.getGameProfile("micheal", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
         Leaderboard l2 = new Leaderboard();
         profile2.setExpPoint(60);
-        profile2.setExpLevel("novice");
+        profile2.setExpLevel("apprentice");
         profile2.setStreak(3);
         em.persist(profile2);
         l2.setUserId("micheal");
@@ -151,25 +150,25 @@ public class StartupBean {
 
         GameProfile profile3 = quizbean.getGameProfile("kelvin", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
         Leaderboard l3 = new Leaderboard();
-        profile3.setExpPoint(30);
-        profile3.setExpLevel("novice");
+        profile3.setExpPoint(151);
+        profile3.setExpLevel("expert");
         profile3.setStreak(3);
         em.persist(profile3);
         l3.setUserId("kelvin");
         l3.setModuleId("a7f180e1-5361-4426-a6fa-5d90404ef2b1");
-        l3.setPoints(30);
+        l3.setPoints(151);
         l3.setTimeCreated(date);
         em.persist(l3);
 
         GameProfile profile4 = quizbean.getGameProfile("adam", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
         Leaderboard l4 = new Leaderboard();
-        profile4.setExpPoint(28);
-        profile4.setExpLevel("novice");
+        profile4.setExpPoint(110);
+        profile4.setExpLevel("enthusiast");
         profile4.setStreak(3);
         em.persist(profile4);
         l4.setUserId("adam");
         l4.setModuleId("a7f180e1-5361-4426-a6fa-5d90404ef2b1");
-        l4.setPoints(28);
+        l4.setPoints(110);
         l4.setTimeCreated(date);
         em.persist(l4);
 
@@ -278,12 +277,12 @@ public class StartupBean {
     private void createQuizzes() {
         System.out.println("Creating quizzes...");
         //String quizName, String moduleId
-        Long quiz1 = quizbean.saveNewQuiz("Pre-class Quiz Week 1", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
-        Long quiz2 = quizbean.saveNewQuiz("Pre-class Quiz Week 2", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
+        Long quiz1 = quizbean.saveNewQuiz("Pre-class Quiz Week 10", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
+        Long quiz2 = quizbean.saveNewQuiz("Pre-class Quiz Week 11", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
 
         //Long quizId, String descr, String difficultyLvl, Date dateOpen, Date dateClose
-        quizbean.saveQuizInfo(quiz1, "Pre-class Quiz Week 1", "beginner", convertToDateObj("18/04/2014"), convertToDateObj("25/04/2014"), null);
-        quizbean.saveQuizInfo(quiz2, "Pre-class Quiz Week 2", "beginner", convertToDateObj("25/04/2014"), convertToDateObj("02/05/2014"), null);
+        quizbean.saveQuizInfo(quiz1, "Pre-class Quiz Week 10", "beginner", convertToDateObj("18/04/2014"), convertToDateObj("25/04/2014"), null);
+        quizbean.saveQuizInfo(quiz2, "Pre-class Quiz Week 11", "beginner", convertToDateObj("25/04/2014"), convertToDateObj("02/05/2014"), null);
 
         /*String quizId, String questName, String questText,
          String option1, String option2, String option3, String option4, Integer answer*/
@@ -296,8 +295,8 @@ public class StartupBean {
         createQuestion(quiz2.toString(), "Second Question", "Which is correct?", "", "Incorrect", "Correct", "Incorrect", "Incorrect", 1);
         createQuestion(quiz2.toString(), "Third Question", "Which is correct?", "", "Incorrect", "Incorrect", "Correct", "Incorrect", 2);
 
-        Long quiz3 = quizbean.saveNewQuiz("Week 1 Quiz Exercise", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
-        quizbean.saveQuizInfo(quiz3, "Week 1 Quiz Exercise", "intermediate", convertToDateObj("16/04/2014"), convertToDateObj("23/04/2014"), quiz1);
+        Long quiz3 = quizbean.saveNewQuiz("Week 10 Quiz Exercise", "a7f180e1-5361-4426-a6fa-5d90404ef2b1");
+        quizbean.saveQuizInfo(quiz3, "Week 10 Quiz Exercise", "intermediate", convertToDateObj("16/04/2014"), convertToDateObj("23/04/2014"), quiz1);
         createQuestion(quiz3.toString(), "First Question", "Which is correct?", "", "Correct", "Incorrect", "Incorrect", "Incorrect", 0);
         createQuestion(quiz3.toString(), "Second Question", "Which is correct?", "", "Incorrect", "Correct", "Incorrect", "Incorrect", 1);
         createQuestion(quiz3.toString(), "Third Question", "Which is correct?", "", "Incorrect", "Incorrect", "Correct", "Incorrect", 2);

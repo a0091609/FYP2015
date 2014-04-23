@@ -139,7 +139,7 @@
                                     <div class="tile bg-yellow tooltips" data-placement="bottom" data-original-title="Retry a quiz.">
                                         <a href="#redoQuiz" data-toggle="modal">
                                             <div class="tile-body">
-                                                <i class="icon-random"></i>
+                                                <i class="icon-refresh"></i>
                                             </div>
                                             <div class="tile-object">
                                                 <div class="name">                           

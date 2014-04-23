@@ -18,6 +18,9 @@
                 border-color: #555555 !important;
                 cursor: default;
             }
+            label.radio{
+                padding-top: 4px;
+            }
         </style>
     </head>
     <!-- END HEAD -->

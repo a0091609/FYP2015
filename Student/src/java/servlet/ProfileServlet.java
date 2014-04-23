@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import session.AccountBeanLocal;
 
 @WebServlet(name = "ProfileServlet", urlPatterns = {"/ProfileServlet", "/ProfileServlet?*"})
@@ -54,8 +55,19 @@ public class ProfileServlet extends HttpServlet {
                 pw.print(json);
                 pw.close();
             } else if (action.equals("viewGameProfile")) {
+                String moduleId = "", moduleName = "";
+                HttpSession session = request.getSession();
+
+                if (session.getAttribute("moduleId") == null) {
+                    moduleId = request.getParameter("moduleId");
+                    moduleName = request.getParameter("moduleName");
+
+                    request.getSession().setAttribute("moduleId", moduleId);
+                    request.getSession().setAttribute("moduleName", moduleName);
+                } else {
+                    moduleId = request.getSession().getAttribute("moduleId").toString();
+                }
                 String userId = request.getSession().getAttribute("userId").toString();
-                String moduleId = request.getParameter("moduleId");
 
                 request.setAttribute("profile", accountBean.getProfileDetails(userId, moduleId));
                 request.setAttribute("leaderboard", accountBean.getLeaderboard(moduleId));

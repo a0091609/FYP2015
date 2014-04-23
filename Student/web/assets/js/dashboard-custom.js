@@ -15,7 +15,7 @@ function dashboardInit(token) {
             createLoginSession(userId, token).done(function(data) {
                 setTimeout(function() {
                     displayModules();
-                }, 1500);
+                }, 1000);
             });
         });
     });
@@ -130,7 +130,7 @@ function displayModules() {
 //            else {
 //                moduleList += '<a href="/Student/QuizServlet?action=viewAllQuiz&moduleId=' + m.moduleId + '&moduleName=' + m.moduleName + '">Quiz</a>';
 //            }
-            moduleList += '<li><i class="icon-user"></i> <a href="/Student/ProfileServlet?action=viewGameProfile&moduleId=' + m.moduleId + '">Game Profile</a></li>';
+            moduleList += '<li><i class="icon-user"></i> <a href="/Student/ProfileServlet?action=viewGameProfile&moduleId=' + m.moduleId + '&moduleName=' + m.moduleName + '">Game Profile</a></li>';
             moduleList += '<li><i class="icon-edit"></i> <a href="/Student/QuizServlet?action=viewAllQuiz&moduleId=' + m.moduleId + '&moduleName=' + m.moduleName + '">Quiz</a></li>';
             moduleList += '</ul>\
                             </div>\

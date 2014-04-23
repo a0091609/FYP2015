@@ -15,7 +15,7 @@ function dashboardInit(token) {
                 createLoginSession(userId, token).done(function(data) {
                     setTimeout(function() {
                         displayModules();
-                    }, 3000);
+                    }, 1000);
                 });
             });
         }
@@ -126,15 +126,17 @@ function displayModules() {
             // End of portlet-title
 
             // Start of portlet-body
-            moduleList += '<div class="portlet-body">';
+            moduleList += '<div class="portlet-body">\
+                            <ul class="feeds">';
 
             if (!m.activated) {
-                moduleList += '<a href="/Instructor/ModuleServlet?action=activateModule&moduleId=' + m.moduleId + '&moduleCode=' + m.moduleCode + '&moduleName=' + m.moduleName + '">Activate module</a>';
+                moduleList += '<li><i class="icon-edit"></i> <a href="/Instructor/ModuleServlet?action=activateModule&moduleId=' + m.moduleId + '&moduleCode=' + m.moduleCode + '&moduleName=' + m.moduleName + '">Activate module</a></li>';
             }
             else {
-                moduleList += '<a href="/Instructor/QuizServlet?action=viewAllQuiz&moduleId=' + m.moduleId + '&moduleName=' + m.moduleName + '">Quiz</a>';
+                moduleList += '<li><i class="icon-edit"></i> <a href="/Instructor/QuizServlet?action=viewAllQuiz&moduleId=' + m.moduleId + '&moduleName=' + m.moduleName + '">Quiz</a></li>';
             }
-            moduleList += '</div>\
+            moduleList += '</ul>\
+                            </div>\
                            </div>';
             // End of portlet-body
         }

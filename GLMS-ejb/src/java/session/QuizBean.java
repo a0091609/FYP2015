@@ -696,7 +696,7 @@ public class QuizBean implements QuizBeanLocal {
         } else if (pts < 100) {
             return "apprentice";
         } else if (pts < 150) {
-            return "entusiast";
+            return "enthusiast";
         } else if (pts < 250) {
             return "expert";
         } else {
